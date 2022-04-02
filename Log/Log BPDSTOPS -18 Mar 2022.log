@@ -1,0 +1,1320 @@
+----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log BPDSTO
+> PS -18 Mar 2022.log
+  log type:  text
+ opened on:  18 Mar 2022, 04:49:32
+
+. 
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\All_Stops_WOW2"
+
+. 
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. 
+. cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+
+. ls
+  <dir>   3/18/22  4:50  .                 
+  <dir>   3/18/22  4:50  ..                
+   0.2k   3/15/22 18:57  2015-2020.url     
+   0.2k   3/15/22 18:57  2020-Present.url  
+  14.4M   3/16/22 20:16  All_Stops.csv     
+  14.4M   3/18/22  1:38  All_Stops_WOW.csv 
+  15.1M   3/18/22  3:08  All_Stops_WOW2.csv
+  59.4M   3/18/22  4:06  All_Stops_WOW2.dta
+  73.4k   3/16/22 23:13  Berkeley PD - Police Beats 2015-2016.geojson
+8511.8k   3/15/22 18:56  Berkeley_PD_-_Stop_Data__Jan_26__2015_to_Sep_30__2020_.csv
+3794.0k   3/15/22 18:56  Berkeley_PD_-_Stop_Data__October_1__2020_-_Present.csv
+  <dir>   3/18/22  4:40  Census Tract Polygons 2010
+ 218.2k   3/17/22 16:08  Census Tract Polygons 2010.geojson
+   0.2k   3/16/22 23:17  Link to GeoJson of Police Beats.url
+   4.3k   3/17/22 19:51  State of California Department of Justice - OpenJustice.csv
+   0.2k   3/17/22 16:27  Summary-Crime-reported-by-the-Berkeley-Police-Department-2010-2
+> 0203_17_2022.csv
+  54.5k   3/18/22  3:53  Census_Tract_Polygons_2010.zip
+
+. 
+. //https://www.stata.com/manuals/spintro4.pdf#spIntro4
+. ssc install shp2dta, replace
+checking shp2dta consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. ssc install spshape2dta, replace
+ssc install: "spshape2dta" not found at SSC, type search spshape2dta
+(To find all packages at SSC that start with s, type ssc describe s)
+r(661);
+
+end of do-file
+
+r(661);
+
+. search spshape2dta
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. unzipfile Census_Tract_Polygons_2010.zip
+    inflating: geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dbf
+    inflating: geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shp
+    inflating: geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shx
+    inflating: geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.prj
+
+successfully unzipped Census_Tract_Polygons_2010.zip to current directory
+total processed:  4
+        skipped:  0
+      extracted:  4
+
+. 
+. spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f
+  (importing .shp file)
+  (importing .dbf file)
+  (creating _ID spatial-unit id)
+  (creating _CX coordinate)
+  (creating _CY coordinate)
+
+  file geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp.dta created
+  file geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta     created
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. br
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. ssc install spmap, replace
+checking spmap consistency and verifying not already installed...
+installing into \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\...
+installation complete.
+
+. 
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+variable ID not found
+(error in option id())
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f genid (name10) replace
+invalid 'genid' 
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f replace
+invalid 'replace' 
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in i/5
+'i' invalid observation number
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     1    |   -122.24414    |   37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     2    |   -122.28782    |   37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     3    |   -122.26959    |    37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     4    |   -122.26032    |   37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     5    |   -122.27792    |   37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. br
+
+. 
+. generate long fips = real(name10)
+
+. bysort fips: assert _N==1
+3 contradictions in 30 by-groups
+assertion is false
+r(9);
+
+end of do-file
+
+r(9);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. assert fips != .
+
+. 
+. 
+. // gen pop = totalpop  //population for each tract
+. 
+. ssc install spmap, replace
+checking spmap consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+variable ID not found
+(error in option id())
+r(111);
+
+end of do-file
+
+r(111);
+
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\ISF_110\Lab 6\wb_adm
+> 0_boundary_lines_10m\wb_data.dta", clear
+
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\geo_export_c67d
+> d96f-bd48-4ef9-88a6-0902237d752f.dta", clear
+
+. rename _ID ID
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. assert fips != .
+fips not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     1    |   -122.24414    |   37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     2    |   -122.28782    |   37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     3    |   -122.26959    |    37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     4    |   -122.26032    |   37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     5    |   -122.27792    |   37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. br
+
+. 
+. generate long fips = real(ID)
+ID not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     1    |   -122.24414    |   37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     2    |   -122.28782    |   37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     3    |   -122.26959    |    37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     4    |   -122.26032    |   37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     5    |   -122.27792    |   37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. br
+
+. 
+. generate long fips = real(ID)
+ID not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     1    |   -122.24414    |   37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     2    |   -122.28782    |   37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     3    |   -122.26959    |    37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     4    |   -122.26032    |   37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     5    |   -122.27792    |   37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. br
+
+. 
+. generate long fips = real(ID)
+ID not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     1    |   -122.24414    |   37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     2    |   -122.28782    |   37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     3    |   -122.26959    |    37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     4    |   -122.26032    |   37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     5    |   -122.27792    |   37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. 
+. 
+. generate long fips = real(ID)
+ID not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 04:51
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+_ID             byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: _ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     1    |   -122.24414    |   37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     2    |   -122.28782    |   37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     3    |   -122.26959    |    37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     4    |   -122.26032    |   37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   _ID    |          _CX    |         _CY    |    aland10    |    awater10    |
+     |     5    |   -122.27792    |   37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. 
+. 
+. // generate long fips = real(ID)
+. // // bysort fips: assert _N==1
+. // assert fips != .
+. 
+. 
+. // gen pop = totalpop  //population for each tract
+. 
+. ssc install spmap, replace
+checking spmap consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+variable ID not found
+(error in option id())
+r(111);
+
+end of do-file
+
+r(111);
+
+. save "geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta", replace
+file geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta saved
+
+. rename _ID ID
+
+. save "geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta", replace
+file geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta saved
+
+. save "geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta", replace
+file geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta saved
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 05:14
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+ID              byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    1    |   -122.24414    |    37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    2    |   -122.28782    |    37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    3    |   -122.26959    |     37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    4    |   -122.26032    |    37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    5    |   -122.27792    |    37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. 
+. 
+. // generate long fips = real(ID)
+. // // bysort fips: assert _N==1
+. // assert fips != .
+. 
+. 
+. // gen pop = totalpop  //population for each tract
+. 
+. ssc install spmap, replace
+checking spmap consistency and verifying not already installed...
+all files already exist and are up to date.
+
+. 
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Reds)
+
+. 
+. set more off
+
+. clear all
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+variable totalpop not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 05:14
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+ID              byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    1    |   -122.24414    |    37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    2    |   -122.28782    |    37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    3    |   -122.26959    |     37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    4    |   -122.26032    |    37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    5    |   -122.27792    |    37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. 
+. 
+. // generate long fips = real(ID)
+. // // bysort fips: assert _N==1
+. // assert fips != .
+. 
+. 
+. // gen pop = totalpop  //population for each tract
+. 
+. // ssc install spmap, replace
+. 
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+
+. // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fc
+> olor(Reds)
+. 
+. set more off
+
+. clear all
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\39\STD1a3c_000000.tmp"
+
+. use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+
+. describe
+
+Contains data from geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+  obs:            33                          
+ vars:            15                          18 Mar 2022 05:14
+----------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------
+ID              byte    %12.0g                Spatial-unit ID
+_CX             double  %10.0g                x-coordinate of area centroid
+_CY             double  %10.0g                y-coordinate of area centroid
+aland10         long    %33.31f               aland10
+awater10        long    %33.31f               awater10
+geo             str48   %48s                  geo
+geoid10         str11   %11s                  geoid10
+id              str11   %11s                  id
+intptlat10      str11   %11s                  intptlat10
+intptlon10      str12   %12s                  intptlon10
+mtfcc10         str5    %9s                   mtfcc10
+name10          str7    %9s                   name10
+namelsad10      str20   %20s                  namelsad10
+totalpop        int     %33.31f               totalpop
+tractce10       str6    %9s                   tractce10
+----------------------------------------------------------------------------------------
+Sorted by: ID
+
+. list in 1/5
+
+     +------------------------------------------------------------------------------+
+  1. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    1    |   -122.24414    |    37.854759    |    1041971    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4238, Alameda County, California  | 06001423800  | 06001423800  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8547587 | -122.2441385 |   G5020 |   4238 | Census Tract 4238 |     2925 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     423800                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  2. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    2    |   -122.28782    |    37.872882    |     674825    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4222, Alameda County, California  | 06001422200  | 06001422200  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8728822 | -122.2878154 |   G5020 |   4222 | Census Tract 4222 |     3144 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422200                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  3. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    3    |   -122.26959    |     37.87524    |     475569    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4224, Alameda County, California  | 06001422400  | 06001422400  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8752396 | -122.2695878 |   G5020 |   4224 | Census Tract 4224 |     4196 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422400                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  4. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    4    |   -122.26032    |    37.877313    |     460332    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4225, Alameda County, California  | 06001422500  | 06001422500  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8773131 | -122.2603183 |   G5020 |   4225 | Census Tract 4225 |     4658 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422500                                   |
+     +------------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------------+
+  5. |   ID    |          _CX    |          _CY    |    aland10    |    awater10    |
+     |    5    |   -122.27792    |    37.874072    |     560051    |           0    |
+     |------------------------------------------------------------------------------|
+     |                                           geo  |     geoid10  |          id  |
+     | Census Tract 4223, Alameda County, California  | 06001422300  | 06001422300  |
+     |------------------------------------------------------------------------------|
+     |  intptlat10 |   intptlon10 | mtfcc10 | name10 |        namelsad10 | totalpop |
+     | +37.8740723 | -122.2779152 |   G5020 |   4223 | Census Tract 4223 |     3387 |
+     |------------------------------------------------------------------------------|
+     |                                   tract~10                                   |
+     |                                     422300                                   |
+     +------------------------------------------------------------------------------+
+
+. 
+. 
+. // generate long fips = real(ID)
+. // // bysort fips: assert _N==1
+. // assert fips != .
+. 
+. 
+. // gen pop = totalpop  //population for each tract
+. 
+. // ssc install spmap, replace
+. 
+. spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolo
+> r(Blues)  
+
+. 
+end of do-file
+
+. graph save "Graph" "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Expor
+> ts\Blue Choropleth totalpop.gph"
+(file \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Blue Chorople
+> th totalpop.gph saved)
+
+. graph export "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Blu
+> e Choropleth totalpop.gph", as(jpg) name("Graph") quality(90) replace
+(file \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Blue Chorople
+> th totalpop.gph written in JPEG format)
+
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\ISF_110\Lab 6\Data\usdata.dta", clear
+
+. exit, clear
