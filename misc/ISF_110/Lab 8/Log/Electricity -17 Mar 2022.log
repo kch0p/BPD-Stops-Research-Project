@@ -1,0 +1,1480 @@
+-----------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\ISF_110\Lab 8\Log\ Electricity -17 Mar 2022.log
+  log type:  text
+ opened on:  17 Mar 2022, 11:11:42
+
+. 
+. use "\\Client\C$\ISF_110\Lab 8\Data\cr_afro_r5_2015_update.dta", clear
+
+. 
+. ********************
+. *Generate variables*
+. ********************
+. 
+. gen urban = 1 if urbrur == 1
+(31,680 missing values generated)
+
+. replace urban = 0 if inlist(urbrur,2,3)
+(31,680 real changes made)
+
+. label var urban "Urban or rural PSU, urban = 1"
+
+. 
+. gen egrid = 1 if ea_svc_a == 1 & ea_svc_a != -1 & ea_svc_a != 9
+(19,217 missing values generated)
+
+. replace egrid = 0 if ea_svc_a == 0
+(19,217 real changes made)
+
+. label var egrid "PSU has electricity grid = 1"
+
+. 
+. gen pwater = 1 if ea_svc_b == 1 & ea_svc_b != -1 & ea_svc_b != 9
+(22,907 missing values generated)
+
+. replace pwater = 0 if ea_svc_b == 0
+(22,797 real changes made)
+
+. label var pwater "PSU has piped water supply = 1"
+
+. 
+. gen sewage = 1 if ea_svc_c == 1 & ea_svc_c != -1 & ea_svc_c !=9
+(37,080 missing values generated)
+
+. replace sewage = 0 if ea_svc_c == 0
+(36,659 real changes made)
+
+. label var sewage "PSU has sewage system = 1"
+
+. 
+. gen ps = 1 if ea_fac_c == 1 & ea_fac_c != -1 & ea_fac_c != 9
+(32,228 missing values generated)
+
+. replace ps = 0 if ea_fac_c == 0
+(31,958 real changes made)
+
+. label variable ps "PSU has police station = 1"
+
+. 
+. gen army = 1 if ea_sec_b == 1 & ea_sec_b != -1 & ea_sec_b != 9
+(46,322 missing values generated)
+
+. replace army = 0 if ea_sec_b == 0
+(46,302 real changes made)
+
+. label var army "PSU has soldiers/army vehecles = 1"
+
+. 
+. gen road = 1 if ea_road == 1 & ea_road != -1
+(27,654 missing values generated)
+
+. replace road = 0 if ea_road == 0
+(27,654 real changes made)
+
+. label var road "PSU has paved/tarred road = 1"
+
+. 
+. gen wofood = 0 if inlist(q8a,0,9)
+(25,697 missing values generated)
+
+. replace wofood = 1 if q8a == 1
+(7,414 real changes made)
+
+. replace wofood = 2 if q8a == 2
+(10,042 real changes made)
+
+. replace wofood = 3 if q8a == 3
+(6,685 real changes made)
+
+. replace wofood = 4 if q8a == 4
+(1,541 real changes made)
+
+. label var wofood "Gone without food, never (0), once or twice (1) to always (4)"
+
+. tab wofood
+
+       Gone |
+    without |
+food, never |
+  (0), once |
+   or twice |
+     (1) to |
+ always (4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     25,890       50.20       50.20
+          1 |      7,414       14.38       64.58
+          2 |     10,042       19.47       84.05
+          3 |      6,685       12.96       97.01
+          4 |      1,541        2.99      100.00
+------------+-----------------------------------
+      Total |     51,572      100.00
+
+. 
+. gen wowater = 0 if inlist(q8b,0,9)
+(25,160 missing values generated)
+
+. replace wowater = 1 if q8b == 1
+(5,934 real changes made)
+
+. replace wowater = 2 if q8b == 2
+(8,711 real changes made)
+
+. replace wowater = 3 if q8b == 3
+(6,319 real changes made)
+
+. replace wowater = 4 if q8b == 4
+(4,170 real changes made)
+
+. label var wowater "Gone without water, never (0), once or twice (1) to always (4)"
+
+. tab wowater
+
+       Gone |
+    without |
+     water, |
+ never (0), |
+    once or |
+  twice (1) |
+  to always |
+        (4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     26,427       51.25       51.25
+          1 |      5,934       11.51       62.76
+          2 |      8,711       16.89       79.66
+          3 |      6,319       12.26       91.91
+          4 |      4,170        8.09      100.00
+------------+-----------------------------------
+      Total |     51,561      100.00
+
+. 
+. gen womedi = 0 if inlist(q8c,0,9)
+(27,488 missing values generated)
+
+. replace womedi = 1 if q8c == 1
+(7,339 real changes made)
+
+. replace womedi = 2 if q8c == 2
+(10,244 real changes made)
+
+. replace womedi = 3 if q8c == 3
+(7,109 real changes made)
+
+. replace womedi = 4 if q8c == 4
+(2,753 real changes made)
+
+. label var womedi "Gone without medical care, never (0), once or twice (1) to always (4)"
+
+. recode womedi (0=0) (1/4=1)
+(womedi: 20106 changes made)
+
+. tab womedi
+
+       Gone |
+    without |
+    medical |
+care, never |
+  (0), once |
+   or twice |
+     (1) to |
+ always (4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     24,099       46.75       46.75
+          1 |     27,445       53.25      100.00
+------------+-----------------------------------
+      Total |     51,544      100.00
+
+. 
+. gen wofuel = 0 if inlist(q8d,0,9)
+(21,308 missing values generated)
+
+. replace wofuel = 1 if q8d == 1
+(6,847 real changes made)
+
+. replace wofuel = 2 if q8d == 2
+(7,850 real changes made)
+
+. replace wofuel = 3 if q8d == 3
+(4,796 real changes made)
+
+. replace wofuel = 4 if q8d == 4
+(1,761 real changes made)
+
+. label var wofuel "Gone without cooking fuel, never (0), once or twice (1) to always (4)"
+
+. tab wofuel
+
+       Gone |
+    without |
+    cooking |
+fuel, never |
+  (0), once |
+   or twice |
+     (1) to |
+ always (4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     30,279       58.76       58.76
+          1 |      6,847       13.29       72.04
+          2 |      7,850       15.23       87.28
+          3 |      4,796        9.31       96.58
+          4 |      1,761        3.42      100.00
+------------+-----------------------------------
+      Total |     51,533      100.00
+
+. 
+. gen woincome = 0 if inlist(q8e,0,9)
+(39,024 missing values generated)
+
+. replace woincome = 1 if q8e == 1
+(5,514 real changes made)
+
+. replace woincome = 2 if q8e == 2
+(11,340 real changes made)
+
+. replace woincome = 3 if q8e == 3
+(13,029 real changes made)
+
+. replace woincome = 4 if q8e == 4
+(9,098 real changes made)
+
+. label var woincome "Gone without cash income, never (0), once or twice (1) to always (4)"
+
+. tab woincome
+
+       Gone |
+    without |
+       cash |
+    income, |
+ never (0), |
+    once or |
+  twice (1) |
+  to always |
+        (4) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     12,563       24.37       24.37
+          1 |      5,514       10.70       35.07
+          2 |     11,340       22.00       57.07
+          3 |     13,029       25.28       82.35
+          4 |      9,098       17.65      100.00
+------------+-----------------------------------
+      Total |     51,544      100.00
+
+. 
+. factor wofood wowater womedi wofuel woincome, pcf
+(obs=51,486)
+
+Factor analysis/correlation                      Number of obs    =     51,486
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          5
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.56669      1.87910            0.5133       0.5133
+        Factor2  |      0.68759      0.02407            0.1375       0.6509
+        Factor3  |      0.66352      0.06692            0.1327       0.7836
+        Factor4  |      0.59661      0.11101            0.1193       0.9029
+        Factor5  |      0.48559            .            0.0971       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(10) = 5.6e+04 Prob>chi2 = 0.0000
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+          wofood |   0.7516 |      0.4351  
+         wowater |   0.6822 |      0.5346  
+          womedi |   0.7220 |      0.4788  
+          wofuel |   0.6628 |      0.5607  
+        woincome |   0.7589 |      0.4241  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =     51,486
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          5
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.56669            .            0.5133       0.5133
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(10) = 5.6e+04 Prob>chi2 = 0.0000
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+          wofood |   0.7516 |      0.4351  
+         wowater |   0.6822 |      0.5346  
+          womedi |   0.7220 |      0.4788  
+          wofuel |   0.6628 |      0.5607  
+        woincome |   0.7589 |      0.4241  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict lpi
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+          wofood |  0.29283 
+         wowater |  0.26580 
+          womedi |  0.28128 
+          wofuel |  0.25822 
+        woincome |  0.29565 
+    ------------------------
+
+
+. label var lpi "Poverty factor scores"
+
+. alpha wofood wowater womedi wofuel woincome, item
+
+Test scale = mean(unstandardized items)
+
+                                                            average
+                             item-test     item-rest       interitem
+Item         |  Obs  Sign   correlation   correlation     covariance      alpha
+-------------+-----------------------------------------------------------------
+wofood       | 51572   +       0.7517        0.5683        .4448623      0.6527
+wowater      | 51561   +       0.7168        0.4820        .4648002      0.6919
+womedi       | 51544   +       0.6215        0.5382        .6546185      0.7147
+wofuel       | 51533   +       0.6784        0.4699        .5083801      0.6922
+woincome     | 51544   +       0.7759        0.5622        .4052867      0.6569
+-------------+-----------------------------------------------------------------
+Test scale   |                                             .4955916      0.7305
+-------------------------------------------------------------------------------
+
+. 
+. gen fearcrim = 0 if inlist(q9b,0,9)
+(16,968 missing values generated)
+
+. replace fearcrim = 1 if inlist(q9b,1,2,3,4)
+(16,881 real changes made)
+
+. label var fearcrim "Feared crime, never (0) to at least once (1)"
+
+. 
+. gen stolen = 0 if inlist(q10a,0,9)
+(13,919 missing values generated)
+
+. replace stolen = 1 if inlist(q10a,1,2,3)
+(13,915 real changes made)
+
+. label var stolen "Something stolen from house,  never (0) to at least once (1)"
+
+. 
+. gen attacked = 0 if inlist(q10b,0,9)
+(6,566 missing values generated)
+
+. replace attacked = 1 if inlist(q10b,1,2,3)
+(4,135 real changes made)
+
+. label var attacked "Physically attacked, never (0) to at least once (1)"
+
+. 
+. factor fearcrim attacked stolen, pcf
+(obs=49,068)
+
+Factor analysis/correlation                      Number of obs    =     49,068
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.52486      0.74018            0.5083       0.5083
+        Factor2  |      0.78468      0.09421            0.2616       0.7698
+        Factor3  |      0.69047            .            0.2302       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  = 9370.24 Prob>chi2 = 0.0000
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+        fearcrim |   0.6948 |      0.5172  
+        attacked |   0.6903 |      0.5236  
+          stolen |   0.7521 |      0.4344  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =     49,068
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.52486            .            0.5083       0.5083
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  = 9370.24 Prob>chi2 = 0.0000
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+        fearcrim |   0.6948 |      0.5172  
+        attacked |   0.6903 |      0.5236  
+          stolen |   0.7521 |      0.4344  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict lii
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+        fearcrim |  0.45567 
+        attacked |  0.45267 
+          stolen |  0.49321 
+    ------------------------
+
+
+. label var lii "Insecurity factor scores"
+
+. alpha fearcrim attacked stolen, item
+
+Test scale = mean(unstandardized items)
+
+                                                            average
+                             item-test     item-rest       interitem
+Item         |  Obs  Sign   correlation   correlation     covariance      alpha
+-------------+-----------------------------------------------------------------
+fearcrim     | 51500   +       0.7667        0.3316        .0347191      0.4010
+attacked     | 49156   +       0.5877        0.3099        .0622124      0.4593
+stolen       | 51583   +       0.7674        0.3686        .0279433      0.3134
+-------------+-----------------------------------------------------------------
+Test scale   |                                             .0419548      0.5033
+-------------------------------------------------------------------------------
+
+. 
+. gen demo_sat = 0 if inlist(q43,0,1,2,9)
+(25,426 missing values generated)
+
+. replace demo_sat = 1 if inlist(q43,3,4)
+(25,414 real changes made)
+
+. label var demo_sat "Satisfaction with democracy, not at all/not very (0) fairly/very (1)"
+
+. 
+. gen law_pr = 1 if inlist(q52c,0,1,9)
+(11,486 missing values generated)
+
+. replace law_pr = 0 if inlist(q52c,2,3) & q52c != -1
+(11,438 real changes made)
+
+. *replace law_pr = 9 if q52c == 9 & q52c != -1
+. label var law_pr "President ignores law/constitution, never/rarely (1) to often/always (0)"
+
+. 
+. gen law_peop = 1 if inlist(q56b,0,1,9)
+(26,905 missing values generated)
+
+. replace law_peop = 0 if inlist(q56b,2,3) & q56b != -1
+(26,865 real changes made)
+
+. label var law_peop "People are treated unequally under the law, never/rarely (1) to often/always (0)"
+
+. 
+. gen law_off = 1 if inlist(q56f,0,1,9)
+(27,848 missing values generated)
+
+. replace law_off = 0 if inlist(q56f,2,3) & q56f != -1
+(27,768 real changes made)
+
+. label var law_off "Officials unpunished, never/rarely (1) to often/always (0)"
+
+. 
+. gen law_ordi = 1 if inlist(q56g,0,1,9)
+(12,177 missing values generated)
+
+. replace law_ordi = 0 if inlist(q56g,2,3) & q56g != -1
+(12,079 real changes made)
+
+. label var law_ordi "Ordinary people unpunished, never/rarely (1) to often/always (0)"
+
+. 
+. factor law_peop law_pr law_ordi law_off, pcf
+(obs=51,359)
+
+Factor analysis/correlation                      Number of obs    =     51,359
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          4
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.67054      0.81179            0.4176       0.4176
+        Factor2  |      0.85875      0.03456            0.2147       0.6323
+        Factor3  |      0.82419      0.17768            0.2060       0.8384
+        Factor4  |      0.64651            .            0.1616       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(6)  = 1.4e+04 Prob>chi2 = 0.0000
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+        law_peop |   0.6932 |      0.5194  
+          law_pr |   0.5487 |      0.6989  
+        law_ordi |   0.5902 |      0.6516  
+         law_off |   0.7352 |      0.4595  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =     51,359
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          4
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.67054            .            0.4176       0.4176
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(6)  = 1.4e+04 Prob>chi2 = 0.0000
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+        law_peop |   0.6932 |      0.5194  
+          law_pr |   0.5487 |      0.6989  
+        law_ordi |   0.5902 |      0.6516  
+         law_off |   0.7352 |      0.4595  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict rule_law
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+        law_peop |  0.41497 
+          law_pr |  0.32847 
+        law_ordi |  0.35332 
+         law_off |  0.44009 
+    ------------------------
+
+
+. 
+. gen cor_tx = 1 if inlist(q60f,0,1,9)
+(18,085 missing values generated)
+
+. replace cor_tx = 0 if inlist(q60b,2,3) & q60b != -1
+(14,902 real changes made)
+
+. label var cor_tx "Tax collectors corrupt, none/some (1) to most/all (0)"
+
+. 
+. gen cor_of = 1 if inlist(q60c,0,1,9)
+(18,525 missing values generated)
+
+. replace cor_of = 0 if inlist(q60c,2,3) & q60c != -1
+(18,484 real changes made)
+
+. label var cor_of "Government officials corrupt, none/some (1) to most/all (0)"
+
+. 
+. gen cor_pl = 1 if inlist(q60e,0,1,9)
+(23,680 missing values generated)
+
+. replace cor_pl = 0 if inlist(q60e,2,3) & q60e != -1
+(23,566 real changes made)
+
+. label var cor_pl "Police corrupt, none/some (1) to most/all (0)"
+
+. 
+. gen cor_ju = 1 if inlist(q60g,0,1,9)
+(14,184 missing values generated)
+
+. replace cor_ju = 0 if inlist(q60g,2,3) & q60g != -1
+(14,148 real changes made)
+
+. label var cor_ju "Judges and magistrates corrupt, none/some (1) to most/all (0)"
+
+. 
+. factor cor_tx cor_of cor_pl cor_ju, pcf
+(obs=42,995)
+
+Factor analysis/correlation                      Number of obs    =     42,995
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          4
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.57451      1.99870            0.6436       0.6436
+        Factor2  |      0.57581      0.05868            0.1440       0.7876
+        Factor3  |      0.51713      0.18457            0.1293       0.9169
+        Factor4  |      0.33256            .            0.0831       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(6)  = 5.9e+04 Prob>chi2 = 0.0000
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+          cor_tx |   0.8516 |      0.2748  
+          cor_of |   0.8340 |      0.3045  
+          cor_pl |   0.7762 |      0.3975  
+          cor_ju |   0.7425 |      0.4487  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =     42,995
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          4
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.57451            .            0.6436       0.6436
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(6)  = 5.9e+04 Prob>chi2 = 0.0000
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+          cor_tx |   0.8516 |      0.2748  
+          cor_of |   0.8340 |      0.3045  
+          cor_pl |   0.7762 |      0.3975  
+          cor_ju |   0.7425 |      0.4487  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict control_cor
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+          cor_tx |  0.33077 
+          cor_of |  0.32393 
+          cor_pl |  0.30150 
+          cor_ju |  0.28841 
+    ------------------------
+
+
+. 
+. gen gov_effe = 0 if inlist(q65a,1,2,9)
+(19,211 missing values generated)
+
+. replace gov_effe = 1 if inlist(q65a,3,4) & q65a != -1
+(19,196 real changes made)
+
+. lab var gov_effe "Government effectiveness in handling the economy, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_effc = 0 if inlist(q65f,1,2,9)
+(24,572 missing values generated)
+
+. replace gov_effc = 1 if inlist(q65f,3,4) & q65f != -1
+(24,522 real changes made)
+
+. lab var gov_effc "Government effectiveness in reducing crime, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_effh = 0 if inlist(q65g,1,2,9)
+(29,409 missing values generated)
+
+. replace gov_effh = 1 if inlist(q65g,3,4) & q65g != -1
+(29,379 real changes made)
+
+. lab var gov_effh "Government effectiveness in improving health services, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_effd = 0 if inlist(q65h,1,2,9)
+(30,697 missing values generated)
+
+. replace gov_effd = 1 if inlist(q65h,3,4) & q65h != -1
+(30,643 real changes made)
+
+. lab var gov_effd "Government effectiveness in addressing educational needs, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_effw = 0 if inlist(q65i,1,2,9)
+(21,264 missing values generated)
+
+. replace gov_effw = 1 if inlist(q65i,3,4) & q65i != -1
+(21,209 real changes made)
+
+. lab var gov_effw "Government effectiveness in delivering household water, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_efff = 0 if inlist(q65j,1,2,9)
+(14,923 missing values generated)
+
+. replace gov_efff = 1 if inlist(q65j,3,4) & q65j != -1
+(14,873 real changes made)
+
+. lab var gov_efff "Government effectiveness in ensuring food for everyone, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_effr = 0 if inlist(q65k,1,2,9)
+(17,430 missing values generated)
+
+. replace gov_effr = 1 if inlist(q65k,3,4) & q65k != -1
+(17,368 real changes made)
+
+. lab var gov_effr "Government effectiveness in fighting corruption, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. gen gov_effb = 0 if inlist(q65n,1,2,9)
+(22,908 missing values generated)
+
+. replace gov_effb = 1 if inlist(q65n,3,4) & q65n != -1
+(22,859 real changes made)
+
+. lab var gov_effb "Government effectiveness in maintaining roads and bridges, badly/fairly (0) to fairly/very well (1)
+> "
+note: label truncated to 80 characters
+
+. 
+. gen gov_effs = 0 if inlist(q65o,1,2,9)
+(19,577 missing values generated)
+
+. replace gov_effs = 1 if inlist(q65o,3,4) & q65o != -1
+(19,526 real changes made)
+
+. lab var gov_effs "Government effectiveness in providing electric supply, badly/fairly (0) to fairly/very well (1)"
+note: label truncated to 80 characters
+
+. 
+. factor gov_effe gov_effc gov_effh gov_effd gov_effw gov_efff gov_effb gov_effr gov_effs, pcf
+(obs=51,288)
+
+Factor analysis/correlation                      Number of obs    =     51,288
+    Method: principal-component factors          Retained factors =          2
+    Rotation: (unrotated)                        Number of params =         17
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      3.49826      2.48846            0.3887       0.3887
+        Factor2  |      1.00979      0.08603            0.1122       0.5009
+        Factor3  |      0.92376      0.18303            0.1026       0.6035
+        Factor4  |      0.74073      0.05154            0.0823       0.6858
+        Factor5  |      0.68918      0.09291            0.0766       0.7624
+        Factor6  |      0.59627      0.02954            0.0663       0.8287
+        Factor7  |      0.56673      0.02404            0.0630       0.8916
+        Factor8  |      0.54269      0.11011            0.0603       0.9519
+        Factor9  |      0.43258            .            0.0481       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(36) = 1.0e+05 Prob>chi2 = 0.0000
+
+Factor loadings (pattern matrix) and unique variances
+
+    -------------------------------------------------
+        Variable |  Factor1   Factor2 |   Uniqueness 
+    -------------+--------------------+--------------
+        gov_effe |   0.5938   -0.1380 |      0.6284  
+        gov_effc |   0.5760   -0.4119 |      0.4985  
+        gov_effh |   0.6815   -0.3768 |      0.3936  
+        gov_effd |   0.6592   -0.3489 |      0.4438  
+        gov_effw |   0.6469    0.2667 |      0.5104  
+        gov_efff |   0.6192    0.2108 |      0.5722  
+        gov_effb |   0.6231    0.3906 |      0.4591  
+        gov_effr |   0.5964   -0.1026 |      0.6338  
+        gov_effs |   0.6075    0.5279 |      0.3522  
+    -------------------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =     51,288
+    Method: principal-component factors          Retained factors =          2
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =         17
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.33773      0.16742            0.2597       0.2597
+        Factor2  |      2.17032            .            0.2411       0.5009
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(36) = 1.0e+05 Prob>chi2 = 0.0000
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    -------------------------------------------------
+        Variable |  Factor1   Factor2 |   Uniqueness 
+    -------------+--------------------+--------------
+        gov_effe |   0.5280    0.3046 |      0.6284  
+        gov_effc |   0.7021    0.0924 |      0.4985  
+        gov_effh |   0.7552    0.1901 |      0.3936  
+        gov_effd |   0.7198    0.1953 |      0.4438  
+        gov_effw |   0.2904    0.6366 |      0.5104  
+        gov_efff |   0.3084    0.5768 |      0.5722  
+        gov_effb |   0.1884    0.7109 |      0.4591  
+        gov_effr |   0.5057    0.3324 |      0.6338  
+        gov_effs |   0.0833    0.8005 |      0.3522  
+    -------------------------------------------------
+
+Factor rotation matrix
+
+    --------------------------------
+                 | Factor1  Factor2 
+    -------------+------------------
+         Factor1 |  0.7305   0.6829 
+         Factor2 | -0.6829   0.7305 
+    --------------------------------
+
+. predict goveff_p
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ----------------------------------
+        Variable |  Factor1   Factor2 
+    -------------+--------------------
+        gov_effe |  0.21735   0.01605 
+        gov_effc |  0.39886  -0.18555 
+        gov_effh |  0.39716  -0.13958 
+        gov_effd |  0.37358  -0.12369 
+        gov_effw | -0.04530   0.31924 
+        gov_efff | -0.01326   0.27337 
+        gov_effb | -0.13405   0.40423 
+        gov_effr |  0.19392   0.04222 
+        gov_effs | -0.23012   0.50047 
+    ----------------------------------
+
+
+. 
+. gen ser_wat = 0 if inlist(q67b,1,2) & q67b != -1 & q67e != 5 & q67e != 9
+(24,277 missing values generated)
+
+. replace ser_wat = 1 if inlist(q67b,3,4)
+(14,464 real changes made)
+
+. lab var ser_wat "Difficulty to obtain household services, easy/very easy (1) to very/difficult (0)"
+note: label truncated to 80 characters
+
+. 
+. gen ser_med = 0 if inlist(q67e,1,2) & q67e != -1 & q67e != 5 & q67e != 9
+(30,378 missing values generated)
+
+. replace ser_med = 1 if inlist(q67e,3,4)
+(27,957 real changes made)
+
+. lab var ser_med "Difficulty to obtain medical treatment, easy/very easy (1) to very/difficult (0)"
+
+. 
+. gen ser_id = 0 if inlist(q67a,1,2) & q67a != -1 & q67e != 5 & q67e != 9
+(26,497 missing values generated)
+
+. replace ser_id = 1 if inlist(q67a,3,4)
+(21,955 real changes made)
+
+. lab var ser_id "Difficulty to obtain identity document, easy/very easy (1) to very/difficult (0)"
+
+. 
+. gen ser_pol = 0 if inlist(q67c,1,2) & q67c != -1 & q67e != 5 & q67e != 9
+(28,235 missing values generated)
+
+. replace ser_pol = 1 if inlist(q67c,3,4)
+(20,482 real changes made)
+
+. lab var ser_pol "Difficulty to obtain help from the police, easy/very easy (1) to very/difficult (0)"
+note: label truncated to 80 characters
+
+. 
+. gen ser_sch = 0 if inlist(q67d,1,2) & q67d != -1 & q67e != 5 & q67e != 9
+(39,487 missing values generated)
+
+. replace ser_sch = 1 if inlist(q67d,3,4)
+(32,612 real changes made)
+
+. lab var ser_sch "Difficulty to obtain school placement, easy/very easy (1) to very/difficult (0)"
+
+. 
+. factor ser_id ser_pol ser_sch ser_wat ser_med, pcf
+(obs=35,717)
+
+Factor analysis/correlation                      Number of obs    =     35,717
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          5
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.16167      1.22460            0.4323       0.4323
+        Factor2  |      0.93707      0.22266            0.1874       0.6197
+        Factor3  |      0.71441      0.10361            0.1429       0.7626
+        Factor4  |      0.61080      0.03475            0.1222       0.8848
+        Factor5  |      0.57605            .            0.1152       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(10) = 2.4e+04 Prob>chi2 = 0.0000
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+          ser_id |   0.6516 |      0.5755  
+         ser_pol |   0.6756 |      0.5436  
+         ser_sch |   0.6189 |      0.6170  
+         ser_wat |   0.6334 |      0.5988  
+         ser_med |   0.7046 |      0.5035  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =     35,717
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          5
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      2.16167            .            0.4323       0.4323
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(10) = 2.4e+04 Prob>chi2 = 0.0000
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+          ser_id |   0.6516 |      0.5755  
+         ser_pol |   0.6756 |      0.5436  
+         ser_sch |   0.6189 |      0.6170  
+         ser_wat |   0.6334 |      0.5988  
+         ser_med |   0.7046 |      0.5035  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict qual_bur
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+          ser_id |  0.30142 
+         ser_pol |  0.31254 
+         ser_sch |  0.28630 
+         ser_wat |  0.29300 
+         ser_med |  0.32596 
+    ------------------------
+
+
+. 
+. *SUMMARY TABLE AND CORRELATION
+. 
+. sum lpi lii egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur urban west_africa_only e
+> ast_africa_only southern_africa_only north_africa_only
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         lpi |     51,486   -3.85e-09           1  -1.374732    2.62812
+         lii |     49,068   -9.31e-09           1  -.7483165   2.976173
+       egrid |     51,587    .6274837    .4834795          0          1
+      pwater |     51,477     .557142    .4967289          0          1
+      sewage |     51,166    .2835281    .4507149          0          1
+-------------+---------------------------------------------------------
+        road |     51,587    .4639347    .4987024          0          1
+          ps |     51,317    .3772434    .4847013          0          1
+        army |     51,567    .1021002    .3027829          0          1
+    rule_law |     51,359    2.00e-09           1  -2.058009   1.280197
+ control_cor |     42,995    4.21e-09           1  -1.779721   .8874844
+-------------+---------------------------------------------------------
+    demo_sat |     51,575    .4927581    .4999524          0          1
+    goveff_p |     51,288   -1.75e-09           1  -2.113922   1.973122
+    qual_bur |     35,717   -1.67e-11           1   -1.57941   1.564946
+       urban |     51,587    .3858918    .4868099          0          1
+west_afric~y |     51,587    .3721093     .483372          0          1
+-------------+---------------------------------------------------------
+east_afric~y |     51,587    .1628123    .3691979          0          1
+southern_a~y |     51,587    .3489833    .4766533          0          1
+north_afri~y |     51,587    .1160951    .3203421          0          1
+
+. 
+. corr lpi lii egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur urban west_africa_only 
+> east_africa_only southern_africa_only north_africa_only
+(obs=27,441)
+
+             |      lpi      lii    egrid   pwater   sewage     road       ps     army rule_law contro~r demo_sat
+-------------+---------------------------------------------------------------------------------------------------
+         lpi |   1.0000
+         lii |   0.2070   1.0000
+       egrid |  -0.2726  -0.0026   1.0000
+      pwater |  -0.2227  -0.0265   0.5552   1.0000
+      sewage |  -0.2394   0.0196   0.4325   0.5012   1.0000
+        road |  -0.2490  -0.0277   0.4667   0.4585   0.4551   1.0000
+          ps |  -0.1051   0.0403   0.3218   0.2758   0.3303   0.2978   1.0000
+        army |   0.0141   0.0276   0.1037   0.1110   0.1210   0.1212   0.2047   1.0000
+    rule_law |  -0.1072  -0.1273  -0.0492  -0.0094  -0.0681  -0.0178  -0.0612  -0.0219   1.0000
+ control_cor |  -0.0947  -0.1239  -0.0224   0.0373  -0.0405   0.0102  -0.0098   0.0056   0.2569   1.0000
+    demo_sat |  -0.1283  -0.0908  -0.0364   0.0134  -0.0023   0.0068  -0.0465  -0.0298   0.2041   0.1610   1.0000
+    goveff_p |  -0.0589  -0.0904  -0.0946  -0.0595  -0.0899  -0.0897  -0.0730  -0.0270   0.2159   0.1682   0.2288
+    qual_bur |  -0.2668  -0.1174   0.1633   0.1497   0.1346   0.1568   0.0729  -0.0211   0.1842   0.1445   0.1524
+       urban |  -0.1875   0.0442   0.4561   0.4595   0.5451   0.4432   0.3591   0.1582  -0.0898  -0.0539  -0.0447
+west_afric~y |   0.1497  -0.0257  -0.0809  -0.0254  -0.0760  -0.0452  -0.1150   0.0836  -0.0670  -0.0955  -0.0265
+east_afric~y |   0.0746   0.0677  -0.1276  -0.1477  -0.0867  -0.1980  -0.0315  -0.0299  -0.0379  -0.0935   0.0297
+southern_a~y |  -0.0816   0.0154   0.0133  -0.0110  -0.0359   0.0236   0.0153  -0.1429   0.1374   0.1241   0.0343
+north_afri~y |  -0.1697  -0.0501   0.2207   0.1948   0.2465   0.2213   0.1751   0.1164  -0.0674   0.0469  -0.0402
+
+             | goveff_p qual_bur    urban west_a~y east_a~y southe~y north_~y
+-------------+---------------------------------------------------------------
+    goveff_p |   1.0000
+    qual_bur |   0.2077   1.0000
+       urban |  -0.1031   0.0486   1.0000
+west_afric~y |  -0.0156  -0.2308   0.0834   1.0000
+east_afric~y |   0.0109  -0.0729  -0.1086  -0.2778   1.0000
+southern_a~y |   0.1676   0.2213  -0.0853  -0.6111  -0.2857   1.0000
+north_afri~y |  -0.2333   0.0817   0.1078  -0.2932  -0.1371  -0.3016   1.0000
+
+
+. 
+. **********
+. *ANALYSES*
+. **********
+. 
+. *MULTIPLE LINEAR REGRESSION
+. 
+. local study "lpi"
+
+. 
+. reg lpi egrid pwater sewage road   //Model 1
+
+      Source |       SS           df       MS      Number of obs   =    50,985
+-------------+----------------------------------   F(4, 50980)     =   1524.52
+       Model |  5449.20797         4  1362.30199   Prob > F        =    0.0000
+    Residual |  45555.3589    50,980  .893592761   R-squared       =    0.1068
+-------------+----------------------------------   Adj R-squared   =    0.1068
+       Total |  51004.5669    50,984   1.0004034   Root MSE        =     .9453
+
+------------------------------------------------------------------------------
+         lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |  -.3565062   .0108679   -32.80   0.000    -.3778074   -.3352051
+      pwater |  -.0835565   .0108772    -7.68   0.000    -.1048758   -.0622371
+      sewage |  -.2216156   .0114352   -19.38   0.000    -.2440286   -.1992025
+        road |  -.2029431   .0098604   -20.58   0.000    -.2222697   -.1836165
+       _cons |   .4271063     .00731    58.43   0.000     .4127786    .4414339
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\ `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symb
+> ol(***, **, *) replace
+\\Client\C$\ISF_110\Lab 8\Results\ lpi-17 Mar 2022.xls
+dir : seeout
+
+. reg lpi egrid pwater sewage road ps army   //Model 2
+
+      Source |       SS           df       MS      Number of obs   =    50,773
+-------------+----------------------------------   F(6, 50766)     =   1041.55
+       Model |  5566.25557         6  927.709262   Prob > F        =    0.0000
+    Residual |  45217.2196    50,766  .890698884   R-squared       =    0.1096
+-------------+----------------------------------   Adj R-squared   =    0.1095
+       Total |  50783.4751    50,772  1.00022601   Root MSE        =    .94377
+
+------------------------------------------------------------------------------
+         lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |  -.3667748    .011012   -33.31   0.000    -.3883584   -.3451913
+      pwater |  -.0904729   .0108988    -8.30   0.000    -.1118346   -.0691111
+      sewage |  -.2389398   .0116078   -20.58   0.000    -.2616912   -.2161884
+        road |  -.2108751   .0098985   -21.30   0.000    -.2302762    -.191474
+          ps |    .043194    .009577     4.51   0.000     .0244229     .061965
+        army |   .1535923   .0141725    10.84   0.000      .125814    .1813706
+       _cons |   .4147677   .0074281    55.84   0.000     .4002086    .4293267
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\`study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symbo
+> l(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results-17 Mar 2022.xls
+dir : seeout
+
+. reg lpi egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur   //Model 3
+
+      Source |       SS           df       MS      Number of obs   =    28,929
+-------------+----------------------------------   F(11, 28917)    =    515.74
+       Model |  4814.08298        11  437.643907   Prob > F        =    0.0000
+    Residual |  24538.1097    28,917  .848570381   R-squared       =    0.1640
+-------------+----------------------------------   Adj R-squared   =    0.1637
+       Total |  29352.1927    28,928  1.01466374   Root MSE        =    .92118
+
+------------------------------------------------------------------------------
+         lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |  -.3425513    .014474   -23.67   0.000     -.370921   -.3141816
+      pwater |  -.0368791   .0141821    -2.60   0.009    -.0646766   -.0090815
+      sewage |   -.250472   .0146644   -17.08   0.000    -.2792149   -.2217291
+        road |  -.1896141   .0128886   -14.71   0.000    -.2148763   -.1643518
+          ps |   .0152886   .0123798     1.23   0.217    -.0089765    .0395536
+        army |   .1560528   .0183382     8.51   0.000     .1201092    .1919965
+    rule_law |  -.0542236   .0057614    -9.41   0.000    -.0655162   -.0429311
+ control_cor |  -.0478276     .00564    -8.48   0.000    -.0588822   -.0367729
+    demo_sat |   -.151247   .0113713   -13.30   0.000    -.1735352   -.1289588
+    goveff_p |  -.0257126   .0057583    -4.47   0.000    -.0369992    -.014426
+    qual_bur |  -.1753126   .0057266   -30.61   0.000    -.1865369   -.1640882
+       _cons |   .4440661   .0118295    37.54   0.000     .4208799    .4672524
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\`study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symbo
+> l(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results-17 Mar 2022.xls
+dir : seeout
+
+. reg lpi egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur urban east_africa_only south
+> ern_africa_only north_africa_only   //Model 4
+
+      Source |       SS           df       MS      Number of obs   =    28,929
+-------------+----------------------------------   F(15, 28913)    =    414.59
+       Model |  5195.81345        15  346.387563   Prob > F        =    0.0000
+    Residual |  24156.3792    28,913  .835485049   R-squared       =    0.1770
+-------------+----------------------------------   Adj R-squared   =    0.1766
+       Total |  29352.1927    28,928  1.01466374   Root MSE        =    .91405
+
+--------------------------------------------------------------------------------------
+                 lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------------+----------------------------------------------------------------
+               egrid |  -.2980046   .0147343   -20.23   0.000    -.3268846   -.2691246
+              pwater |  -.0274763   .0142011    -1.93   0.053    -.0553112    .0003586
+              sewage |  -.1816435   .0154358   -11.77   0.000    -.2118984   -.1513886
+                road |  -.1606654   .0129808   -12.38   0.000    -.1861085   -.1352223
+                  ps |   .0522352   .0125142     4.17   0.000     .0277067    .0767636
+                army |   .1617465   .0184433     8.77   0.000     .1255967    .1978962
+            rule_law |  -.0566913   .0057335    -9.89   0.000    -.0679293   -.0454533
+         control_cor |  -.0346491   .0056518    -6.13   0.000    -.0457269   -.0235713
+            demo_sat |  -.1587241   .0113368   -14.00   0.000    -.1809447   -.1365036
+            goveff_p |  -.0465492   .0058645    -7.94   0.000     -.058044   -.0350544
+            qual_bur |  -.1566447   .0058295   -26.87   0.000    -.1680708   -.1452187
+               urban |  -.1148488   .0145052    -7.92   0.000    -.1432795    -.086418
+    east_africa_only |  -.0527035   .0165801    -3.18   0.001    -.0852012   -.0202057
+southern_africa_only |  -.1420099   .0134513   -10.56   0.000    -.1683751   -.1156446
+   north_africa_only |  -.3991324   .0195244   -20.44   0.000    -.4374012   -.3608636
+               _cons |   .5169036   .0140319    36.84   0.000     .4894004    .5444068
+--------------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\`study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symbo
+> l(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results-17 Mar 2022.xls
+dir : seeout
+
+. 
+.         /
+/ is not a valid command name
+r(199);
+
+end of do-file
+
+r(199);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\56\STD2470_000000.tmp"
+
+. local study "lpi"
+
+. 
+. reg lpi egrid pwater sewage road   //Model 1
+
+      Source |       SS           df       MS      Number of obs   =    50,985
+-------------+----------------------------------   F(4, 50980)     =   1524.52
+       Model |  5449.20797         4  1362.30199   Prob > F        =    0.0000
+    Residual |  45555.3589    50,980  .893592761   R-squared       =    0.1068
+-------------+----------------------------------   Adj R-squared   =    0.1068
+       Total |  51004.5669    50,984   1.0004034   Root MSE        =     .9453
+
+------------------------------------------------------------------------------
+         lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |  -.3565062   .0108679   -32.80   0.000    -.3778074   -.3352051
+      pwater |  -.0835565   .0108772    -7.68   0.000    -.1048758   -.0622371
+      sewage |  -.2216156   .0114352   -19.38   0.000    -.2440286   -.1992025
+        road |  -.2029431   .0098604   -20.58   0.000    -.2222697   -.1836165
+       _cons |   .4271063     .00731    58.43   0.000     .4127786    .4414339
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) replace
+\\Client\C$\ISF_110\Lab 8\Results\Results lpi-.xls
+dir : seeout
+
+. reg lpi egrid pwater sewage road ps army   //Model 2
+
+      Source |       SS           df       MS      Number of obs   =    50,773
+-------------+----------------------------------   F(6, 50766)     =   1041.55
+       Model |  5566.25557         6  927.709262   Prob > F        =    0.0000
+    Residual |  45217.2196    50,766  .890698884   R-squared       =    0.1096
+-------------+----------------------------------   Adj R-squared   =    0.1095
+       Total |  50783.4751    50,772  1.00022601   Root MSE        =    .94377
+
+------------------------------------------------------------------------------
+         lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |  -.3667748    .011012   -33.31   0.000    -.3883584   -.3451913
+      pwater |  -.0904729   .0108988    -8.30   0.000    -.1118346   -.0691111
+      sewage |  -.2389398   .0116078   -20.58   0.000    -.2616912   -.2161884
+        road |  -.2108751   .0098985   -21.30   0.000    -.2302762    -.191474
+          ps |    .043194    .009577     4.51   0.000     .0244229     .061965
+        army |   .1535923   .0141725    10.84   0.000      .125814    .1813706
+       _cons |   .4147677   .0074281    55.84   0.000     .4002086    .4293267
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results\Results lpi-.xls
+dir : seeout
+
+. reg lpi egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur   //Model 3
+
+      Source |       SS           df       MS      Number of obs   =    28,929
+-------------+----------------------------------   F(11, 28917)    =    515.74
+       Model |  4814.08298        11  437.643907   Prob > F        =    0.0000
+    Residual |  24538.1097    28,917  .848570381   R-squared       =    0.1640
+-------------+----------------------------------   Adj R-squared   =    0.1637
+       Total |  29352.1927    28,928  1.01466374   Root MSE        =    .92118
+
+------------------------------------------------------------------------------
+         lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |  -.3425513    .014474   -23.67   0.000     -.370921   -.3141816
+      pwater |  -.0368791   .0141821    -2.60   0.009    -.0646766   -.0090815
+      sewage |   -.250472   .0146644   -17.08   0.000    -.2792149   -.2217291
+        road |  -.1896141   .0128886   -14.71   0.000    -.2148763   -.1643518
+          ps |   .0152886   .0123798     1.23   0.217    -.0089765    .0395536
+        army |   .1560528   .0183382     8.51   0.000     .1201092    .1919965
+    rule_law |  -.0542236   .0057614    -9.41   0.000    -.0655162   -.0429311
+ control_cor |  -.0478276     .00564    -8.48   0.000    -.0588822   -.0367729
+    demo_sat |   -.151247   .0113713   -13.30   0.000    -.1735352   -.1289588
+    goveff_p |  -.0257126   .0057583    -4.47   0.000    -.0369992    -.014426
+    qual_bur |  -.1753126   .0057266   -30.61   0.000    -.1865369   -.1640882
+       _cons |   .4440661   .0118295    37.54   0.000     .4208799    .4672524
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results\Results lpi-.xls
+dir : seeout
+
+. reg lpi egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur urban east_africa_only south
+> ern_africa_only north_africa_only   //Model 4
+
+      Source |       SS           df       MS      Number of obs   =    28,929
+-------------+----------------------------------   F(15, 28913)    =    414.59
+       Model |  5195.81345        15  346.387563   Prob > F        =    0.0000
+    Residual |  24156.3792    28,913  .835485049   R-squared       =    0.1770
+-------------+----------------------------------   Adj R-squared   =    0.1766
+       Total |  29352.1927    28,928  1.01466374   Root MSE        =    .91405
+
+--------------------------------------------------------------------------------------
+                 lpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------------+----------------------------------------------------------------
+               egrid |  -.2980046   .0147343   -20.23   0.000    -.3268846   -.2691246
+              pwater |  -.0274763   .0142011    -1.93   0.053    -.0553112    .0003586
+              sewage |  -.1816435   .0154358   -11.77   0.000    -.2118984   -.1513886
+                road |  -.1606654   .0129808   -12.38   0.000    -.1861085   -.1352223
+                  ps |   .0522352   .0125142     4.17   0.000     .0277067    .0767636
+                army |   .1617465   .0184433     8.77   0.000     .1255967    .1978962
+            rule_law |  -.0566913   .0057335    -9.89   0.000    -.0679293   -.0454533
+         control_cor |  -.0346491   .0056518    -6.13   0.000    -.0457269   -.0235713
+            demo_sat |  -.1587241   .0113368   -14.00   0.000    -.1809447   -.1365036
+            goveff_p |  -.0465492   .0058645    -7.94   0.000     -.058044   -.0350544
+            qual_bur |  -.1566447   .0058295   -26.87   0.000    -.1680708   -.1452187
+               urban |  -.1148488   .0145052    -7.92   0.000    -.1432795    -.086418
+    east_africa_only |  -.0527035   .0165801    -3.18   0.001    -.0852012   -.0202057
+southern_africa_only |  -.1420099   .0134513   -10.56   0.000    -.1683751   -.1156446
+   north_africa_only |  -.3991324   .0195244   -20.44   0.000    -.4374012   -.3608636
+               _cons |   .5169036   .0140319    36.84   0.000     .4894004    .5444068
+--------------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results\Results lpi-.xls
+dir : seeout
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\56\STD2470_000000.tmp"
+
+.         
+. local study "lli"
+
+. 
+. reg lii egrid pwater sewage road   //Model 1
+
+      Source |       SS           df       MS      Number of obs   =    48,566
+-------------+----------------------------------   F(4, 48561)     =     29.41
+       Model |  117.201673         4  29.3004183   Prob > F        =    0.0000
+    Residual |  48380.5916    48,561  .996284912   R-squared       =    0.0024
+-------------+----------------------------------   Adj R-squared   =    0.0023
+       Total |  48497.7933    48,565  .998616149   Root MSE        =    .99814
+
+------------------------------------------------------------------------------
+         lii |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |   .0486457   .0121025     4.02   0.000     .0249246    .0723668
+      pwater |  -.0937987   .0119351    -7.86   0.000    -.1171916   -.0704058
+      sewage |   .0950592   .0123265     7.71   0.000     .0708992    .1192193
+        road |  -.0562002   .0109976    -5.11   0.000    -.0777557   -.0346447
+       _cons |   .0158911   .0079535     2.00   0.046     .0003021    .0314802
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) replace
+\\Client\C$\ISF_110\Lab 8\Results\Results lli-.xls
+dir : seeout
+
+. reg lii egrid pwater sewage road ps army   //Model 2
+
+      Source |       SS           df       MS      Number of obs   =    48,354
+-------------+----------------------------------   F(6, 48347)     =     42.54
+       Model |  253.507837         6  42.2513062   Prob > F        =    0.0000
+    Residual |    48020.78    48,347  .993252529   R-squared       =    0.0053
+-------------+----------------------------------   Adj R-squared   =    0.0051
+       Total |  48274.2879    48,353  .998372136   Root MSE        =    .99662
+
+------------------------------------------------------------------------------
+         lii |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |   .0304005   .0122211     2.49   0.013      .006447     .054354
+      pwater |  -.1031997   .0119653    -8.62   0.000    -.1266517   -.0797476
+      sewage |   .0739859   .0125018     5.92   0.000     .0494822    .0984895
+        road |   -.067668   .0110582    -6.12   0.000    -.0893423   -.0459937
+          ps |   .1016962   .0102745     9.90   0.000     .0815581    .1218343
+        army |   .0693843   .0150581     4.61   0.000     .0398702    .0988983
+       _cons |  -.0027395   .0081045    -0.34   0.735    -.0186245    .0131455
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results\Results lli-.xls
+dir : seeout
+
+. reg lii egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur   //Model 3
+
+      Source |       SS           df       MS      Number of obs   =    27,497
+-------------+----------------------------------   F(11, 27485)    =    101.91
+       Model |  1109.15292        11  100.832083   Prob > F        =    0.0000
+    Residual |  27194.0493    27,485  .989414199   R-squared       =    0.0392
+-------------+----------------------------------   Adj R-squared   =    0.0388
+       Total |  28303.2022    27,496  1.02935708   Root MSE        =    .99469
+
+------------------------------------------------------------------------------
+         lii |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       egrid |      .0089   .0165396     0.54   0.591    -.0235185    .0413186
+      pwater |  -.0609814   .0159589    -3.82   0.000    -.0922617   -.0297011
+      sewage |     .07304    .016165     4.52   0.000     .0413559    .1047242
+        road |  -.0735514    .014709    -5.00   0.000    -.1023818    -.044721
+          ps |   .0816207   .0135822     6.01   0.000     .0549988    .1082426
+        army |   .0580367   .0199111     2.91   0.004       .01901    .0970635
+    rule_law |  -.0730528    .006357   -11.49   0.000    -.0855128   -.0605928
+ control_cor |  -.0782047    .006223   -12.57   0.000     -.090402   -.0660073
+    demo_sat |  -.0813417   .0126147    -6.45   0.000    -.1060671   -.0566163
+    goveff_p |  -.0346326   .0063961    -5.41   0.000    -.0471694   -.0220959
+    qual_bur |  -.0769034   .0063185   -12.17   0.000    -.0892879   -.0645188
+       _cons |   .0619101   .0131242     4.72   0.000      .036186    .0876341
+------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results\Results lli-.xls
+dir : seeout
+
+. reg lii egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur urban east_africa_only south
+> ern_africa_only north_africa_only   //Model 4
+
+      Source |       SS           df       MS      Number of obs   =    27,497
+-------------+----------------------------------   F(15, 27481)    =     98.03
+       Model |  1437.48447        15  95.8322979   Prob > F        =    0.0000
+    Residual |  26865.7177    27,481  .977610629   R-squared       =    0.0508
+-------------+----------------------------------   Adj R-squared   =    0.0503
+       Total |  28303.2022    27,496  1.02935708   Root MSE        =    .98874
+
+--------------------------------------------------------------------------------------
+                 lii |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------------+----------------------------------------------------------------
+               egrid |   -.000868    .016696    -0.05   0.959    -.0335931    .0318571
+              pwater |  -.0567914   .0160209    -3.54   0.000    -.0881933   -.0253896
+              sewage |   .0541326   .0170914     3.17   0.002     .0206326    .0876326
+                road |  -.0646203   .0149594    -4.32   0.000    -.0939415   -.0352991
+                  ps |   .0570375   .0137676     4.14   0.000     .0300523    .0840226
+                army |   .0994813    .020062     4.96   0.000     .0601587    .1388038
+            rule_law |  -.0770374   .0063385   -12.15   0.000    -.0894612   -.0646135
+         control_cor |  -.0738659   .0062516   -11.82   0.000    -.0861194   -.0616124
+            demo_sat |  -.0801033    .012566    -6.37   0.000    -.1047334   -.0554733
+            goveff_p |  -.0514386   .0065292    -7.88   0.000    -.0642362   -.0386409
+            qual_bur |  -.0846745   .0064496   -13.13   0.000    -.0973161   -.0720329
+               urban |   .0992615   .0161639     6.14   0.000     .0675795    .1309435
+    east_africa_only |   .2280084   .0205976    11.07   0.000     .1876361    .2683808
+southern_africa_only |   .1754184   .0145702    12.04   0.000     .1468601    .2039768
+   north_africa_only |  -.0923001   .0211721    -4.36   0.000    -.1337986   -.0508016
+               _cons |  -.0487541   .0153852    -3.17   0.002    -.0789098   -.0185984
+--------------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.0
+> 5) symbol(***, **, *) append
+\\Client\C$\ISF_110\Lab 8\Results\Results lli-.xls
+dir : seeout
+
+. 
+end of do-file
+

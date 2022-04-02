@@ -1,0 +1,205 @@
+------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\ISF_110\Lab 7\Log\ SP50
+> 0 -10 Mar 2022.log
+  log type:  text
+ opened on:  10 Mar 2022, 13:19:27
+
+. 
+. 
+. 
+. // A common perception about COVID-19 is that 
+> Warm Climate is more resistant to the coronavi
+> rus outbreak and we need to verify this using 
+> Hypothesis Testing. So, what will our null and
+>  alternate hypothesis be?
+. 
+. // Null Hypothesis: Warm climates have no impa
+> ct on the spread of coronavirus. Any increase 
+> is due to chance. 
+. 
+. // Alternate Hypothesis: 
+. 
+. 
+. use "\\Client\C$\ISF_110\Lab 7\Data\phdi_covid
+> _temp_vita.dta"
+
+. gen temp_cat = 0 if temperature < 24
+(48,128 missing values generated)
+
+. replace temp_cat = 1 if temperature >= 24
+(48,128 real changes made)
+
+. 
+. tab temp_cat
+
+   temp_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     64,956       57.44       57.44
+          1 |     48,128       42.56      100.00
+------------+-----------------------------------
+      Total |    113,084      100.00
+
+. 
+. ztest total_cases, by(temp_cat)
+
+Two-sample z test
+------------------------------------------------
+> ------------------------------
+   Group |     Obs        Mean    Std. Err.   St
+> d. Dev.                                       
+>           [95% Conf. Interval]
+---------+--------------------------------------
+> ------------------------------
+       0 |  64,333    826830.8    .0039426      
+>      1                                        
+>           826830.8                            
+>                       826830.8
+       1 |  47,842    578286.6    .0045719      
+>      1                                        
+>           578286.6                            
+>                       578286.6
+---------+--------------------------------------
+> ------------------------------
+    diff |            248544.2    .0060371      
+>           248544.2                            
+>                       248544.2
+------------------------------------------------
+> ------------------------------
+    diff = mean(0) - mean(1)                    
+>                   z =  4.1e+07
+Ho: diff = 0
+
+    Ha: diff < 0                 Ha: diff != 0  
+>                Ha: diff > 0
+ Pr(Z < z) = 1.0000         Pr(|Z| > |z|) = 0.00
+> 00          Pr(Z > z) = 0.0000
+
+. 
+. 
+. 
+. 
+. 
+. // This t-test is designed to compare the mean
+> s of the same variable between two groups. Usi
+> ng the “high school and beyond” dataset, we wi
+> ll test the following hypothesis: 
+. 
+. // “Female high school students do significant
+> ly better than male high school students on wr
+> iting tests.”
+. 
+. // In the dataset, the students were randomly 
+> selected from a larger population of high scho
+> ol students. Although the sample size is large
+> r than 30, we assume that variances for the tw
+> o populations are the same. Perform the t-test
+>  using the following command and interpret you
+> r results: 
+. 
+. 
+. 
+. 
+. use https://stats.idre.ucla.edu/stat/stata/not
+> es/hsb2, clear
+(highschool and beyond (200 cases))
+
+. ttest write, by(female)
+
+Two-sample t test with equal variances
+------------------------------------------------
+> ------------------------------
+   Group |     Obs        Mean    Std. Err.   St
+> d. Dev.                                       
+>           [95% Conf. Interval]
+---------+--------------------------------------
+> ------------------------------
+    male |      91    50.12088    1.080274    10
+> .30516                                        
+>           47.97473                            
+>                       52.26703
+  female |     109    54.99083    .7790686    8.
+> 133715                                        
+>           53.44658                            
+>                       56.53507
+---------+--------------------------------------
+> ------------------------------
+combined |     200      52.775    .6702372    9.
+> 478586                                        
+>           51.45332                            
+>                       54.09668
+---------+--------------------------------------
+> ------------------------------
+    diff |           -4.869947    1.304191      
+>          -7.441835                            
+>                      -2.298059
+------------------------------------------------
+> ------------------------------
+    diff = mean(male) - mean(female)            
+>                   t =  -3.7341
+Ho: diff = 0                                    
+>  degrees of freedom =      198
+
+    Ha: diff < 0                 Ha: diff != 0  
+>                Ha: diff > 0
+ Pr(T < t) = 0.0001         Pr(|T| > |t|) = 0.00
+> 02          Pr(T > t) = 0.9999
+
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. // The following data (The Journal of Advertis
+> ing, 1983, p. 34-42) are from a cross-sectiona
+> l study that involved soliciting opinions on a
+> nti-smoking advertisements. Each subject was a
+> sked whether they smoked and their reaction (o
+> n a five-point ordinal scale) to the ad. The d
+> ata are summarized as a two-way table of count
+> s, given below:
+. 
+. 
+. // Is there any statistically significant corr
+> elation between the respondents being a smoker
+>  and their opinions about the anti-smoking ads
+> ? To answer this question, perform a chi-squar
+> e test using the following command:
+. 
+. tabi 8 14 35 21  19 \ 31 42 78 61 69, chi2
+
+           |          col
+       row |         1          2 |     Total
+-----------+----------------------+----------
+         1 |         8         14 |        97 
+         2 |        31         42 |       281 
+-----------+----------------------+----------
+     Total |        39         56 |       378 
+
+
+           |          col
+       row |         3          4 |     Total
+-----------+----------------------+----------
+         1 |        35         21 |        97 
+         2 |        78         61 |       281 
+-----------+----------------------+----------
+     Total |       113         82 |       378 
+
+
+           |    col
+       row |         5 |     Total
+-----------+-----------+----------
+         1 |        19 |        97 
+         2 |        69 |       281 
+-----------+-----------+----------
+     Total |        88 |       378 
+
+          Pearson chi2(4) =   2.9907   Pr = 0.55
+> 9
+
+. 
+end of do-file
+

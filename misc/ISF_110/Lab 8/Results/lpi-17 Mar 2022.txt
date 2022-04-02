@@ -1,0 +1,18 @@
+	(1)
+VARIABLES	lpi
+	
+egrid	-0.357***
+	(0.011)
+pwater	-0.084***
+	(0.011)
+sewage	-0.222***
+	(0.011)
+road	-0.203***
+	(0.010)
+Constant	0.427***
+	(0.007)
+	
+Observations	50,985
+R-squared	0.107
+Standard errors in parentheses	
+*** p<0.001, ** p<0.01, * p<0.05	
