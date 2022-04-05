@@ -2,7 +2,7 @@
 *********CLASS PROJECT ISF 110*************
 *************By KC HARRIS *****************
 *******************************************
-// clear alls
+clear alls
 set more off
 capt log close
 local c_date = c(current_date)
@@ -10,15 +10,15 @@ local study "BPDSTOPS"
 
 log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
-use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops"
+// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops"
 
 sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
 
 cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
 ls
 
-
-replace stop = 1 if raceperceivedpriortostop=="True"
+gen stop = 1 if raceperceivedpriortostop=="True"
+// replace stop = 1 if raceperceivedpriortostop=="True"
 replace stop = 0 if raceperceivedpriortostop == "False"
 lab def stop 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
 lab value stop stop
@@ -101,9 +101,20 @@ lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "
 lab value resultofstoptype resultofstoptype
 
 
+gen reason = 1 if reasonforstop=="Traffic Violation"
+replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
+replace reason = 2 if reasonforstop=="Reasonable suspicion"
+replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
+replace reason = 5 if !inlist(reason,1,2,3,4)
+lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Other" 
+lab value reason reason
 
 
-
+gen arrest = 1 if resultofstop=="Custodial Arrest Without Warrant" 
+replace arrest = 1 if strpos(resultofstop, "Arrest")>0
+replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" | resultofstoptype!="Custodial Arrest With Warrant"
+lab def arrest 1 "Arrest" 2 "Other" 
+lab value arrest arrest
 
 
 
