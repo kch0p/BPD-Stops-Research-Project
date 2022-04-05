@@ -2,27 +2,28 @@
 *********CLASS PROJECT ISF 110*************
 *************By KC HARRIS *****************
 *******************************************
-clear alls
+clear all
 set more off
 capt log close
 local c_date = c(current_date)
 local study "BPDSTOPS"
 
-log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+
+use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\all_stops_prof.dta", clear
 
 // use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops"
 
-sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
-
-cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
-ls
+// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+//
+// cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+// ls
 
 gen stop = 1 if raceperceivedpriortostop=="True"
 // replace stop = 1 if raceperceivedpriortostop=="True"
 replace stop = 0 if raceperceivedpriortostop == "False"
 lab def stop 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
 lab value stop stop
-
 
 gen race = 1 if perceivedraceorethnicity=="White"
 replace race = 2 if perceivedraceorethnicity=="Black/African American"
@@ -31,7 +32,6 @@ replace race = 4 if perceivedraceorethnicity=="Asian"
 replace race = 5 if !inlist(race,1,2,3,4)
 lab def race 1 "White" 2 "Black/African American" 3 "Hispanic/Latino" 4 "Asian" 5 "Other" 
 lab value race race
-
 
 gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
 replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
@@ -100,7 +100,6 @@ replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Non
 lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6 "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning"
 lab value resultofstoptype resultofstoptype
 
-
 gen reason = 1 if reasonforstop=="Traffic Violation"
 replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
 replace reason = 2 if reasonforstop=="Reasonable suspicion"
@@ -110,18 +109,19 @@ lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Con
 lab value reason reason
 
 
-gen arrest = 1 if resultofstop=="Custodial Arrest Without Warrant" 
-replace arrest = 1 if strpos(resultofstop, "Arrest")>0
-replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" | resultofstoptype!="Custodial Arrest With Warrant"
-lab def arrest 1 "Arrest" 2 "Other" 
-lab value arrest arrest
+gen arrest = 1 if inlist(resultofstoptype,3,4)
+replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+
+// replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" & resultofstoptype!="Custodial Arrest With Warrant"
+// lab def arrest 1 "Arrest" 2 "Other" 
+// lab value arrest arrest
 
 
 
 drop if durationofstop >270
 
 
-
+exit, clear 
 
 
 
