@@ -1,0 +1,628 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log BPDSTOPS - 6 Apr 2022.log
+  log type:  text
+ opened on:   6 Apr 2022, 18:47:39
+
+. 
+. // use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\all_stops_prof.dta", clear
+. 
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+
+. 
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. 
+. cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+
+. ls
+  <dir>   4/06/22 18:47  .                 
+  <dir>   4/06/22 18:47  ..                
+   0.2k   3/15/22 18:57  2015-2020.url     
+   0.2k   3/15/22 18:57  2020-Present.url  
+  15.2M   4/01/22 18:37  All_Stops (peter.txt
+  14.4M   3/16/22 20:16  All_Stops.csv     
+  15.2M   4/01/22 18:39  All_Stops_with_tracts.csv
+  14.4M   3/18/22  1:38  All_Stops_WOW.csv 
+  15.1M   3/18/22  3:08  All_Stops_WOW2.csv
+  59.4M   3/18/22  4:06  All_Stops_WOW2.dta
+  73.4k   3/16/22 23:13  Berkeley PD - Police Beats 2015-2016.geojson
+8511.8k   3/15/22 18:56  Berkeley_PD_-_Stop_Data__Jan_26__2015_to_Sep_30__2020_.csv
+3792.4k   4/01/22 21:36  Berkeley_PD_-_Stop_Data__October_1__2020_-_Present.csv
+  <dir>   3/18/22  4:40  Census Tract Polygons 2010
+ 218.2k   3/17/22 16:08  Census Tract Polygons 2010.geojson
+  54.5k   3/18/22  3:53  Census_Tract_Polygons_2010.zip
+ 100.8k   3/26/22 16:43  Doc Submission (Assignment 3 KC HARRIS) .pdf
+3865.8k   4/01/22 19:45  formatted_allstops.csv
+3188.2k   4/05/22 11:45  Full Berkeley PD Workbook.xlsx
+  77.3k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dbf
+  18.0k   3/18/22  5:14  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+   0.2k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.prj
+  84.1k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shp
+   0.4k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shx
+ 149.1k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp.dta
+   0.2k   3/16/22 23:17  Link to GeoJson of Police Beats.url
+  15.2M   4/01/22 18:30  peter test.txt    
+   4.3k   3/17/22 19:51  State of California Department of Justice - OpenJustice.csv
+   0.2k   3/17/22 16:27  Summary-Crime-reported-by-the-Berkeley-Police-Department-2010-20203_17_2022.csv
+8698.7k   4/06/22 18:07  formatted_allstops.dta
+
+. 
+. gen stop = 1 if raceperceivedpriortostop=="True"
+(4,649 missing values generated)
+
+. // replace stop = 1 if raceperceivedpriortostop=="True"
+. replace stop = 0 if raceperceivedpriortostop == "False"
+(4,649 real changes made)
+
+. lab def stop 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
+
+. lab value stop stop
+
+. 
+. gen race = 1 if perceivedraceorethnicity=="White"
+(5,234 missing values generated)
+
+. replace race = 2 if perceivedraceorethnicity=="Black/African American"
+(2,892 real changes made)
+
+. replace race = 3 if perceivedraceorethnicity=="Hispanic/Latino"
+(1,190 real changes made)
+
+. replace race = 4 if perceivedraceorethnicity=="Asian"
+(517 real changes made)
+
+. replace race = 5 if !inlist(race,1,2,3,4)
+(635 real changes made)
+
+. lab def race 1 "White" 2 "Black/African American" 3 "Hispanic/Latino" 4 "Asian" 5 "Other" 
+
+. lab value race race
+
+. 
+. gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
+(6,185 missing values generated)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
+(0 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Contacted parent/legal guardian or other person responsible for the minor"
+(3 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|In-field cite and release"
+(5 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Warning (verbal or written)"
+(16 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor"
+(2 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Noncriminal transport or caretaking transport (includ
+> ing transport by officer / ambulance or other agency)|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant"
+(212 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(2 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaki
+> ng transport (including transport by officer / ambulance or other agency)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Citation for infraction"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant"
+(96 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Warning (verbal or written)"
+(2 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant"
+(734 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(5 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Contacted parent/legal guardian or other person responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant"
+(43 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other pers
+> on responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or o
+> ther agency)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
+(73 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(3 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)"
+(5 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(0 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Warning (verbal or written)"
+(5 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release" 
+(275 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(4 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Citation for infraction" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest without warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Field interview card completed" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other 
+> agency)" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other a
+> gency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 7 if resultofstop== "No action" 
+(1,324 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+(69 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)" 
+(22 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Citation for infrac
+> tion" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(371 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for infraction" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / am
+> bulance or other agency)" 
+(6 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal or written)" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)" 
+(2,800 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(5 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction" 
+(6 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest without warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Field interview card completed" 
+(45 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or othe
+> r agency)"
+(3 real changes made)
+
+. lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6
+>  "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning"
+
+. lab value resultofstoptype resultofstoptype
+
+. 
+. gen reason = 1 if reasonforstop=="Traffic Violation"
+(3,852 missing values generated)
+
+. replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
+(203 real changes made)
+
+. replace reason = 2 if reasonforstop=="Reasonable suspicion"
+(3,521 real changes made)
+
+. replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
+(45 real changes made)
+
+. replace reason = 5 if !inlist(reason,1,2,3,4)
+(83 real changes made)
+
+. lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Other" 
+
+. lab value reason reason
+
+. 
+. 
+. gen arrest = 1 if inlist(resultofstoptype,3,4)
+(6,986 missing values generated)
+
+. replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+(6,983 real changes made)
+
+. lab def arrest 1 "Arrested" 0 "Not Arrested"
+
+. lab value arrest arrest
+
+. 
+. 
+. gen black = 1 if race == 2
+(5,196 missing values generated)
+
+. replace black = 0 if race !=2
+(5,196 real changes made)
+
+. lab def reason 1 "Black/African American" 0 "Not Black/African American" 
+label reason already defined
+r(110);
+
+end of do-file
+
+r(110);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\19\STD1f98_000000.tmp"
+
+. lab def black 1 "Black/African American" 0 "Not Black/African American" 
+
+. lab value black black
+
+. 
+end of do-file
+
+. summ durationofstop
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+durationof~p |      8,088    16.61301    17.63129          1        270
+
+. tab durationofstop , sort
+
+Duration of |
+       Stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         10 |      1,552       19.19       19.19
+          5 |      1,099       13.59       32.78
+         15 |        757        9.36       42.14
+         20 |        676        8.36       50.49
+         30 |        562        6.95       57.44
+          8 |        417        5.16       62.60
+          7 |        322        3.98       66.58
+          3 |        320        3.96       70.54
+          4 |        251        3.10       73.64
+         60 |        239        2.95       76.59
+          6 |        235        2.91       79.50
+          2 |        186        2.30       81.80
+         25 |        183        2.26       84.06
+         40 |        148        1.83       85.89
+         45 |        131        1.62       87.51
+          9 |        109        1.35       88.86
+         12 |        109        1.35       90.21
+          1 |         87        1.08       91.28
+         50 |         66        0.82       92.10
+         35 |         58        0.72       92.82
+         13 |         47        0.58       93.40
+         11 |         45        0.56       93.95
+         14 |         40        0.49       94.45
+         18 |         32        0.40       94.84
+         16 |         31        0.38       95.23
+         17 |         30        0.37       95.60
+        120 |         29        0.36       95.96
+         90 |         23        0.28       96.24
+         23 |         20        0.25       96.49
+         24 |         20        0.25       96.74
+         22 |         19        0.23       96.97
+         70 |         18        0.22       97.19
+         19 |         17        0.21       97.40
+         21 |         16        0.20       97.60
+         28 |         16        0.20       97.80
+         65 |         12        0.15       97.95
+         42 |          9        0.11       98.06
+         55 |          9        0.11       98.17
+         75 |          9        0.11       98.28
+         26 |          8        0.10       98.38
+         27 |          7        0.09       98.47
+         34 |          7        0.09       98.55
+         37 |          7        0.09       98.64
+         38 |          7        0.09       98.73
+         80 |          6        0.07       98.80
+         29 |          5        0.06       98.86
+         36 |          5        0.06       98.92
+         31 |          4        0.05       98.97
+         32 |          4        0.05       99.02
+         33 |          4        0.05       99.07
+         44 |          4        0.05       99.12
+         57 |          4        0.05       99.17
+        110 |          4        0.05       99.22
+        150 |          4        0.05       99.27
+         53 |          3        0.04       99.31
+         61 |          3        0.04       99.34
+         63 |          3        0.04       99.38
+        180 |          3        0.04       99.42
+         39 |          2        0.02       99.44
+         41 |          2        0.02       99.47
+         43 |          2        0.02       99.49
+         51 |          2        0.02       99.52
+         52 |          2        0.02       99.54
+         62 |          2        0.02       99.57
+         64 |          2        0.02       99.59
+         69 |          2        0.02       99.62
+         81 |          2        0.02       99.64
+        129 |          2        0.02       99.67
+        130 |          2        0.02       99.69
+        200 |          2        0.02       99.72
+         46 |          1        0.01       99.73
+         47 |          1        0.01       99.74
+         48 |          1        0.01       99.75
+         54 |          1        0.01       99.77
+         56 |          1        0.01       99.78
+         58 |          1        0.01       99.79
+         66 |          1        0.01       99.80
+         68 |          1        0.01       99.81
+         72 |          1        0.01       99.83
+         73 |          1        0.01       99.84
+         76 |          1        0.01       99.85
+         77 |          1        0.01       99.86
+         78 |          1        0.01       99.88
+         85 |          1        0.01       99.89
+         87 |          1        0.01       99.90
+         93 |          1        0.01       99.91
+         98 |          1        0.01       99.93
+        100 |          1        0.01       99.94
+        115 |          1        0.01       99.95
+        140 |          1        0.01       99.96
+        160 |          1        0.01       99.98
+        240 |          1        0.01       99.99
+        270 |          1        0.01      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. tab durationofstop , sort 'Stop'
+option ' not allowed
+r(198);
+
+. tab durationofstop
+
+Duration of |
+       Stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         87        1.08        1.08
+          2 |        186        2.30        3.38
+          3 |        320        3.96        7.33
+          4 |        251        3.10       10.44
+          5 |      1,099       13.59       24.02
+          6 |        235        2.91       26.93
+          7 |        322        3.98       30.91
+          8 |        417        5.16       36.07
+          9 |        109        1.35       37.41
+         10 |      1,552       19.19       56.60
+         11 |         45        0.56       57.16
+         12 |        109        1.35       58.51
+         13 |         47        0.58       59.09
+         14 |         40        0.49       59.58
+         15 |        757        9.36       68.94
+         16 |         31        0.38       69.32
+         17 |         30        0.37       69.70
+         18 |         32        0.40       70.09
+         19 |         17        0.21       70.30
+         20 |        676        8.36       78.66
+         21 |         16        0.20       78.86
+         22 |         19        0.23       79.09
+         23 |         20        0.25       79.34
+         24 |         20        0.25       79.59
+         25 |        183        2.26       81.85
+         26 |          8        0.10       81.95
+         27 |          7        0.09       82.04
+         28 |         16        0.20       82.23
+         29 |          5        0.06       82.29
+         30 |        562        6.95       89.24
+         31 |          4        0.05       89.29
+         32 |          4        0.05       89.34
+         33 |          4        0.05       89.39
+         34 |          7        0.09       89.48
+         35 |         58        0.72       90.20
+         36 |          5        0.06       90.26
+         37 |          7        0.09       90.34
+         38 |          7        0.09       90.43
+         39 |          2        0.02       90.45
+         40 |        148        1.83       92.28
+         41 |          2        0.02       92.31
+         42 |          9        0.11       92.42
+         43 |          2        0.02       92.45
+         44 |          4        0.05       92.50
+         45 |        131        1.62       94.11
+         46 |          1        0.01       94.13
+         47 |          1        0.01       94.14
+         48 |          1        0.01       94.15
+         50 |         66        0.82       94.97
+         51 |          2        0.02       94.99
+         52 |          2        0.02       95.02
+         53 |          3        0.04       95.05
+         54 |          1        0.01       95.07
+         55 |          9        0.11       95.18
+         56 |          1        0.01       95.19
+         57 |          4        0.05       95.24
+         58 |          1        0.01       95.25
+         60 |        239        2.95       98.21
+         61 |          3        0.04       98.24
+         62 |          2        0.02       98.27
+         63 |          3        0.04       98.31
+         64 |          2        0.02       98.33
+         65 |         12        0.15       98.48
+         66 |          1        0.01       98.49
+         68 |          1        0.01       98.50
+         69 |          2        0.02       98.53
+         70 |         18        0.22       98.75
+         72 |          1        0.01       98.76
+         73 |          1        0.01       98.78
+         75 |          9        0.11       98.89
+         76 |          1        0.01       98.90
+         77 |          1        0.01       98.91
+         78 |          1        0.01       98.92
+         80 |          6        0.07       99.00
+         81 |          2        0.02       99.02
+         85 |          1        0.01       99.04
+         87 |          1        0.01       99.05
+         90 |         23        0.28       99.33
+         93 |          1        0.01       99.34
+         98 |          1        0.01       99.36
+        100 |          1        0.01       99.37
+        110 |          4        0.05       99.42
+        115 |          1        0.01       99.43
+        120 |         29        0.36       99.79
+        129 |          2        0.02       99.81
+        130 |          2        0.02       99.84
+        140 |          1        0.01       99.85
+        150 |          4        0.05       99.90
+        160 |          1        0.01       99.91
+        180 |          3        0.04       99.95
+        200 |          2        0.02       99.98
+        240 |          1        0.01       99.99
+        270 |          1        0.01      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. summ durationofstop
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+durationof~p |      8,088    16.61301    17.63129          1        270
+
+. sum durationofstop , detail
+
+                      Duration of Stop
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            1              1
+ 5%            3              1
+10%            4              1       Obs               8,088
+25%            6              1       Sum of Wgt.       8,088
+
+50%           10                      Mean           16.61301
+                        Largest       Std. Dev.      17.63129
+75%           20            200
+90%           35            200       Variance       310.8625
+95%           52            240       Skewness       3.527707
+99%           81            270       Kurtosis       25.49851
+
+. sum distancefromcal , detail
+
+                      Distance from Cal
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%      .271442       .0607034
+ 5%      .422741       .0930547
+10%     .5308525       .0932231       Obs               8,088
+25%     .7572905        .093796       Sum of Wgt.       8,088
+
+50%     1.311348                      Mean           1.374554
+                        Largest       Std. Dev.      .6966917
+75%     1.957968       3.347969
+90%     2.293726       3.349791       Variance       .4853793
+95%     2.499713       3.349791       Skewness       .3018102
+99%     3.012692       3.354947       Kurtosis       2.085582
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\19\STD1f98_000000.tmp"
+
+. gen far = 1 if distancefromcal >= 2
+(6,182 missing values generated)
+
+. replace far = 0 if distancefromcal < 2
+(6,182 real changes made)
+
+. lab def far 1 "Far from university" 0 "Not far from university" 
+
+. lab value far far
+
+. 
+end of do-file
+
+. tab far
+
+                    far |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+Not far from university |      6,182       76.43       76.43
+    Far from university |      1,906       23.57      100.00
+------------------------+-----------------------------------
+                  Total |      8,088      100.00
+

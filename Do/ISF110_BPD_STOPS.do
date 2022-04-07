@@ -8,16 +8,16 @@ capt log close
 local c_date = c(current_date)
 local study "BPDSTOPS"
 
-// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
-use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\all_stops_prof.dta", clear
+// use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\all_stops_prof.dta", clear
 
-// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops"
+use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
 
-// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
-//
-// cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
-// ls
+sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+ls
 
 gen stop = 1 if raceperceivedpriortostop=="True"
 // replace stop = 1 if raceperceivedpriortostop=="True"
@@ -111,6 +111,25 @@ lab value reason reason
 
 gen arrest = 1 if inlist(resultofstoptype,3,4)
 replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+lab def arrest 1 "Arrested" 0 "Not Arrested"
+lab value arrest arrest
+
+
+gen black = 1 if race == 2
+replace black = 0 if race !=2
+lab def black 1 "Black/African American" 0 "Not Black/African American" 
+lab value black black
+
+
+gen longstop = 1 if durationofstop >= 20
+replace longstop = 0 if durationofstop < 20
+lab def longstop 1 "Longer than average stop" 0 "Normal/shorter than average stop" 
+lab value longstop longstop
+
+gen far = 1 if distancefromcal >= 2
+replace far = 0 if distancefromcal < 2
+lab def far 1 "Far from university" 0 "Not far from university" 
+lab value far far
 
 // replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" & resultofstoptype!="Custodial Arrest With Warrant"
 // lab def arrest 1 "Arrest" 2 "Other" 
@@ -136,95 +155,95 @@ exit, clear
 
 
 //https://www.stata.com/manuals/spintro4.pdf#spIntro4
-ssc install shp2dta, replace
-// ssc install spshape2dta, replace
-
-unzipfile Census_Tract_Polygons_2010.zip
-
-spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f replace
-
-use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
-describe
-list in 1/5
-
-
-// generate long fips = real(ID)
-// // bysort fips: assert _N==1
-// assert fips != .
-
-
-// gen pop = totalpop  //population for each tract
-
-// ssc install spmap, replace
-
-spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Blues)  
-// spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Reds)
-
-set more off
-clear all
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//EVERYTHING AFTER THIS IS UNDER DEVELOPMENT. GRAPHS
-use usdata, clear
-ren subreg_id subreg
-encode subreg, gen(subreg_id)
-
-keep subreg_id unhappy housing_price unemployment
-
-merge 1:1 subreg_id using usdb.dta
-drop _merge
-
-merge 1:1 subreg_id using uslabelcoord.dta
-drop _merge
-
-
-spmap unhappy using uscoord.dta, id(subreg_id) ///
-label(label(subreg_id) xcoord(xcoord) ycoord(ycoord)) ///
-fcolor(Reds) legtitle("Fraction of respondents who were unhappy") ///
-title("Figure 3: Unhappiness by Census Division, 2012")
-
-
-
-
-
-gen Y = housing_price
-format Y %4.1f 
-
-spmap unhappy using uscoord.dta, id(subreg_id)  ///
-point(x(xcoord) y(ycoord) proportional(Y) fcolor(red) ocolor(white) size(*3.5))  ///
-label(label(subreg_id) xcoord(xcoord) ycoord(ycoord))  /// 
-fcolor(Whites) legtitle("Fraction of respondents who were unhappy")  ///
-title("Figure 3: Housing Price and Unhappiness by Census Division, 2012")
+// ssc install shp2dta, replace
+// // ssc install spshape2dta, replace
+//
+// unzipfile Census_Tract_Polygons_2010.zip
+//
+// spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f replace
+//
+// use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+// describe
+// list in 1/5
+//
+//
+// // generate long fips = real(ID)
+// // // bysort fips: assert _N==1
+// // assert fips != .
+//
+//
+// // gen pop = totalpop  //population for each tract
+//
+// // ssc install spmap, replace
+//
+// spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Blues)  
+// // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Reds)
+//
+// set more off
+// clear all
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// //EVERYTHING AFTER THIS IS UNDER DEVELOPMENT. GRAPHS
+// use usdata, clear
+// ren subreg_id subreg
+// encode subreg, gen(subreg_id)
+//
+// keep subreg_id unhappy housing_price unemployment
+//
+// merge 1:1 subreg_id using usdb.dta
+// drop _merge
+//
+// merge 1:1 subreg_id using uslabelcoord.dta
+// drop _merge
+//
+//
+// spmap unhappy using uscoord.dta, id(subreg_id) ///
+// label(label(subreg_id) xcoord(xcoord) ycoord(ycoord)) ///
+// fcolor(Reds) legtitle("Fraction of respondents who were unhappy") ///
+// title("Figure 3: Unhappiness by Census Division, 2012")
+//
+//
+//
+//
+//
+// gen Y = housing_price
+// format Y %4.1f 
+//
+// spmap unhappy using uscoord.dta, id(subreg_id)  ///
+// point(x(xcoord) y(ycoord) proportional(Y) fcolor(red) ocolor(white) size(*3.5))  ///
+// label(label(subreg_id) xcoord(xcoord) ycoord(ycoord))  /// 
+// fcolor(Whites) legtitle("Fraction of respondents who were unhappy")  ///
+// title("Figure 3: Housing Price and Unhappiness by Census Division, 2012")
 
 
 
