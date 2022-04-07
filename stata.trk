@@ -1,4 +1,4 @@
-* 00000002
+* 00000003
 *! version 1.0.0
 * Do not erase or edit this file
 * It is used by Stata to track the ado and help
@@ -71,4 +71,32 @@ f s\spmap_point.ado
 f s\spmap_polygon.ado
 f s\spmap_psl.ado
 f s\spmap_scalebar.ado
+e
+S http://fmwww.bc.edu/RePEc/bocode/m
+N marginscontplot2.pkg
+D  6 Apr 2022
+U 3
+d 'MARGINSCONTPLOT2': module to graph margins for continuous predictors
+d 
+d     marginscontplot2 provides a graph of the marginal effect of a
+d continuous predictor on the response   variable in the most
+d recently fitted regression model. See Royston (Stata Journal,
+d 2013) for details and examples.    This routine is an extension
+d of marginscontplot.
+d 
+d KW: marginal effects
+d KW: graphics
+d KW: marginscontplot
+d 
+d Requires: Stata version 12.1
+d 
+d Distribution-Date: 20180104
+d 
+d Author: Patrick Royston, University College London
+d Support: email  j.royston@@ucl.ac.uk
+d 
+f m\marginscontplot2.ado
+f m\marginscontplot2.sthlp
+f m\mcp2.ado
+f m\mcp2.sthlp
 e

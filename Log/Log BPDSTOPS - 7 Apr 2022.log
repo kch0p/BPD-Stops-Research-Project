@@ -1,0 +1,609 @@
+-------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log BPDSTOPS - 7 Apr 2022.log
+  log type:  text
+ opened on:   7 Apr 2022, 16:44:09
+
+. 
+. // use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\all_stops_prof.dta", clear
+. 
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+
+. 
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. 
+. cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+
+. ls
+  <dir>   4/07/22 16:44  .                 
+  <dir>   4/07/22 16:44  ..                
+   0.2k   3/15/22 18:57  2015-2020.url     
+   0.2k   3/15/22 18:57  2020-Present.url  
+  15.2M   4/01/22 18:37  All_Stops (peter.txt
+  14.4M   3/16/22 20:16  All_Stops.csv     
+  15.2M   4/01/22 18:39  All_Stops_with_tracts.csv
+  14.4M   3/18/22  1:38  All_Stops_WOW.csv 
+  15.1M   3/18/22  3:08  All_Stops_WOW2.csv
+  59.4M   3/18/22  4:06  All_Stops_WOW2.dta
+  73.4k   3/16/22 23:13  Berkeley PD - Police Beats 2015-2016.geojson
+8511.8k   3/15/22 18:56  Berkeley_PD_-_Stop_Data__Jan_26__2015_to_Sep_30__2020_.csv
+3792.4k   4/01/22 21:36  Berkeley_PD_-_Stop_Data__October_1__2020_-_Present.csv
+  <dir>   3/18/22  4:40  Census Tract Polygons 2010
+ 218.2k   3/17/22 16:08  Census Tract Polygons 2010.geojson
+  54.5k   3/18/22  3:53  Census_Tract_Polygons_2010.zip
+ 100.8k   3/26/22 16:43  Doc Submission (Assignment 3 KC HARRIS) .pdf
+3865.8k   4/01/22 19:45  formatted_allstops.csv
+3188.2k   4/05/22 11:45  Full Berkeley PD Workbook.xlsx
+  77.3k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dbf
+  18.0k   3/18/22  5:14  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+   0.2k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.prj
+  84.1k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shp
+   0.4k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shx
+ 149.1k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp.dta
+   0.2k   3/16/22 23:17  Link to GeoJson of Police Beats.url
+  15.2M   4/01/22 18:30  peter test.txt    
+   4.3k   3/17/22 19:51  State of California Department of Justice - OpenJustice.csv
+   0.2k   3/17/22 16:27  Summary-Crime-reported-by-the-Berkeley-Police-Department-2010-20203_17_2022.csv
+   1.0k   4/07/22 13:53  mcp2_example.do   
+8731.5k   4/07/22 16:15  formatted_allstops.dta
+
+. 
+. gen racepercieved = 1 if raceperceivedpriortostop=="True"
+(4,649 missing values generated)
+
+. // replace stop = 1 if raceperceivedpriortostop=="True"
+. replace racepercieved = 0 if raceperceivedpriortostop == "False"
+(4,649 real changes made)
+
+. lab def racepercieved 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
+
+. lab value racepercieved racepercieved
+
+. 
+. gen race = 1
+
+. replace race = 2 if perceivedraceorethnicity=="White"
+(2,854 real changes made)
+
+. replace race = 3 if perceivedraceorethnicity=="Black/African American"
+(2,892 real changes made)
+
+. replace race = 4 if perceivedraceorethnicity=="Hispanic/Latino"
+(1,190 real changes made)
+
+. replace race = 5 if perceivedraceorethnicity=="Asian"
+(517 real changes made)
+
+. replace race = 1 if !inlist(race,1,2,3,4,5)
+(0 real changes made)
+
+. lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
+
+. lab value race race
+
+. 
+. gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
+(6,185 missing values generated)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 55
+> 85.20)"
+(0 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Contacted parent/legal guardian or o
+> ther person responsible for the minor"
+(3 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|In-field cite and release"
+(5 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Warning (verbal or written)"
+(16 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible 
+> for the minor"
+(2 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible 
+> for the minor|Noncriminal transport or caretaking transport (including transport by officer / ambulance or 
+> other agency)|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible 
+> for the minor|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant"
+(212 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatri
+> c hold (W&I Code 5150 or 5585.20)"
+(2 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatri
+> c hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by off
+> icer / ambulance or other agency)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Citation fo
+> r infraction"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial a
+> rrest without warrant"
+(96 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial a
+> rrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Field inter
+> view card completed"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Warning (ve
+> rbal or written)"
+(2 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant"
+(734 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant| Psychiatric hold (W&I Code
+>  5150 or 5585.20)"
+(5 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Contacted parent/legal guar
+> dian or other person responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant t
+> o outstanding warrant"
+(43 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant t
+> o outstanding warrant|Contacted parent/legal guardian or other person responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or ca
+> retaking transport (including transport by officer / ambulance or other agency)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Custodial arrest without warrant|Field interview card comple
+> ted"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
+(73 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5
+> 150 or 5585.20)"
+(3 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or care
+> taking transport (including transport by officer / ambulance or other agency)"
+(5 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or care
+> taking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardi
+> an or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(0 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Warning (verbal or written)"
+(5 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release" 
+(275 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release| Psychiatric hold (W&I Code 5150
+>  or 5585.20)" 
+(4 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Citation for infraction" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest pursuant to out
+> standing warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest without warrant
+> " 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Field interview card completed" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Noncriminal transport or caretak
+> ing transport (including transport by officer / ambulance or other agency)" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release|Noncriminal transport or caretaki
+> ng transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 
+> or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 7 if resultofstop== "No action" 
+(1,324 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including tr
+> ansport by officer / ambulance or other agency)" 
+(69 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including tr
+> ansport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(22 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including tr
+> ansport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite 
+> and release" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including tr
+> ansport by officer / ambulance or other agency)|Citation for infraction" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including tr
+> ansport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible
+>  for the minor" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including tr
+> ansport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible
+>  for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(371 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for in
+> fraction" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arres
+> t pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arres
+> t without warrant" 
+(4 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview
+>  card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite a
+> nd release" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal tra
+> nsport or caretaking transport (including transport by officer / ambulance or other agency)" 
+(6 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal
+>  or written)" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)" 
+(2,800 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)| Psychiatric hold (W&I Code 51
+> 50 or 5585.20)" 
+(5 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction" 
+(6 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction|Field 
+> interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest pursuant to o
+> utstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest without warra
+> nt" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Field interview card completed
+> " 
+(45 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release|Fiel
+> d interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Noncriminal transport or caret
+> aking transport (including transport by officer / ambulance or other agency)"
+(3 real changes made)
+
+. lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warra
+> nt" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6 "In-Field Cite and Release" 7 "No Actio
+> n" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning"
+
+. lab value resultofstoptype resultofstoptype
+
+. 
+. gen reason = 1 if reasonforstop=="Traffic Violation"
+(3,852 missing values generated)
+
+. replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
+(203 real changes made)
+
+. replace reason = 2 if reasonforstop=="Reasonable suspicion"
+(3,521 real changes made)
+
+. replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
+(45 real changes made)
+
+. replace reason = 5 if !inlist(reason,1,2,3,4)
+(83 real changes made)
+
+. lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Other" 
+
+. lab value reason reason
+
+. 
+. 
+. gen arrest = 1 if inlist(resultofstoptype,3,4)
+(6,986 missing values generated)
+
+. replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+(6,983 real changes made)
+
+. lab def arrest 1 "Arrested" 0 "Not Arrested"
+
+. lab value arrest arrest
+
+. 
+. 
+. gen other = 1 if race == 1
+(7,453 missing values generated)
+
+. replace other = 0 if race !=1
+(7,453 real changes made)
+
+. lab def other 1 "Other " 0 "Not Other " 
+
+. lab value other other
+
+. 
+. 
+. gen white = 2 if race == 2
+(5,234 missing values generated)
+
+. replace white = 0 if race !=2
+(5,234 real changes made)
+
+. lab def white 1 "White" 0 "Not White" 
+
+. lab value white white
+
+. 
+. 
+. gen black = 1 if race == 3
+(5,196 missing values generated)
+
+. replace black = 0 if race !=3
+(5,196 real changes made)
+
+. lab def black 1 "Black/African American" 0 "Not Black/African American" 
+
+. lab value black black
+
+. 
+. 
+. gen hispanic = 1 if race == 4
+(6,898 missing values generated)
+
+. replace hispanic = 0 if race !=4
+(6,898 real changes made)
+
+. lab def hispanic 1 "Hispanic" 0 "Not Hispanic" 
+
+. lab value hispanic hispanic
+
+. 
+. 
+. gen asian = 1 if race == 5
+(7,571 missing values generated)
+
+. replace asian = 0 if race !=5
+(7,571 real changes made)
+
+. lab def asian 1 "Asian " 0 "Not Asian " 
+
+. lab value asian asian
+
+. 
+. 
+. gen longstop = 1 if durationofstop >= 20
+(5,686 missing values generated)
+
+. replace longstop = 0 if durationofstop < 20
+(5,686 real changes made)
+
+. lab def longstop 1 "Longer than average stop" 0 "Normal/shorter than average stop" 
+
+. lab value longstop longstop
+
+. 
+. gen far = 1 if distancefromcal >= 2
+(6,182 missing values generated)
+
+. replace far = 0 if distancefromcal < 2
+(6,182 real changes made)
+
+. lab def far 1 "Far from university" 0 "Not far from university" 
+
+. lab value far far
+
+. 
+. // replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" & resultofstoptype!="Custodial Ar
+> rest With Warrant"
+. // lab def arrest 1 "Arrest" 2 "Other" 
+. // lab value arrest arrest
+. 
+. 
+. 
+. drop if durationofstop >270
+(0 observations deleted)
+
+. 
+. 
+. 
+. // mcp2 perceivedage black
+. 
+. // logit arrest black distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+. 
+. logit arrest black perceivedage racepercieved distancefromcalsimple c.distancefromcalsimple#c.distancefromc
+> alsimple, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3066.9271  
+Iteration 2:   log likelihood =   -3059.82  
+Iteration 3:   log likelihood = -3059.8083  
+Iteration 4:   log likelihood = -3059.8083  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(5)        =     319.16
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3059.8083                     Pseudo R2         =     0.0496
+
+              _b_table():  3499  member _b_table::new() not found
+           _coef_table():     -  function returned error
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. tab race
+
+                  race |      Freq.     Percent        Cum.
+-----------------------+-----------------------------------
+                 Other |        635        7.85        7.85
+                 White |      2,854       35.29       43.14
+Black/African American |      2,892       35.76       78.89
+       Hispanic/Latino |      1,190       14.71       93.61
+                 Asian |        517        6.39      100.00
+-----------------------+-----------------------------------
+                 Total |      8,088      100.00
+
+. logit longstop racepercieved white black hispanic asian other distancefromcalsimple c.distancefromcalsimple
+> #c.distancefromcalsimple, or
+
+note: other omitted because of collinearity
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4731.4533  
+Iteration 2:   log likelihood =  -4728.088  
+Iteration 3:   log likelihood = -4728.0758  
+Iteration 4:   log likelihood = -4728.0758  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(7)        =     383.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4728.0758                     Pseudo R2         =     0.0390
+
+------------------------------------------------------------------------------------------
+                longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------------------+----------------------------------------------------------------
+           racepercieved |   2.099454   .1088461    14.31   0.000     1.896601    2.324004
+                   white |   1.223381   .0688174     3.58   0.000      1.09567    1.365976
+                   black |   2.195028   .2441515     7.07   0.000     1.765068    2.729723
+                hispanic |    1.90822   .2327176     5.30   0.000     1.502519    2.423467
+                   asian |   .7133031   .1175738    -2.05   0.040     .5163813    .9853211
+                   other |          1  (omitted)
+   distancefromcalsimple |    .914447   .1406877    -0.58   0.561     .6763963    1.236277
+                         |
+ c.distancefromcalsimple#|
+ c.distancefromcalsimple |   1.073666    .053798     1.42   0.156     .9732362     1.18446
+                         |
+                   _cons |   .1701021   .0249067   -12.10   0.000      .127666     .226644
+------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest racepercieved white black hispanic asian other distancefromcalsimple c.distancefromcalsimple#c
+> .distancefromcalsimple, or
+
+note: other omitted because of collinearity
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3053.5641  
+Iteration 2:   log likelihood = -3043.2545  
+Iteration 3:   log likelihood = -3043.1746  
+Iteration 4:   log likelihood = -3043.1746  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(7)        =     352.43
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3043.1746                     Pseudo R2         =     0.0547
+
+------------------------------------------------------------------------------------------
+                  arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------------------+----------------------------------------------------------------
+           racepercieved |   2.924036   .2074401    15.12   0.000     2.544461    3.360234
+                   white |   1.046232   .0777858     0.61   0.543     .9043626    1.210358
+                   black |     1.5389   .2253258     2.94   0.003     1.154988    2.050422
+                hispanic |    1.41107    .229661     2.12   0.034     1.025675    1.941276
+                   asian |   .4213823   .1072848    -3.39   0.001     .2558343     .694055
+                   other |          1  (omitted)
+   distancefromcalsimple |   .7612068   .1582573    -1.31   0.189     .5064484    1.144116
+                         |
+ c.distancefromcalsimple#|
+ c.distancefromcalsimple |   1.063089   .0739984     0.88   0.379     .9275129    1.218482
+                         |
+                   _cons |   .0906087   .0173939   -12.51   0.000     .0621967    .1319996
+------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3219.0646  
+Iteration 2:   log likelihood = -3219.0646  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.65
+                                                Prob > chi2       =     0.4198
+Log likelihood = -3219.0646                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |  -.0274695   .0341232    -0.81   0.421    -.0943498    .0394108
+       _cons |  -1.827215   .0400148   -45.66   0.000    -1.905643   -1.748788
+------------------------------------------------------------------------------
+
+. logit arrest white, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3219.0646  
+Iteration 2:   log likelihood = -3219.0646  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.65
+                                                Prob > chi2       =     0.4198
+Log likelihood = -3219.0646                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |   .9729044   .0331987    -0.81   0.421     .9099644    1.040198
+       _cons |   .1608609   .0064368   -45.66   0.000      .148727    .1739847
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+

@@ -626,3 +626,611 @@ Not far from university |      6,182       76.43       76.43
 ------------------------+-----------------------------------
                   Total |      8,088      100.00
 
+. logit stop race, or
+
+Iteration 0:   log likelihood = -5515.3231  
+Iteration 1:   log likelihood = -5380.8466  
+Iteration 2:   log likelihood = -5380.2137  
+Iteration 3:   log likelihood = -5380.2137  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =     270.22
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5380.2137                     Pseudo R2         =     0.0245
+
+------------------------------------------------------------------------------
+        stop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        race |    .723796    .014773   -15.84   0.000      .695413    .7533375
+       _cons |   1.463503   .0698961     7.97   0.000     1.332725    1.607113
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit stop black
+
+Iteration 0:   log likelihood = -5515.3231  
+Iteration 1:   log likelihood = -5498.0794  
+Iteration 2:   log likelihood = -5498.0777  
+Iteration 3:   log likelihood = -5498.0777  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      34.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5498.0777                     Pseudo R2         =     0.0031
+
+------------------------------------------------------------------------------
+        stop |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .2749455   .0467954     5.88   0.000     .1832282    .3666627
+       _cons |  -.4009765   .0283052   -14.17   0.000    -.4564536   -.3454994
+------------------------------------------------------------------------------
+
+. logit stop black, or
+
+Iteration 0:   log likelihood = -5515.3231  
+Iteration 1:   log likelihood = -5498.0794  
+Iteration 2:   log likelihood = -5498.0777  
+Iteration 3:   log likelihood = -5498.0777  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      34.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5498.0777                     Pseudo R2         =     0.0031
+
+------------------------------------------------------------------------------
+        stop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.316459   .0616042     5.88   0.000     1.201088    1.442911
+       _cons |   .6696658    .018955   -14.17   0.000     .6335264    .7078668
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\19\STD1f98_000000.tmp"
+
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. ssc install mcp2
+ssc install: "mcp2" not found at SSC, type search mcp2
+(To find all packages at SSC that start with m, type ssc describe m)
+r(661);
+
+end of do-file
+
+r(661);
+
+. search mcp2
+
+. search mcp2
+
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. 
+. ssc install mcp2
+ssc install: "mcp2" not found at SSC, type search mcp2
+(To find all packages at SSC that start with m, type ssc describe m)
+r(661);
+
+. mcp2 black
+
+. logit arrest black far
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3190.36  
+Iteration 2:   log likelihood = -3190.0379  
+Iteration 3:   log likelihood = -3190.0379  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      58.70
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3190.0379                     Pseudo R2         =     0.0091
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .3978715   .0658164     6.05   0.000     .2688738    .5268692
+         far |  -.3624174   .0833421    -4.35   0.000    -.5257649     -.19907
+       _cons |  -1.925857   .0461681   -41.71   0.000    -2.016345   -1.835369
+------------------------------------------------------------------------------
+
+. logit arrest black far, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3190.36  
+Iteration 2:   log likelihood = -3190.0379  
+Iteration 3:   log likelihood = -3190.0379  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      58.70
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3190.0379                     Pseudo R2         =     0.0091
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.488653   .0979777     6.05   0.000      1.30849    1.693622
+         far |   .6959918   .0580054    -4.35   0.000     .5911031    .8194925
+       _cons |   .1457508    .006729   -41.71   0.000     .1331412    .1595546
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. mcp2 stop black
+neither stop nor i.stop are in the model
+r(111);
+
+. mcpt black stop
+command mcpt is unrecognized
+r(199);
+
+. mcpt2 black stop
+command mcpt2 is unrecognized
+r(199);
+
+. mcp2 black stop
+neither stop nor i.stop are in the model
+r(111);
+
+. logit stop black
+
+Iteration 0:   log likelihood = -5515.3231  
+Iteration 1:   log likelihood = -5498.0794  
+Iteration 2:   log likelihood = -5498.0777  
+Iteration 3:   log likelihood = -5498.0777  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      34.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5498.0777                     Pseudo R2         =     0.0031
+
+------------------------------------------------------------------------------
+        stop |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .2749455   .0467954     5.88   0.000     .1832282    .3666627
+       _cons |  -.4009765   .0283052   -14.17   0.000    -.4564536   -.3454994
+------------------------------------------------------------------------------
+
+. logit stop black , or
+
+Iteration 0:   log likelihood = -5515.3231  
+Iteration 1:   log likelihood = -5498.0794  
+Iteration 2:   log likelihood = -5498.0777  
+Iteration 3:   log likelihood = -5498.0777  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      34.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5498.0777                     Pseudo R2         =     0.0031
+
+------------------------------------------------------------------------------
+        stop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.316459   .0616042     5.88   0.000     1.201088    1.442911
+       _cons |   .6696658    .018955   -14.17   0.000     .6335264    .7078668
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. tab stop
+
+                    stop |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+Race Not Percieved Prior |      4,649       57.48       57.48
+    Race Percieved Prior |      3,439       42.52      100.00
+-------------------------+-----------------------------------
+                   Total |      8,088      100.00
+
+. logit arrest black
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3200.18  
+Iteration 2:   log likelihood = -3200.0446  
+Iteration 3:   log likelihood = -3200.0446  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3200.0446                     Pseudo R2         =     0.0060
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .4116229   .0656802     6.27   0.000      .282892    .5403538
+       _cons |  -2.007832    .042946   -46.75   0.000    -2.092005   -1.923659
+------------------------------------------------------------------------------
+
+. logit arrest black , or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3200.18  
+Iteration 2:   log likelihood = -3200.0446  
+Iteration 3:   log likelihood = -3200.0446  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3200.0446                     Pseudo R2         =     0.0060
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.509265   .0991289     6.27   0.000     1.326962    1.716614
+       _cons |   .1342795   .0057668   -46.75   0.000     .1234394    .1460714
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white, or
+variable white not found
+r(111);
+
+. logit arrest race, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3208.7344  
+Iteration 2:   log likelihood = -3208.6699  
+Iteration 3:   log likelihood = -3208.6699  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      21.44
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3208.6699                     Pseudo R2         =     0.0033
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        race |   .8776817   .0252983    -4.53   0.000     .8294725    .9286928
+       _cons |   .2073172   .0138534   -23.55   0.000      .181868    .2363276
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. reg distancefromcal durationofstop
+
+      Source |       SS           df       MS      Number of obs   =     8,088
+-------------+----------------------------------   F(1, 8086)      =      0.34
+       Model |  .163816687         1  .163816687   Prob > F        =    0.5613
+    Residual |  3925.09835     8,086  .485419039   R-squared       =    0.0000
+-------------+----------------------------------   Adj R-squared   =   -0.0001
+       Total |  3925.26216     8,087  .485379271   Root MSE        =    .69672
+
+--------------------------------------------------------------------------------
+distancefrom~l |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+durationofstop |   .0002553   .0004394     0.58   0.561    -.0006061    .0011166
+         _cons |   1.370313   .0106447   128.73   0.000     1.349447    1.391179
+--------------------------------------------------------------------------------
+
+. reg durationofstop distancefromcal
+
+      Source |       SS           df       MS      Number of obs   =     8,088
+-------------+----------------------------------   F(1, 8086)      =      0.34
+       Model |  104.916838         1  104.916838   Prob > F        =    0.5613
+    Residual |  2513839.79     8,086  310.887929   R-squared       =    0.0000
+-------------+----------------------------------   Adj R-squared   =   -0.0001
+       Total |  2513944.71     8,087   310.86246   Root MSE        =    17.632
+
+---------------------------------------------------------------------------------
+ durationofstop |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+distancefromcal |   .1634889   .2814282     0.58   0.561    -.3881828    .7151606
+          _cons |   16.38828   .4336842    37.79   0.000     15.53815    17.23842
+---------------------------------------------------------------------------------
+
+. logit arrest black, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3200.18  
+Iteration 2:   log likelihood = -3200.0446  
+Iteration 3:   log likelihood = -3200.0446  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3200.0446                     Pseudo R2         =     0.0060
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.509265   .0991289     6.27   0.000     1.326962    1.716614
+       _cons |   .1342795   .0057668   -46.75   0.000     .1234394    .1460714
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. mcp2
+too few variables specified
+r(102);
+
+. mcp2 arrest black
+neither arrest nor i.arrest are in the model
+r(111);
+
+. mcp2 black
+
+. logit arrest black far
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3190.36  
+Iteration 2:   log likelihood = -3190.0379  
+Iteration 3:   log likelihood = -3190.0379  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      58.70
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3190.0379                     Pseudo R2         =     0.0091
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .3978715   .0658164     6.05   0.000     .2688738    .5268692
+         far |  -.3624174   .0833421    -4.35   0.000    -.5257649     -.19907
+       _cons |  -1.925857   .0461681   -41.71   0.000    -2.016345   -1.835369
+------------------------------------------------------------------------------
+
+. logit arrest black far, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3190.36  
+Iteration 2:   log likelihood = -3190.0379  
+Iteration 3:   log likelihood = -3190.0379  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      58.70
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3190.0379                     Pseudo R2         =     0.0091
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.488653   .0979777     6.05   0.000      1.30849    1.693622
+         far |   .6959918   .0580054    -4.35   0.000     .5911031    .8194925
+       _cons |   .1457508    .006729   -41.71   0.000     .1331412    .1595546
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. mcp2 far
+
+. mcp2
+too few variables specified
+r(102);
+
+. logit arrest black age
+variable age not found
+r(111);
+
+. logit arrest black perceivedage , or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3199.9152  
+Iteration 2:   log likelihood =  -3199.777  
+Iteration 3:   log likelihood =  -3199.777  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      39.23
+                                                Prob > chi2       =     0.0000
+Log likelihood =  -3199.777                     Pseudo R2         =     0.0061
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.506569   .0990209     6.24   0.000     1.324473    1.713702
+perceivedage |   1.001828   .0024969     0.73   0.464     .9969463    1.006734
+       _cons |   .1254808   .0128283   -20.30   0.000     .1026966    .1533198
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. lin reg durationofstop perceivedage
+command lin is unrecognized
+r(199);
+
+. reg durationofstop perceivedage
+
+      Source |       SS           df       MS      Number of obs   =     8,088
+-------------+----------------------------------   F(1, 8086)      =      4.96
+       Model |  1540.11811         1  1540.11811   Prob > F        =    0.0260
+    Residual |  2512404.59     8,086  310.710437   R-squared       =    0.0006
+-------------+----------------------------------   Adj R-squared   =    0.0005
+       Total |  2513944.71     8,087   310.86246   Root MSE        =    17.627
+
+------------------------------------------------------------------------------
+durationof~p |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+perceivedage |  -.0335824   .0150839    -2.23   0.026    -.0631507   -.0040141
+       _cons |   17.86718   .5964478    29.96   0.000     16.69799    19.03637
+------------------------------------------------------------------------------
+
+. logit arrest age, or
+variable age not found
+r(111);
+
+. logit arrest perceivedage , or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3218.9299  
+Iteration 2:   log likelihood = -3218.9299  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.92
+                                                Prob > chi2       =     0.3374
+Log likelihood = -3218.9299                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+perceivedage |   1.002385   .0024837     0.96   0.336     .9975288    1.007265
+       _cons |   .1443294   .0142493   -19.61   0.000     .1189371    .1751428
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. predict y1
+(option pr assumed; Pr(arrest))
+
+. twoway scatter y1 arrest perceivedage , connect(1 .)
+(note:  named style 1 not found in class connectstyle, default attributes used)
+
+. logit arrest black
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3200.18  
+Iteration 2:   log likelihood = -3200.0446  
+Iteration 3:   log likelihood = -3200.0446  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3200.0446                     Pseudo R2         =     0.0060
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .4116229   .0656802     6.27   0.000      .282892    .5403538
+       _cons |  -2.007832    .042946   -46.75   0.000    -2.092005   -1.923659
+------------------------------------------------------------------------------
+
+. mcp2
+too few variables specified
+r(102);
+
+. mcp2 arrest black
+neither arrest nor i.arrest are in the model
+r(111);
+
+. mcp2 arrest
+neither arrest nor i.arrest are in the model
+r(111);
+
+. mcp2 black
+
+. mcpt perceivedage black, at1(20(1)100)
+command mcpt is unrecognized
+r(199);
+
+. mcp2 perceivedage black, at1(20(1)100)
+neither perceivedage nor i.perceivedage are in the model
+r(111);
+
+. logit black arrest
+
+Iteration 0:   log likelihood = -5270.9196  
+Iteration 1:   log likelihood = -5251.6038  
+Iteration 2:   log likelihood = -5251.5742  
+Iteration 3:   log likelihood = -5251.5742  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5251.5742                     Pseudo R2         =     0.0037
+
+------------------------------------------------------------------------------
+       black |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      arrest |   .4116229   .0656802     6.27   0.000      .282892    .5403538
+       _cons |   -.644981    .025189   -25.61   0.000    -.6943506   -.5956115
+------------------------------------------------------------------------------
+
+. logit black arrest , or
+
+Iteration 0:   log likelihood = -5270.9196  
+Iteration 1:   log likelihood = -5251.6038  
+Iteration 2:   log likelihood = -5251.5742  
+Iteration 3:   log likelihood = -5251.5742  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5251.5742                     Pseudo R2         =     0.0037
+
+------------------------------------------------------------------------------
+       black | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      arrest |   1.509265   .0991289     6.27   0.000     1.326962    1.716614
+       _cons |   .5246725    .013216   -25.61   0.000     .4993986    .5512254
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest black far
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3190.36  
+Iteration 2:   log likelihood = -3190.0379  
+Iteration 3:   log likelihood = -3190.0379  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      58.70
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3190.0379                     Pseudo R2         =     0.0091
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   .3978715   .0658164     6.05   0.000     .2688738    .5268692
+         far |  -.3624174   .0833421    -4.35   0.000    -.5257649     -.19907
+       _cons |  -1.925857   .0461681   -41.71   0.000    -2.016345   -1.835369
+------------------------------------------------------------------------------
+
+. logit arrest black far, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3190.36  
+Iteration 2:   log likelihood = -3190.0379  
+Iteration 3:   log likelihood = -3190.0379  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      58.70
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3190.0379                     Pseudo R2         =     0.0091
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.488653   .0979777     6.05   0.000      1.30849    1.693622
+         far |   .6959918   .0580054    -4.35   0.000     .5911031    .8194925
+       _cons |   .1457508    .006729   -41.71   0.000     .1331412    .1595546
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. mcp2
+too few variables specified
+r(102);
+
+. logit arrest black far perceivedage , or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3190.1984  
+Iteration 2:   log likelihood = -3189.8739  
+Iteration 3:   log likelihood = -3189.8739  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =      59.03
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3189.8739                     Pseudo R2         =     0.0092
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.486489   .0979098     6.02   0.000      1.30646    1.691326
+         far |   .6971046   .0581321    -4.33   0.000     .5919916    .8208813
+perceivedage |   1.001428   .0024912     0.57   0.566     .9965568    1.006322
+       _cons |    .138194   .0143586   -19.05   0.000     .1127321    .1694068
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. mcp2
+too few variables specified
+r(102);
+
+. mcp2 black
+
+. mcp2 race
+neither race nor i.race are in the model
+r(111);
+
+. mcp2 arrest
+neither arrest nor i.arrest are in the model
+r(111);
+
+. mcp2
+too few variables specified
+r(102);
+
+. mcp2 arrest black far perceivedage
+invalid arrest black far perceivedage
+r(198);
+
+. mcp2 perceivedage
+

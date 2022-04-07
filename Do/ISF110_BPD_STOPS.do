@@ -19,18 +19,19 @@ sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
 cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
 ls
 
-gen stop = 1 if raceperceivedpriortostop=="True"
+gen racepercieved = 1 if raceperceivedpriortostop=="True"
 // replace stop = 1 if raceperceivedpriortostop=="True"
-replace stop = 0 if raceperceivedpriortostop == "False"
-lab def stop 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
-lab value stop stop
+replace racepercieved = 0 if raceperceivedpriortostop == "False"
+lab def racepercieved 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
+lab value racepercieved racepercieved
 
-gen race = 1 if perceivedraceorethnicity=="White"
-replace race = 2 if perceivedraceorethnicity=="Black/African American"
-replace race = 3 if perceivedraceorethnicity=="Hispanic/Latino"
-replace race = 4 if perceivedraceorethnicity=="Asian"
-replace race = 5 if !inlist(race,1,2,3,4)
-lab def race 1 "White" 2 "Black/African American" 3 "Hispanic/Latino" 4 "Asian" 5 "Other" 
+gen race = 1
+replace race = 2 if perceivedraceorethnicity=="White"
+replace race = 3 if perceivedraceorethnicity=="Black/African American"
+replace race = 4 if perceivedraceorethnicity=="Hispanic/Latino"
+replace race = 5 if perceivedraceorethnicity=="Asian"
+replace race = 1 if !inlist(race,1,2,3,4,5)
+lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
 lab value race race
 
 gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
@@ -115,10 +116,34 @@ lab def arrest 1 "Arrested" 0 "Not Arrested"
 lab value arrest arrest
 
 
-gen black = 1 if race == 2
-replace black = 0 if race !=2
+gen other = 1 if race == 1
+replace other = 0 if race !=1
+lab def other 1 "Other " 0 "Not Other " 
+lab value other other
+
+
+gen white = 2 if race == 2
+replace white = 0 if race !=2
+lab def white 1 "White" 0 "Not White" 
+lab value white white
+
+
+gen black = 1 if race == 3
+replace black = 0 if race !=3
 lab def black 1 "Black/African American" 0 "Not Black/African American" 
 lab value black black
+
+
+gen hispanic = 1 if race == 4
+replace hispanic = 0 if race !=4
+lab def hispanic 1 "Hispanic" 0 "Not Hispanic" 
+lab value hispanic hispanic
+
+
+gen asian = 1 if race == 5
+replace asian = 0 if race !=5
+lab def asian 1 "Asian " 0 "Not Asian " 
+lab value asian asian
 
 
 gen longstop = 1 if durationofstop >= 20
@@ -140,7 +165,24 @@ lab value far far
 drop if durationofstop >270
 
 
-exit, clear 
+
+// mcp2 perceivedage black
+
+// logit arrest black distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+
+logit arrest black perceivedage racepercieved distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+margins, at(distancefromcalsimple =(1(.25)4))
+marginsplot, xdimension(at(distancefromcalsimple))
+mcp2 distancefromcalsimple black 
+
+
+logit longstop racepercieved white black hispanic asian other distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+margins, at(distancefromcalsimple =(1(.25)4))
+marginsplot, xdimension(at(distancefromcalsimple))
+mcp2 distancefromcalsimple
+
+
+// exit, clear 
 
 
 
