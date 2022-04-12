@@ -19,6 +19,10 @@ sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
 cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
 ls
 
+
+drop if durationofstop >270
+
+
 gen racepercieved = 1 if raceperceivedpriortostop=="True"
 // replace stop = 1 if raceperceivedpriortostop=="True"
 replace racepercieved = 0 if raceperceivedpriortostop == "False"
@@ -33,6 +37,7 @@ replace race = 5 if perceivedraceorethnicity=="Asian"
 replace race = 1 if !inlist(race,1,2,3,4,5)
 lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
 lab value race race
+
 
 gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
 replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
@@ -122,9 +127,9 @@ lab def other 1 "Other " 0 "Not Other "
 lab value other other
 
 
-gen white = 2 if race == 2
+gen white = 1 if race == 2
 replace white = 0 if race !=2
-lab def white 1 "White" 0 "Not White" 
+lab def white  1 "White" 0 "Not White"
 lab value white white
 
 
@@ -146,6 +151,12 @@ lab def asian 1 "Asian " 0 "Not Asian "
 lab value asian asian
 
 
+gen nonwhite = 1 if inlist(race,1,3,4,5) 
+replace nonwhite = 0 if inlist(race,2)
+lab def nonwhite 0 "White" 1 "Nonwhite"
+lab value nonwhite nonwhite
+
+
 gen longstop = 1 if durationofstop >= 20
 replace longstop = 0 if durationofstop < 20
 lab def longstop 1 "Longer than average stop" 0 "Normal/shorter than average stop" 
@@ -162,7 +173,6 @@ lab value far far
 
 
 
-drop if durationofstop >270
 
 
 
