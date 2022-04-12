@@ -1,0 +1,1227 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log BPDSTOPS -12 Apr 2022.log
+  log type:  text
+ opened on:  12 Apr 2022, 10:18:51
+
+. 
+. // use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\all_stops_prof.dta", clear
+. 
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+
+. 
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. 
+. cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+
+. ls
+  <dir>   4/12/22 10:18  .                 
+  <dir>   4/12/22 10:18  ..                
+   0.2k   3/15/22 18:57  2015-2020.url     
+   0.2k   3/15/22 18:57  2020-Present.url  
+  15.2M   4/01/22 18:37  All_Stops (peter.txt
+  14.4M   3/16/22 20:16  All_Stops.csv     
+  15.2M   4/01/22 18:39  All_Stops_with_tracts.csv
+  14.4M   3/18/22  1:38  All_Stops_WOW.csv 
+  15.1M   3/18/22  3:08  All_Stops_WOW2.csv
+  59.4M   3/18/22  4:06  All_Stops_WOW2.dta
+  73.4k   3/16/22 23:13  Berkeley PD - Police Beats 2015-2016.geojson
+8511.8k   3/15/22 18:56  Berkeley_PD_-_Stop_Data__Jan_26__2015_to_Sep_30__2020_.csv
+3792.4k   4/01/22 21:36  Berkeley_PD_-_Stop_Data__October_1__2020_-_Present.csv
+  <dir>   3/18/22  4:40  Census Tract Polygons 2010
+ 218.2k   3/17/22 16:08  Census Tract Polygons 2010.geojson
+  54.5k   3/18/22  3:53  Census_Tract_Polygons_2010.zip
+ 100.8k   3/26/22 16:43  Doc Submission (Assignment 3 KC HARRIS) .pdf
+3865.8k   4/01/22 19:45  formatted_allstops.csv
+8731.5k   4/07/22 16:15  formatted_allstops.dta
+3188.2k   4/05/22 11:45  Full Berkeley PD Workbook.xlsx
+  77.3k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dbf
+  18.0k   3/18/22  5:14  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.dta
+   0.2k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.prj
+  84.1k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shp
+   0.4k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f.shx
+ 149.1k   3/18/22  4:51  geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp.dta
+   0.2k   3/16/22 23:17  Link to GeoJson of Police Beats.url
+   1.0k   4/07/22 13:53  mcp2_example.do   
+  15.2M   4/01/22 18:30  peter test.txt    
+   4.3k   3/17/22 19:51  State of California Department of Justice - OpenJustice.csv
+   0.2k   3/17/22 16:27  Summary-Crime-reported-by-the-Berkeley-Police-Department-2010-20203_17_2022.csv
+
+. 
+. 
+. drop if durationofstop >270
+(0 observations deleted)
+
+. 
+. 
+. gen racepercieved = 1 if raceperceivedpriortostop=="True"
+(4,649 missing values generated)
+
+. // replace stop = 1 if raceperceivedpriortostop=="True"
+. replace racepercieved = 0 if raceperceivedpriortostop == "False"
+(4,649 real changes made)
+
+. lab def racepercieved 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
+
+. lab value racepercieved racepercieved
+
+. 
+. gen race = 1
+
+. replace race = 2 if perceivedraceorethnicity=="White"
+(2,854 real changes made)
+
+. replace race = 3 if perceivedraceorethnicity=="Black/African American"
+(2,892 real changes made)
+
+. replace race = 4 if perceivedraceorethnicity=="Hispanic/Latino"
+(1,190 real changes made)
+
+. replace race = 5 if perceivedraceorethnicity=="Asian"
+(517 real changes made)
+
+. replace race = 1 if !inlist(race,1,2,3,4,5)
+(0 real changes made)
+
+. lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
+
+. lab value race race
+
+. 
+. 
+. gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
+(6,185 missing values generated)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
+(0 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Contacted parent/legal guardian or other person responsible for the minor"
+(3 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|In-field cite and release"
+(5 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Warning (verbal or written)"
+(16 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor"
+(2 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Noncriminal transport or caretaking transport (includ
+> ing transport by officer / ambulance or other agency)|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant"
+(212 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(2 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaki
+> ng transport (including transport by officer / ambulance or other agency)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Citation for infraction"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant"
+(96 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Warning (verbal or written)"
+(2 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant"
+(734 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(5 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Contacted parent/legal guardian or other person responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant"
+(43 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other pers
+> on responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or o
+> ther agency)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
+(73 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(3 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)"
+(5 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(0 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Warning (verbal or written)"
+(5 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release" 
+(275 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(4 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Citation for infraction" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest without warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Field interview card completed" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other 
+> agency)" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other a
+> gency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 7 if resultofstop== "No action" 
+(1,324 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+(69 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)" 
+(22 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Citation for infrac
+> tion" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(371 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for infraction" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / am
+> bulance or other agency)" 
+(6 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal or written)" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)" 
+(2,800 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(5 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction" 
+(6 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest without warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Field interview card completed" 
+(45 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or othe
+> r agency)"
+(3 real changes made)
+
+. lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6
+>  "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning"
+
+. lab value resultofstoptype resultofstoptype
+
+. 
+. gen reason = 1 if reasonforstop=="Traffic Violation"
+(3,852 missing values generated)
+
+. replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
+(203 real changes made)
+
+. replace reason = 2 if reasonforstop=="Reasonable suspicion"
+(3,521 real changes made)
+
+. replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
+(45 real changes made)
+
+. replace reason = 5 if !inlist(reason,1,2,3,4)
+(83 real changes made)
+
+. lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Other" 
+
+. lab value reason reason
+
+. 
+. 
+. gen arrest = 1 if inlist(resultofstoptype,3,4)
+(6,986 missing values generated)
+
+. replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+(6,983 real changes made)
+
+. lab def arrest 1 "Arrested" 0 "Not Arrested"
+
+. lab value arrest arrest
+
+. 
+. 
+. gen other = 1 if race == 1
+(7,453 missing values generated)
+
+. replace other = 0 if race !=1
+(7,453 real changes made)
+
+. lab def other 1 "Other " 0 "Not Other " 
+
+. lab value other other
+
+. 
+. 
+. gen white = 1 if race == 2
+(5,234 missing values generated)
+
+. replace white = 0 if race !=2
+(5,234 real changes made)
+
+. lab def white  1 "White" 0 "Not White"
+
+. lab value white white
+
+. 
+. 
+. gen black = 1 if race == 3
+(5,196 missing values generated)
+
+. replace black = 0 if race !=3
+(5,196 real changes made)
+
+. lab def black 1 "Black/African American" 0 "Not Black/African American" 
+
+. lab value black black
+
+. 
+. 
+. gen hispanic = 1 if race == 4
+(6,898 missing values generated)
+
+. replace hispanic = 0 if race !=4
+(6,898 real changes made)
+
+. lab def hispanic 1 "Hispanic" 0 "Not Hispanic" 
+
+. lab value hispanic hispanic
+
+. 
+. 
+. gen asian = 1 if race == 5
+(7,571 missing values generated)
+
+. replace asian = 0 if race !=5
+(7,571 real changes made)
+
+. lab def asian 1 "Asian " 0 "Not Asian " 
+
+. lab value asian asian
+
+. 
+. 
+. gen nonwhite = 1 if inlist(race,1,3,4,5) 
+(2,854 missing values generated)
+
+. replace nonwhite = 0 if inlist(race,2)
+(2,854 real changes made)
+
+. lab def nonwhite 0 "White" 1 "Nonwhite"
+
+. lab value nonwhite nonwhite
+
+. 
+. 
+. gen longstop = 1 if durationofstop >= 20
+(5,686 missing values generated)
+
+. replace longstop = 0 if durationofstop < 20
+(5,686 real changes made)
+
+. lab def longstop 1 "Longer than average stop" 0 "Normal/shorter than average stop" 
+
+. lab value longstop longstop
+
+. 
+. gen far = 1 if distancefromcal >= 2
+(6,182 missing values generated)
+
+. replace far = 0 if distancefromcal < 2
+(6,182 real changes made)
+
+. lab def far 1 "Far from university" 0 "Not far from university" 
+
+. lab value far far
+
+. 
+. // replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" & resultofstoptype!="Custodial Arrest With Warrant"
+. // lab def arrest 1 "Arrest" 2 "Other" 
+. // lab value arrest arrest
+. 
+. 
+. 
+. 
+. 
+. 
+. // mcp2 perceivedage black
+. 
+. // logit arrest black distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+. 
+. logit arrest black perceivedage racepercieved distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3066.9271  
+Iteration 2:   log likelihood =   -3059.82  
+Iteration 3:   log likelihood = -3059.8083  
+Iteration 4:   log likelihood = -3059.8083  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(5)        =     319.16
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3059.8083                     Pseudo R2         =     0.0496
+
+-----------------------------------------------------------------------------------------------------------------
+                                         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+------------------------------------------------+----------------------------------------------------------------
+                                          black |   1.427719   .0958546     5.30   0.000     1.251683    1.628511
+                                   perceivedage |   .9971047   .0025761    -1.12   0.262     .9920683    1.002167
+                                  racepercieved |   2.966004   .2081096    15.50   0.000     2.584921    3.403269
+                          distancefromcalsimple |   .7900135   .1642003    -1.13   0.257     .5256741    1.187278
+                                                |
+c.distancefromcalsimple#c.distancefromcalsimple |    1.05528   .0735117     0.77   0.440     .9206024    1.209659
+                                                |
+                                          _cons |   .1047542   .0177035   -13.35   0.000     .0752174    .1458897
+-----------------------------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. margins, at(distancefromcalsimple =(1(.25)4))
+
+Predictive margins                              Number of obs     =      8,085
+Model VCE    : OIM
+
+Expression   : Pr(arrest), predict()
+
+1._at        : distancefr~e    =           1
+
+2._at        : distancefr~e    =        1.25
+
+3._at        : distancefr~e    =         1.5
+
+4._at        : distancefr~e    =        1.75
+
+5._at        : distancefr~e    =           2
+
+6._at        : distancefr~e    =        2.25
+
+7._at        : distancefr~e    =         2.5
+
+8._at        : distancefr~e    =        2.75
+
+9._at        : distancefr~e    =           3
+
+10._at       : distancefr~e    =        3.25
+
+11._at       : distancefr~e    =         3.5
+
+12._at       : distancefr~e    =        3.75
+
+13._at       : distancefr~e    =           4
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .1372574   .0047714    28.77   0.000     .1279056    .1466091
+          2  |   .1340259   .0051979    25.78   0.000     .1238382    .1442135
+          3  |   .1315947   .0054308    24.23   0.000     .1209505    .1422388
+          4  |   .1299301    .005365    24.22   0.000      .119415    .1404453
+          5  |   .1290092   .0053652    24.05   0.000     .1184936    .1395248
+          6  |    .128819    .006205    20.76   0.000     .1166574    .1409807
+          7  |    .129357   .0085187    15.19   0.000     .1126607    .1460534
+          8  |   .1306307   .0123503    10.58   0.000     .1064245    .1548369
+          9  |   .1326576   .0175777     7.55   0.000     .0982059    .1671093
+         10  |   .1354659   .0241796     5.60   0.000     .0880748     .182857
+         11  |   .1390944   .0322309     4.32   0.000      .075923    .2022659
+         12  |   .1435929   .0418716     3.43   0.001     .0615261    .2256596
+         13  |   .1490225     .05329     2.80   0.005     .0445761     .253469
+------------------------------------------------------------------------------
+
+. marginsplot, xdimension(at(distancefromcalsimple))
+
+  Variables that uniquely identify margins: distancefromcalsimple
+
+. mcp2 distancefromcalsimple black 
+
+. 
+. 
+. logit longstop racepercieved white black hispanic asian other distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+
+note: other omitted because of collinearity
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4731.4533  
+Iteration 2:   log likelihood =  -4728.088  
+Iteration 3:   log likelihood = -4728.0758  
+Iteration 4:   log likelihood = -4728.0758  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(7)        =     383.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4728.0758                     Pseudo R2         =     0.0390
+
+-----------------------------------------------------------------------------------------------------------------
+                                       longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+------------------------------------------------+----------------------------------------------------------------
+                                  racepercieved |   2.099454   .1088461    14.31   0.000     1.896601    2.324004
+                                          white |    1.49666   .1683797     3.58   0.000     1.200494    1.865892
+                                          black |   2.195028   .2441515     7.07   0.000     1.765068    2.729723
+                                       hispanic |    1.90822   .2327176     5.30   0.000     1.502519    2.423467
+                                          asian |   .7133031   .1175738    -2.05   0.040     .5163813    .9853211
+                                          other |          1  (omitted)
+                          distancefromcalsimple |    .914447   .1406877    -0.58   0.561     .6763963    1.236277
+                                                |
+c.distancefromcalsimple#c.distancefromcalsimple |   1.073666    .053798     1.42   0.156     .9732362     1.18446
+                                                |
+                                          _cons |   .1701021   .0249067   -12.10   0.000      .127666     .226644
+-----------------------------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. margins, at(distancefromcalsimple =(1(.25)4))
+
+Predictive margins                              Number of obs     =      8,088
+Model VCE    : OIM
+
+Expression   : Pr(longstop), predict()
+
+1._at        : distancefr~e    =           1
+
+2._at        : distancefr~e    =        1.25
+
+3._at        : distancefr~e    =         1.5
+
+4._at        : distancefr~e    =        1.75
+
+5._at        : distancefr~e    =           2
+
+6._at        : distancefr~e    =        2.25
+
+7._at        : distancefr~e    =         2.5
+
+8._at        : distancefr~e    =        2.75
+
+9._at        : distancefr~e    =           3
+
+10._at       : distancefr~e    =        3.25
+
+11._at       : distancefr~e    =         3.5
+
+12._at       : distancefr~e    =        3.75
+
+13._at       : distancefr~e    =           4
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .2842977   .0061179    46.47   0.000     .2723068    .2962886
+          2  |   .2877326   .0066547    43.24   0.000     .2746896    .3007755
+          3  |   .2929431   .0071108    41.20   0.000     .2790062      .30688
+          4  |   .2999812   .0072022    41.65   0.000     .2858652    .3140972
+          5  |   .3089136   .0072754    42.46   0.000     .2946541     .323173
+          6  |   .3198195   .0083125    38.47   0.000     .3035273    .3361117
+          7  |   .3327874   .0113412    29.34   0.000     .3105591    .3550157
+          8  |     .34791   .0165944    20.97   0.000     .3153856    .3804343
+          9  |   .3652778   .0239047    15.28   0.000     .3184254    .4121301
+         10  |   .3849711   .0331451    11.61   0.000     .3200078    .4499344
+         11  |   .4070499   .0442413     9.20   0.000     .3203386    .4937612
+         12  |   .4315414   .0571052     7.56   0.000     .3196173    .5434655
+         13  |   .4584267   .0715836     6.40   0.000     .3181254    .5987279
+------------------------------------------------------------------------------
+
+. marginsplot, xdimension(at(distancefromcalsimple))
+
+  Variables that uniquely identify margins: distancefromcalsimple
+
+. mcp2 distancefromcalsimple
+
+. 
+. 
+. // exit, clear 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. //https://www.stata.com/manuals/spintro4.pdf#spIntro4
+. // ssc install shp2dta, replace
+. // // ssc install spshape2dta, replace
+. //
+. // unzipfile Census_Tract_Polygons_2010.zip
+. //
+. // spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f replace
+. //
+. // use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+. // describe
+. // list in 1/5
+. //
+. //
+. // // generate long fips = real(ID)
+. // // // bysort fips: assert _N==1
+. // // assert fips != .
+. //
+. //
+. // // gen pop = totalpop  //population for each tract
+. //
+. // // ssc install spmap, replace
+. //
+. // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Blues)  
+. // // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Reds)
+. //
+. // set more off
+. // clear all
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. // //EVERYTHING AFTER THIS IS UNDER DEVELOPMENT. GRAPHS
+. // use usdata, clear
+. // ren subreg_id subreg
+. // encode subreg, gen(subreg_id)
+. //
+. // keep subreg_id unhappy housing_price unemployment
+. //
+. // merge 1:1 subreg_id using usdb.dta
+. // drop _merge
+. //
+. // merge 1:1 subreg_id using uslabelcoord.dta
+. // drop _merge
+. //
+. //
+. // spmap unhappy using uscoord.dta, id(subreg_id) ///
+. // label(label(subreg_id) xcoord(xcoord) ycoord(ycoord)) ///
+. // fcolor(Reds) legtitle("Fraction of respondents who were unhappy") ///
+. // title("Figure 3: Unhappiness by Census Division, 2012")
+. //
+. //
+. //
+. //
+. //
+. // gen Y = housing_price
+. // format Y %4.1f 
+. //
+. // spmap unhappy using uscoord.dta, id(subreg_id)  ///
+. // point(x(xcoord) y(ycoord) proportional(Y) fcolor(red) ocolor(white) size(*3.5))  ///
+. // label(label(subreg_id) xcoord(xcoord) ycoord(ycoord))  /// 
+. // fcolor(Whites) legtitle("Fraction of respondents who were unhappy")  ///
+. // title("Figure 3: Housing Price and Unhappiness by Census Division, 2012")
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. tab arrest
+
+      arrest |      Freq.     Percent        Cum.
+-------------+-----------------------------------
+Not Arrested |      6,983       86.37       86.37
+    Arrested |      1,102       13.63      100.00
+-------------+-----------------------------------
+       Total |      8,085      100.00
+
+. tab white
+
+      white |      Freq.     Percent        Cum.
+------------+-----------------------------------
+  Not White |      5,234       64.71       64.71
+      White |      2,854       35.29      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. tab longstop
+
+                        longstop |      Freq.     Percent        Cum.
+---------------------------------+-----------------------------------
+Normal/shorter than average stop |      5,686       70.30       70.30
+        Longer than average stop |      2,402       29.70      100.00
+---------------------------------+-----------------------------------
+                           Total |      8,088      100.00
+
+. tab far
+
+                    far |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+Not far from university |      6,182       76.43       76.43
+    Far from university |      1,906       23.57      100.00
+------------------------+-----------------------------------
+                  Total |      8,088      100.00
+
+. tab racepercieved
+
+           racepercieved |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+Race Not Percieved Prior |      4,649       57.48       57.48
+    Race Percieved Prior |      3,439       42.52      100.00
+-------------------------+-----------------------------------
+                   Total |      8,088      100.00
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\2\STD17f0_000000.tmp"
+
+. factor race distancefromcalsimple durationofstop, pcf
+(obs=8,088)
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285      0.05686            0.3509       0.3509
+        Factor2  |      0.99598      0.04481            0.3320       0.6829
+        Factor3  |      0.95117            .            0.3171       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285            .            0.3509       0.3509
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict arrpi
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+            race |  0.67256 
+    distancefr~e |  0.63946 
+    durationof~p |  0.29760 
+    ------------------------
+
+
+. label var arrpi "Arrest Factor Scores"
+
+. alpha race distancefromcalsimple durationofstop, item
+
+Test scale = mean(unstandardized items)
+
+                                                            average
+                             item-test     item-rest       interitem
+Item         |  Obs  Sign   correlation   correlation     covariance      alpha
+-------------+-----------------------------------------------------------------
+race         | 8088    +       0.0761        0.0193        .0770442      0.0010
+distancefr~e | 8088    +       0.0483        0.0090        .3094736      0.0040
+durationof~p | 8088    +       0.9975        0.0175        .0333442      0.0851
+-------------+-----------------------------------------------------------------
+Test scale   |                                              .139954      0.0040
+-------------------------------------------------------------------------------
+
+. 
+. 
+. 
+. local study "arrpi"
+
+. 
+. reg arrpr nonwhite far racepercieved   //Model 1
+variable arrpr not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\2\STD17f0_000000.tmp"
+
+. 
+. factor race distancefromcalsimple durationofstop, pcf
+(obs=8,088)
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285      0.05686            0.3509       0.3509
+        Factor2  |      0.99598      0.04481            0.3320       0.6829
+        Factor3  |      0.95117            .            0.3171       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285            .            0.3509       0.3509
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict arrpi
+(option regression assumed; regression scoring)
+variable arrpi already defined
+r(110);
+
+end of do-file
+
+r(110);
+
+. drop arrpi
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\2\STD17f0_000000.tmp"
+
+. 
+. factor race distancefromcalsimple durationofstop, pcf
+(obs=8,088)
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285      0.05686            0.3509       0.3509
+        Factor2  |      0.99598      0.04481            0.3320       0.6829
+        Factor3  |      0.95117            .            0.3171       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285            .            0.3509       0.3509
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict arrpi
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+            race |  0.67256 
+    distancefr~e |  0.63946 
+    durationof~p |  0.29760 
+    ------------------------
+
+
+. label var arrpi "Arrest Factor Scores"
+
+. alpha race distancefromcalsimple durationofstop, item
+
+Test scale = mean(unstandardized items)
+
+                                                            average
+                             item-test     item-rest       interitem
+Item         |  Obs  Sign   correlation   correlation     covariance      alpha
+-------------+-----------------------------------------------------------------
+race         | 8088    +       0.0761        0.0193        .0770442      0.0010
+distancefr~e | 8088    +       0.0483        0.0090        .3094736      0.0040
+durationof~p | 8088    +       0.9975        0.0175        .0333442      0.0851
+-------------+-----------------------------------------------------------------
+Test scale   |                                              .139954      0.0040
+-------------------------------------------------------------------------------
+
+. 
+. 
+. 
+. local study "arrpi"
+
+. 
+. reg arrpi nonwhite far racepercieved   //Model 1
+
+      Source |       SS           df       MS      Number of obs   =     8,088
+-------------+----------------------------------   F(3, 8084)      =   1898.15
+       Model |  3342.24969         3  1114.08323   Prob > F        =    0.0000
+    Residual |  4744.75033     8,084  .586931015   R-squared       =    0.4133
+-------------+----------------------------------   Adj R-squared   =    0.4131
+       Total |  8087.00002     8,087           1   Root MSE        =    .76611
+
+-------------------------------------------------------------------------------
+        arrpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+     nonwhite |   .8583469   .0179553    47.80   0.000     .8231499    .8935439
+          far |   1.146059   .0201622    56.84   0.000     1.106536    1.185582
+racepercieved |  -.0872829   .0174316    -5.01   0.000    -.1214534   -.0531124
+        _cons |  -.7884286   .0177198   -44.49   0.000    -.8231639   -.7536933
+-------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) 
+> replace
+command outreg2 is unrecognized
+r(199);
+
+end of do-file
+
+r(199);
+
+. ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+installing into \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\...
+installation complete.
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\2\STD17f0_000000.tmp"
+
+. local study "lpi"
+
+. 
+. reg lpi egrid pwater sewage road   //Model 1
+variable lpi not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. drop arrpi
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\2\STD17f0_000000.tmp"
+
+. 
+. factor race distancefromcalsimple durationofstop, pcf
+(obs=8,088)
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: (unrotated)                        Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |   Eigenvalue   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285      0.05686            0.3509       0.3509
+        Factor2  |      0.99598      0.04481            0.3320       0.6829
+        Factor3  |      0.95117            .            0.3171       1.0000
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+. rotate
+
+Factor analysis/correlation                      Number of obs    =      8,088
+    Method: principal-component factors          Retained factors =          1
+    Rotation: orthogonal varimax (Kaiser off)    Number of params =          3
+
+    --------------------------------------------------------------------------
+         Factor  |     Variance   Difference        Proportion   Cumulative
+    -------------+------------------------------------------------------------
+        Factor1  |      1.05285            .            0.3509       0.3509
+    --------------------------------------------------------------------------
+    LR test: independent vs. saturated:  chi2(3)  =   20.94 Prob>chi2 = 0.0001
+
+Rotated factor loadings (pattern matrix) and unique variances
+
+    ---------------------------------------
+        Variable |  Factor1 |   Uniqueness 
+    -------------+----------+--------------
+            race |   0.7081 |      0.4986  
+    distancefr~e |   0.6733 |      0.5467  
+    durationof~p |   0.3133 |      0.9018  
+    ---------------------------------------
+
+Factor rotation matrix
+
+    -----------------------
+                 | Factor1 
+    -------------+---------
+         Factor1 |  1.0000 
+    -----------------------
+
+. predict arrpi
+(option regression assumed; regression scoring)
+
+Scoring coefficients (method = regression; based on varimax rotated factors)
+
+    ------------------------
+        Variable |  Factor1 
+    -------------+----------
+            race |  0.67256 
+    distancefr~e |  0.63946 
+    durationof~p |  0.29760 
+    ------------------------
+
+
+. label var arrpi "Arrest Factor Scores"
+
+. alpha race distancefromcalsimple durationofstop, item
+
+Test scale = mean(unstandardized items)
+
+                                                            average
+                             item-test     item-rest       interitem
+Item         |  Obs  Sign   correlation   correlation     covariance      alpha
+-------------+-----------------------------------------------------------------
+race         | 8088    +       0.0761        0.0193        .0770442      0.0010
+distancefr~e | 8088    +       0.0483        0.0090        .3094736      0.0040
+durationof~p | 8088    +       0.9975        0.0175        .0333442      0.0851
+-------------+-----------------------------------------------------------------
+Test scale   |                                              .139954      0.0040
+-------------------------------------------------------------------------------
+
+. 
+. 
+. 
+. local study "arrpi"
+
+. 
+. reg arrpi nonwhite far racepercieved   //Model 1
+
+      Source |       SS           df       MS      Number of obs   =     8,088
+-------------+----------------------------------   F(3, 8084)      =   1898.15
+       Model |  3342.24969         3  1114.08323   Prob > F        =    0.0000
+    Residual |  4744.75033     8,084  .586931015   R-squared       =    0.4133
+-------------+----------------------------------   Adj R-squared   =    0.4131
+       Total |  8087.00002     8,087           1   Root MSE        =    .76611
+
+-------------------------------------------------------------------------------
+        arrpi |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+     nonwhite |   .8583469   .0179553    47.80   0.000     .8231499    .8935439
+          far |   1.146059   .0201622    56.84   0.000     1.106536    1.185582
+racepercieved |  -.0872829   .0174316    -5.01   0.000    -.1214534   -.0531124
+        _cons |  -.7884286   .0177198   -44.49   0.000    -.8231639   -.7536933
+-------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) 
+> replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110/o/outreg2.ado
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrpi-.xls
+dir : seeout
+
+. 
+end of do-file
+
