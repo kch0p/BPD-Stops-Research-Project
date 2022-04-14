@@ -1,0 +1,2289 @@
+------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\
+> Log BPDSTOPS -13 Apr 2022.log
+  log type:  text
+ opened on:  13 Apr 2022, 21:18:25
+
+. 
+. // use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\form
+> atted_allstops.dta", clear
+. //
+. // sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-1
+> 10"
+. // ssc install mcp2
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\forma
+> tted_allstops.dta"
+
+. 
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-11
+> 0"
+
+. //
+. // cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
+. // ls
+. 
+. 
+. drop if durationofstop >270
+(0 observations deleted)
+
+. 
+. 
+. gen racepercieved = 1 if raceperceivedpriortostop=="True"
+(4,649 missing values generated)
+
+. // replace stop = 1 if raceperceivedpriortostop=="True"
+. replace racepercieved = 0 if raceperceivedpriortostop == "False"
+(4,649 real changes made)
+
+. lab def racepercieved 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
+
+. lab value racepercieved racepercieved
+
+. 
+. gen race = 1
+
+. replace race = 2 if perceivedraceorethnicity=="White"
+(2,854 real changes made)
+
+. replace race = 3 if perceivedraceorethnicity=="Black/African American"
+(2,892 real changes made)
+
+. replace race = 4 if perceivedraceorethnicity=="Hispanic/Latino"
+(1,190 real changes made)
+
+. replace race = 5 if perceivedraceorethnicity=="Asian"
+(517 real changes made)
+
+. replace race = 1 if !inlist(race,1,2,3,4,5)
+(0 real changes made)
+
+. lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Lati
+> no" 5 "Asian" 
+
+. lab value race race
+
+. 
+. 
+. gen resultofstoptype = 1 if resultofstop=="Citation for infraction"
+(6,185 missing values generated)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psyc
+> hiatric hol(W&I Code 5150 or 5585.20)"
+(0 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Conta
+> cted parent/legal guardian or other person responsible for the minor"
+(3 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|In-fi
+> eld cite and release"
+(5 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Warni
+> ng (verbal or written)"
+(16 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardi
+> an or other person responsible for the minor"
+(2 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardi
+> an or other person responsible for the minor|Noncriminal transport or careta
+> king transport (including transport by officer / ambulance or other agency)|
+> Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardi
+> an or other person responsible for the minor|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to 
+> outstanding warrant"
+(212 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to 
+> outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(2 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to 
+> outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal
+>  transport or caretaking transport (including transport by officer / ambulan
+> ce or other agency)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Citation for infraction"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant"
+(96 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Warning (verbal or written)"
+(2 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant"
+(734 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(5 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Contacted parent/legal guardian or other person responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant"
+(43 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other pers
+> on responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or o
+> ther agency)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
+(73 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(3 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)"
+(5 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(0 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Warning (verbal or written)"
+(5 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release" 
+(275 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(4 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Citation for infraction" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest without warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Field interview card completed" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other 
+> agency)" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other a
+> gency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 7 if resultofstop== "No action" 
+(1,324 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+(69 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)" 
+(22 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Citation for infrac
+> tion" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(371 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for infraction" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / am
+> bulance or other agency)" 
+(6 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal or written)" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)" 
+(2,800 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(5 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction" 
+(6 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest without warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Field interview card completed" 
+(45 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or othe
+> r agency)"
+(3 real changes made)
+
+. lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6
+>  "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning"
+
+. lab value resultofstoptype resultofstoptype
+
+. 
+. gen reason = 1 if reasonforstop=="Traffic Violation"
+(3,852 missing values generated)
+
+. replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
+(203 real changes made)
+
+. replace reason = 2 if reasonforstop=="Reasonable suspicion"
+(3,521 real changes made)
+
+. replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
+(45 real changes made)
+
+. replace reason = 5 if !inlist(reason,1,2,3,4)
+(83 real changes made)
+
+. lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Other" 
+
+. lab value reason reason
+
+. 
+. 
+. gen arrest = 1 if inlist(resultofstoptype,3,4)
+(6,986 missing values generated)
+
+. replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+(6,983 real changes made)
+
+. lab def arrest 1 "Arrested" 0 "Not Arrested"
+
+. lab value arrest arrest
+
+. 
+. 
+. gen other = 1 if race == 1
+(7,453 missing values generated)
+
+. replace other = 0 if race !=1
+(7,453 real changes made)
+
+. lab def other 1 "Other " 0 "Not Other " 
+
+. lab value other other
+
+. 
+. 
+. gen white = 1 if race == 2
+(5,234 missing values generated)
+
+. replace white = 0 if race !=2
+(5,234 real changes made)
+
+. lab def white  1 "White" 0 "Not White"
+
+. lab value white white
+
+. 
+. 
+. gen black = 1 if race == 3
+(5,196 missing values generated)
+
+. replace black = 0 if race !=3
+(5,196 real changes made)
+
+. lab def black 1 "Black/African American" 0 "Not Black/African American" 
+
+. lab value black black
+
+. 
+. 
+. gen hispanic = 1 if race == 4
+(6,898 missing values generated)
+
+. replace hispanic = 0 if race !=4
+(6,898 real changes made)
+
+. lab def hispanic 1 "Hispanic" 0 "Not Hispanic" 
+
+. lab value hispanic hispanic
+
+. 
+. 
+. gen asian = 1 if race == 5
+(7,571 missing values generated)
+
+. replace asian = 0 if race !=5
+(7,571 real changes made)
+
+. lab def asian 1 "Asian " 0 "Not Asian " 
+
+. lab value asian asian
+
+. 
+. 
+. gen nonwhite = 1 if inlist(race,1,3,4,5) 
+(2,854 missing values generated)
+
+. replace nonwhite = 0 if inlist(race,2)
+(2,854 real changes made)
+
+. lab def nonwhite 0 "White" 1 "Nonwhite"
+
+. lab value nonwhite nonwhite
+
+. 
+. 
+. gen longstop = 1 if durationofstop >= 20
+(5,686 missing values generated)
+
+. replace longstop = 0 if durationofstop < 20
+(5,686 real changes made)
+
+. lab def longstop 1 "Longer than average stop" 0 "Normal/shorter than average stop" 
+
+. lab value longstop longstop
+
+. 
+. gen far = 1 if distancefromcal >= 2
+(6,182 missing values generated)
+
+. replace far = 0 if distancefromcal < 2
+(6,182 real changes made)
+
+. lab def far 1 "Far from university" 0 "Not far from university" 
+
+. lab value far far
+
+. 
+. // replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" & resultofstoptype!="Custodial Arrest With Warrant"
+. // lab def arrest 1 "Arrest" 2 "Other" 
+. // lab value arrest arrest
+. 
+. 
+. 
+. 
+. 
+. 
+. // mcp2 perceivedage black
+. 
+. // logit arrest black distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+. 
+. logit arrest black perceivedage racepercieved distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3066.9271  
+Iteration 2:   log likelihood =   -3059.82  
+Iteration 3:   log likelihood = -3059.8083  
+Iteration 4:   log likelihood = -3059.8083  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(5)        =     319.16
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3059.8083                     Pseudo R2         =     0.0496
+
+-----------------------------------------------------------------------------------------------------------------
+                                         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+------------------------------------------------+----------------------------------------------------------------
+                                          black |   1.427719   .0958546     5.30   0.000     1.251683    1.628511
+                                   perceivedage |   .9971047   .0025761    -1.12   0.262     .9920683    1.002167
+                                  racepercieved |   2.966004   .2081096    15.50   0.000     2.584921    3.403269
+                          distancefromcalsimple |   .7900135   .1642003    -1.13   0.257     .5256741    1.187278
+                                                |
+c.distancefromcalsimple#c.distancefromcalsimple |    1.05528   .0735117     0.77   0.440     .9206024    1.209659
+                                                |
+                                          _cons |   .1047542   .0177035   -13.35   0.000     .0752174    .1458897
+-----------------------------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. margins, at(distancefromcalsimple =(1(.25)4))
+
+Predictive margins                              Number of obs     =      8,085
+Model VCE    : OIM
+
+Expression   : Pr(arrest), predict()
+
+1._at        : distancefr~e    =           1
+
+2._at        : distancefr~e    =        1.25
+
+3._at        : distancefr~e    =         1.5
+
+4._at        : distancefr~e    =        1.75
+
+5._at        : distancefr~e    =           2
+
+6._at        : distancefr~e    =        2.25
+
+7._at        : distancefr~e    =         2.5
+
+8._at        : distancefr~e    =        2.75
+
+9._at        : distancefr~e    =           3
+
+10._at       : distancefr~e    =        3.25
+
+11._at       : distancefr~e    =         3.5
+
+12._at       : distancefr~e    =        3.75
+
+13._at       : distancefr~e    =           4
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .1372574   .0047714    28.77   0.000     .1279056    .1466091
+          2  |   .1340259   .0051979    25.78   0.000     .1238382    .1442135
+          3  |   .1315947   .0054308    24.23   0.000     .1209505    .1422388
+          4  |   .1299301    .005365    24.22   0.000      .119415    .1404453
+          5  |   .1290092   .0053652    24.05   0.000     .1184936    .1395248
+          6  |    .128819    .006205    20.76   0.000     .1166574    .1409807
+          7  |    .129357   .0085187    15.19   0.000     .1126607    .1460534
+          8  |   .1306307   .0123503    10.58   0.000     .1064245    .1548369
+          9  |   .1326576   .0175777     7.55   0.000     .0982059    .1671093
+         10  |   .1354659   .0241796     5.60   0.000     .0880748     .182857
+         11  |   .1390944   .0322309     4.32   0.000      .075923    .2022659
+         12  |   .1435929   .0418716     3.43   0.001     .0615261    .2256596
+         13  |   .1490225     .05329     2.80   0.005     .0445761     .253469
+------------------------------------------------------------------------------
+
+. marginsplot, xdimension(at(distancefromcalsimple))
+
+  Variables that uniquely identify margins: distancefromcalsimple
+
+. mcp2 distancefromcalsimple black 
+
+. 
+. 
+. logit longstop racepercieved white black hispanic asian other distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
+
+note: other omitted because of collinearity
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4731.4533  
+Iteration 2:   log likelihood =  -4728.088  
+Iteration 3:   log likelihood = -4728.0758  
+Iteration 4:   log likelihood = -4728.0758  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(7)        =     383.49
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4728.0758                     Pseudo R2         =     0.0390
+
+-----------------------------------------------------------------------------------------------------------------
+                                       longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+------------------------------------------------+----------------------------------------------------------------
+                                  racepercieved |   2.099454   .1088461    14.31   0.000     1.896601    2.324004
+                                          white |    1.49666   .1683797     3.58   0.000     1.200494    1.865892
+                                          black |   2.195028   .2441515     7.07   0.000     1.765068    2.729723
+                                       hispanic |    1.90822   .2327176     5.30   0.000     1.502519    2.423467
+                                          asian |   .7133031   .1175738    -2.05   0.040     .5163813    .9853211
+                                          other |          1  (omitted)
+                          distancefromcalsimple |    .914447   .1406877    -0.58   0.561     .6763963    1.236277
+                                                |
+c.distancefromcalsimple#c.distancefromcalsimple |   1.073666    .053798     1.42   0.156     .9732362     1.18446
+                                                |
+                                          _cons |   .1701021   .0249067   -12.10   0.000      .127666     .226644
+-----------------------------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. margins, at(distancefromcalsimple =(1(.25)4))
+
+Predictive margins                              Number of obs     =      8,088
+Model VCE    : OIM
+
+Expression   : Pr(longstop), predict()
+
+1._at        : distancefr~e    =           1
+
+2._at        : distancefr~e    =        1.25
+
+3._at        : distancefr~e    =         1.5
+
+4._at        : distancefr~e    =        1.75
+
+5._at        : distancefr~e    =           2
+
+6._at        : distancefr~e    =        2.25
+
+7._at        : distancefr~e    =         2.5
+
+8._at        : distancefr~e    =        2.75
+
+9._at        : distancefr~e    =           3
+
+10._at       : distancefr~e    =        3.25
+
+11._at       : distancefr~e    =         3.5
+
+12._at       : distancefr~e    =        3.75
+
+13._at       : distancefr~e    =           4
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .2842977   .0061179    46.47   0.000     .2723068    .2962886
+          2  |   .2877326   .0066547    43.24   0.000     .2746896    .3007755
+          3  |   .2929431   .0071108    41.20   0.000     .2790062      .30688
+          4  |   .2999812   .0072022    41.65   0.000     .2858652    .3140972
+          5  |   .3089136   .0072754    42.46   0.000     .2946541     .323173
+          6  |   .3198195   .0083125    38.47   0.000     .3035273    .3361117
+          7  |   .3327874   .0113412    29.34   0.000     .3105591    .3550157
+          8  |     .34791   .0165944    20.97   0.000     .3153856    .3804343
+          9  |   .3652778   .0239047    15.28   0.000     .3184254    .4121301
+         10  |   .3849711   .0331451    11.61   0.000     .3200078    .4499344
+         11  |   .4070499   .0442413     9.20   0.000     .3203386    .4937612
+         12  |   .4315414   .0571052     7.56   0.000     .3196173    .5434655
+         13  |   .4584267   .0715836     6.40   0.000     .3181254    .5987279
+------------------------------------------------------------------------------
+
+. marginsplot, xdimension(at(distancefromcalsimple))
+
+  Variables that uniquely identify margins: distancefromcalsimple
+
+. mcp2 distancefromcalsimple
+
+. 
+. 
+. // exit, clear 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. //https://www.stata.com/manuals/spintro4.pdf#spIntro4
+. // ssc install shp2dta, replace
+. // // ssc install spshape2dta, replace
+. //
+. // unzipfile Census_Tract_Polygons_2010.zip
+. //
+. // spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f replace
+. //
+. // use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+. // describe
+. // list in 1/5
+. //
+. //
+. // // generate long fips = real(ID)
+. // // // bysort fips: assert _N==1
+. // // assert fips != .
+. //
+. //
+. // // gen pop = totalpop  //population for each tract
+. //
+. // // ssc install spmap, replace
+. //
+. // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Blues)  
+. // // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Reds)
+. //
+. // set more off
+. // clear all
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. //
+. // //EVERYTHING AFTER THIS IS UNDER DEVELOPMENT. GRAPHS
+. // use usdata, clear
+. // ren subreg_id subreg
+. // encode subreg, gen(subreg_id)
+. //
+. // keep subreg_id unhappy housing_price unemployment
+. //
+. // merge 1:1 subreg_id using usdb.dta
+. // drop _merge
+. //
+. // merge 1:1 subreg_id using uslabelcoord.dta
+. // drop _merge
+. //
+. //
+. // spmap unhappy using uscoord.dta, id(subreg_id) ///
+. // label(label(subreg_id) xcoord(xcoord) ycoord(ycoord)) ///
+. // fcolor(Reds) legtitle("Fraction of respondents who were unhappy") ///
+. // title("Figure 3: Unhappiness by Census Division, 2012")
+. //
+. //
+. //
+. //
+. //
+. // gen Y = housing_price
+. // format Y %4.1f 
+. //
+. // spmap unhappy using uscoord.dta, id(subreg_id)  ///
+. // point(x(xcoord) y(ycoord) proportional(Y) fcolor(red) ocolor(white) size(*3.5))  ///
+. // label(label(subreg_id) xcoord(xcoord) ycoord(ycoord))  /// 
+. // fcolor(Whites) legtitle("Fraction of respondents who were unhappy")  ///
+. // title("Figure 3: Housing Price and Unhappiness by Census Division, 2012")
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. local model "arrest"
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. logit arrest nonwhite far racepercieved   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3073.0287  
+Iteration 2:   log likelihood = -3066.4603  
+Iteration 3:   log likelihood = -3066.4494  
+Iteration 4:   log likelihood = -3066.4494  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =     305.88
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3066.4494                     Pseudo R2         =     0.0475
+
+-------------------------------------------------------------------------------
+       arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+     nonwhite |    .194706   .0700481     2.78   0.005     .0574143    .3319978
+          far |  -.2649949   .0847148    -3.13   0.002    -.4310328    -.098957
+racepercieved |   1.126044   .0690001    16.32   0.000     .9908067    1.261282
+        _cons |  -2.508958   .0770664   -32.56   0.000    -2.660006   -2.357911
+-------------------------------------------------------------------------------
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform() dec(3) alpha(0.001, 0.01, 0.05) symbol(***,
+>  **, *) replace
+option eform() not allowed
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. logit arrest nonwhite far racepercieved, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3073.0287  
+Iteration 2:   log likelihood = -3066.4603  
+Iteration 3:   log likelihood = -3066.4494  
+Iteration 4:   log likelihood = -3066.4494  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =     305.88
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3066.4494                     Pseudo R2         =     0.0475
+
+-------------------------------------------------------------------------------
+       arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+     nonwhite |   1.214954   .0851052     2.78   0.005     1.059095     1.39375
+          far |   .7672099    .064994    -3.13   0.002     .6498376    .9057817
+racepercieved |   3.083435   .2127572    16.32   0.000     2.693406    3.529944
+        _cons |   .0813529   .0062696   -32.56   0.000     .0699478    .0946177
+-------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, *
+> *, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrest-.xls
+dir : seeout
+
+. 
+end of do-file
+
+. tab informationbasedstop
+
+Information |
+ Based Stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         no |      2,603       58.59       58.59
+        yes |      1,840       41.41      100.00
+------------+-----------------------------------
+      Total |      4,443      100.00
+
+. tab typeofstop
+
+    Type Of |
+       Stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+    Bicycle |        141        1.74        1.74
+ Pedestrian |      3,417       42.25       43.99
+    Vehicle |      4,530       56.01      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. tab officertypeofassignment
+
+             Officer Type of Assignment |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                Investigative/detective |         12        0.15        0.15
+K-12 public school, including school .. |          2        0.02        0.17
+                                  Other |          1        0.01        0.19
+Patrol, traffic enforcement, field op.. |      8,064       99.70       99.89
+Special events (e.g., sports, concert.. |          7        0.09       99.98
+                             Task force |          2        0.02      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      8,088      100.00
+
+. tab perceivedgender
+
+      Perceived Gender |      Freq.     Percent        Cum.
+-----------------------+-----------------------------------
+                Female |      2,001       24.75       24.75
+                  Male |      6,065       75.01       99.75
+   Transgender Man/Boy |          8        0.10       99.85
+Transgender Woman/Girl |         12        0.15      100.00
+-----------------------+-----------------------------------
+                 Total |      8,086      100.00
+
+. tab islgbt
+
+    Is LGBT |      Freq.     Percent        Cum.
+------------+-----------------------------------
+      False |      7,917       97.89       97.89
+       True |        171        2.11      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. tab perceivedage
+
+  Perceived |
+        Age |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          5 |          2        0.02        0.02
+          9 |          1        0.01        0.04
+         10 |          5        0.06        0.10
+         11 |          4        0.05        0.15
+         12 |          1        0.01        0.16
+         13 |          1        0.01        0.17
+         14 |          1        0.01        0.19
+         15 |          9        0.11        0.30
+         16 |         16        0.20        0.49
+         17 |         27        0.33        0.83
+         18 |         90        1.11        1.94
+         19 |         57        0.70        2.65
+         20 |        536        6.63        9.27
+         21 |        120        1.48       10.76
+         22 |        104        1.29       12.04
+         23 |         80        0.99       13.03
+         24 |         62        0.77       13.80
+         25 |        784        9.69       23.49
+         26 |         56        0.69       24.18
+         27 |         41        0.51       24.69
+         28 |         93        1.15       25.84
+         29 |         12        0.15       25.99
+         30 |      1,421       17.57       43.56
+         31 |          9        0.11       43.67
+         32 |         32        0.40       44.07
+         33 |         16        0.20       44.26
+         34 |         21        0.26       44.52
+         35 |        762        9.42       53.94
+         36 |         25        0.31       54.25
+         37 |         18        0.22       54.48
+         38 |         34        0.42       54.90
+         39 |         11        0.14       55.03
+         40 |      1,128       13.95       68.98
+         41 |          6        0.07       69.05
+         42 |          9        0.11       69.16
+         43 |          7        0.09       69.25
+         44 |          9        0.11       69.36
+         45 |        519        6.42       75.78
+         46 |          7        0.09       75.87
+         47 |          5        0.06       75.93
+         48 |         11        0.14       76.06
+         49 |          8        0.10       76.16
+         50 |        889       10.99       87.15
+         51 |          4        0.05       87.20
+         52 |          4        0.05       87.25
+         53 |          2        0.02       87.28
+         54 |          5        0.06       87.34
+         55 |        255        3.15       90.49
+         56 |          9        0.11       90.60
+         57 |          4        0.05       90.65
+         58 |          3        0.04       90.69
+         59 |          4        0.05       90.74
+         60 |        454        5.61       96.35
+         61 |          1        0.01       96.36
+         62 |          2        0.02       96.39
+         64 |          2        0.02       96.41
+         65 |        125        1.55       97.96
+         66 |          4        0.05       98.01
+         67 |          5        0.06       98.07
+         68 |          3        0.04       98.11
+         69 |          3        0.04       98.15
+         70 |        107        1.32       99.47
+         72 |          1        0.01       99.48
+         73 |          2        0.02       99.51
+         75 |         17        0.21       99.72
+         77 |          1        0.01       99.73
+         78 |          1        0.01       99.74
+         79 |          1        0.01       99.75
+         80 |         11        0.14       99.89
+         82 |          1        0.01       99.90
+         83 |          1        0.01       99.91
+         85 |          4        0.05       99.96
+         90 |          2        0.02       99.99
+         99 |          1        0.01      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. tab typeofpropertyseized
+
+                Type of Property Seized |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                Alcohol |         29       10.00       10.00
+                             Ammunition |          1        0.34       10.34
+Ammunition|Cell phone(s) or electroni.. |          1        0.34       10.69
+Ammunition|Cell phone(s) or electroni.. |          1        0.34       11.03
+    Cell phone(s) or electronic devices |          6        2.07       13.10
+Cell phone(s) or electronic devices| .. |          3        1.03       14.14
+                     Drug paraphernalia |         32       11.03       25.17
+Drug paraphernalia| Other contraband .. |          4        1.38       26.55
+Drug paraphernalia| Vehicle|Suspected.. |          1        0.34       26.90
+     Drug paraphernalia|Drugs/narcotics |          2        0.69       27.59
+Drug paraphernalia|Suspected stolen p.. |          2        0.69       28.28
+Drug paraphernalia|Suspected stolen p.. |          1        0.34       28.62
+                        Drugs/narcotics |         26        8.97       37.59
+Drugs/narcotics| Other contraband or .. |          2        0.69       38.28
+Drugs/narcotics| Other contraband or .. |          1        0.34       38.62
+Drugs/narcotics| Other contraband or .. |          1        0.34       38.97
+                Drugs/narcotics|Alcohol |          1        0.34       39.31
+Drugs/narcotics|Cell phone(s) or elec.. |          3        1.03       40.34
+Drugs/narcotics|Cell phone(s) or elec.. |          1        0.34       40.69
+Drugs/narcotics|Cell phone(s) or elec.. |          1        0.34       41.03
+     Drugs/narcotics|Drug paraphernalia |         25        8.62       49.66
+Drugs/narcotics|Drug paraphernalia| O.. |          3        1.03       50.69
+Drugs/narcotics|Drug paraphernalia|Ce.. |          2        0.69       51.38
+Drugs/narcotics|Drug paraphernalia|Ce.. |          1        0.34       51.72
+Drugs/narcotics|Drug paraphernalia|Mo.. |          1        0.34       52.07
+Drugs/narcotics|Drug paraphernalia|Su.. |          3        1.03       53.10
+Drugs/narcotics|Drug paraphernalia|We.. |          1        0.34       53.45
+Drugs/narcotics|Money|Cell phone(s) o.. |          1        0.34       53.79
+Drugs/narcotics|Money|Drug parapherna.. |          1        0.34       54.14
+Drugs/narcotics|Money|Drug parapherna.. |          2        0.69       54.83
+Drugs/narcotics|Money|Drug parapherna.. |          1        0.34       55.17
+Drugs/narcotics|Money|Drug parapherna.. |          1        0.34       55.52
+Drugs/narcotics|Suspected stolen prop.. |          2        0.69       56.21
+Drugs/narcotics|Suspected stolen prop.. |          1        0.34       56.55
+Drugs/narcotics|Suspected stolen prop.. |          1        0.34       56.90
+Drugs/narcotics|Suspected stolen prop.. |          1        0.34       57.24
+Drugs/narcotics|Suspected stolen prop.. |          1        0.34       57.59
+Drugs/narcotics|Weapon(s) other than .. |          1        0.34       57.93
+Drugs/narcotics|Weapon(s) other than .. |          1        0.34       58.28
+Drugs/narcotics|Weapon(s) other than .. |          1        0.34       58.62
+                               Firearms |          2        0.69       59.31
+                    Firearms|Ammunition |          3        1.03       60.34
+Firearms|Ammunition| Vehicle|Cell pho.. |          1        0.34       60.69
+Firearms|Ammunition|Cell phone(s) or .. |          1        0.34       61.03
+Firearms|Ammunition|Cell phone(s) or .. |          2        0.69       61.72
+Firearms|Ammunition|Cell phone(s) or .. |          1        0.34       62.07
+    Firearms|Ammunition|Drugs/narcotics |          1        0.34       62.41
+Firearms|Ammunition|Drugs/narcotics|C.. |          1        0.34       62.76
+Firearms|Ammunition|Drugs/narcotics|M.. |          1        0.34       63.10
+Firearms|Ammunition|Suspected stolen .. |          1        0.34       63.45
+Firearms|Cell phone(s) or electronic .. |          1        0.34       63.79
+               Firearms|Drugs/narcotics |          1        0.34       64.14
+Firearms|Drugs/narcotics|Ammunition|C.. |          1        0.34       64.48
+Firearms|Drugs/narcotics|Suspected st.. |          1        0.34       64.83
+Firearms|Suspected stolen property|Ce.. |          1        0.34       65.17
+Money|Suspected stolen property|Cell .. |          1        0.34       65.52
+           Other contraband or evidence |         31       10.69       76.21
+Other contraband or evidence|Cell pho.. |          1        0.34       76.55
+Other contraband or evidence|Cell pho.. |          1        0.34       76.90
+Other contraband or evidence|Drugs/na.. |          1        0.34       77.24
+Other contraband or evidence|Suspecte.. |          3        1.03       78.28
+              Suspected stolen property |         19        6.55       84.83
+Suspected stolen property| Other cont.. |          4        1.38       86.21
+Suspected stolen property| Vehicle|Dr.. |          1        0.34       86.55
+Suspected stolen property|Cell phone(.. |          1        0.34       86.90
+Suspected stolen property|Drug paraph.. |          1        0.34       87.24
+Suspected stolen property|Drugs/narco.. |          1        0.34       87.59
+     Suspected stolen property|Firearms |          1        0.34       87.93
+                                Vehicle |          2        0.69       88.62
+  Vehicle| Other contraband or evidence |          1        0.34       88.97
+           Weapon(s) other than firearm |         24        8.28       97.24
+Weapon(s) other than firearm| Other c.. |          2        0.69       97.93
+Weapon(s) other than firearm|Alcohol|.. |          1        0.34       98.28
+Weapon(s) other than firearm|Cell pho.. |          1        0.34       98.62
+Weapon(s) other than firearm|Drug par.. |          1        0.34       98.97
+Weapon(s) other than firearm|Drugs/na.. |          1        0.34       99.31
+Weapon(s) other than firearm|Drugs/na.. |          1        0.34       99.66
+Weapon(s) other than firearm|Drugs/na.. |          1        0.34      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        290      100.00
+
+. tab contrabandorevidence
+
+                 Contraband or Evidence |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                Alcohol |        240        2.97        2.97
+             Alcohol|Drug paraphernalia |          3        0.04        3.00
+                Alcohol|Drugs/narcotics |          2        0.02        3.03
+Alcohol|Drugs/narcotics|Drug parapher.. |          1        0.01        3.04
+   Alcohol|Other contraband or evidence |          7        0.09        3.13
+                             Ammunition |          8        0.10        3.23
+Ammunition|Cell phone(s) or electroni.. |          1        0.01        3.24
+Ammunition|Drugs/narcotics|Drug parap.. |          1        0.01        3.25
+Ammunition|Drugs/narcotics|Drug parap.. |          1        0.01        3.26
+Ammunition|Firearm(s)|Alcohol|Money|D.. |          1        0.01        3.28
+Ammunition|Firearm(s)|Drugs/narcotics.. |          1        0.01        3.29
+  Cell phone(s) or electronic device(s) |         14        0.17        3.46
+Cell phone(s) or electronic device(s).. |          2        0.02        3.49
+Cell phone(s) or electronic device(s).. |          1        0.01        3.50
+Cell phone(s) or electronic device(s).. |          1        0.01        3.51
+                     Drug paraphernalia |        211        2.61        6.12
+             Drug paraphernalia|Alcohol |          2        0.02        6.14
+Drug paraphernalia|Cell phone(s) or e.. |          1        0.01        6.16
+     Drug paraphernalia|Drugs/narcotics |          7        0.09        6.24
+Drug paraphernalia|Drugs/narcotics|Su.. |          1        0.01        6.26
+Drug paraphernalia|Other contraband o.. |         13        0.16        6.42
+Drug paraphernalia|Suspected stolen p.. |          7        0.09        6.50
+Drug paraphernalia|Suspected stolen p.. |          1        0.01        6.52
+Drug paraphernalia|Weapon(s) other th.. |          2        0.02        6.54
+                        Drugs/narcotics |        200        2.47        9.01
+                Drugs/narcotics|Alcohol |          9        0.11        9.12
+Drugs/narcotics|Alcohol|Cell phone(s).. |          1        0.01        9.14
+Drugs/narcotics|Alcohol|Drug parapher.. |          2        0.02        9.16
+Drugs/narcotics|Cell phone(s) or elec.. |          4        0.05        9.21
+     Drugs/narcotics|Drug paraphernalia |         69        0.85       10.06
+Drugs/narcotics|Drug paraphernalia|Al.. |          1        0.01       10.08
+Drugs/narcotics|Drug paraphernalia|Ce.. |          3        0.04       10.11
+Drugs/narcotics|Drug paraphernalia|Ce.. |          1        0.01       10.13
+Drugs/narcotics|Drug paraphernalia|Ce.. |          1        0.01       10.14
+Drugs/narcotics|Drug paraphernalia|Mo.. |          2        0.02       10.16
+Drugs/narcotics|Drug paraphernalia|Ot.. |          6        0.07       10.24
+Drugs/narcotics|Drug paraphernalia|Su.. |          7        0.09       10.32
+             Drugs/narcotics|Firearm(s) |          1        0.01       10.34
+                  Drugs/narcotics|Money |          1        0.01       10.35
+Drugs/narcotics|Money|Cell phone(s) o.. |          2        0.02       10.37
+Drugs/narcotics|Money|Drug parapherna.. |          2        0.02       10.40
+Drugs/narcotics|Money|Drug parapherna.. |          1        0.01       10.41
+Drugs/narcotics|Money|Drug parapherna.. |          2        0.02       10.44
+Drugs/narcotics|Money|Suspected stole.. |          1        0.01       10.45
+Drugs/narcotics|Other contraband or e.. |         12        0.15       10.60
+Drugs/narcotics|Other contraband or e.. |          1        0.01       10.61
+Drugs/narcotics|Other contraband or e.. |          1        0.01       10.62
+Drugs/narcotics|Suspected stolen prop.. |         12        0.15       10.77
+Drugs/narcotics|Suspected stolen prop.. |          3        0.04       10.81
+Drugs/narcotics|Suspected stolen prop.. |          3        0.04       10.84
+Drugs/narcotics|Weapon(s) other than .. |          6        0.07       10.92
+                             Firearm(s) |         14        0.17       11.09
+                  Firearm(s)|Ammunition |         14        0.17       11.26
+Firearm(s)|Ammunition|Cell phone(s) o.. |          2        0.02       11.29
+  Firearm(s)|Ammunition|Drugs/narcotics |          4        0.05       11.34
+Firearm(s)|Ammunition|Drugs/narcotics.. |          1        0.01       11.35
+Firearm(s)|Ammunition|Drugs/narcotics.. |          2        0.02       11.37
+Firearm(s)|Ammunition|Drugs/narcotics.. |          2        0.02       11.40
+Firearm(s)|Ammunition|Drugs/narcotics.. |          2        0.02       11.42
+Firearm(s)|Ammunition|Drugs/narcotics.. |          1        0.01       11.44
+Firearm(s)|Ammunition|Other contraban.. |          1        0.01       11.45
+Firearm(s)|Ammunition|Suspected stole.. |          1        0.01       11.46
+Firearm(s)|Cell phone(s) or electroni.. |          1        0.01       11.47
+Firearm(s)|Drug paraphernalia|Cell ph.. |          1        0.01       11.49
+             Firearm(s)|Drugs/narcotics |          4        0.05       11.54
+Firearm(s)|Drugs/narcotics|Drug parap.. |          1        0.01       11.55
+Firearm(s)|Drugs/narcotics|Suspected .. |          1        0.01       11.56
+   Firearm(s)|Suspected stolen property |          1        0.01       11.57
+Firearm(s)|Weapon(s) other than a fir.. |          1        0.01       11.59
+Firearm(s)|Weapon(s) other than a fir.. |          1        0.01       11.60
+                                  Money |          2        0.02       11.62
+               Money|Drug paraphernalia |          1        0.01       11.63
+Money|Drugs/narcotics|Cell phone(s) o.. |          1        0.01       11.65
+Money|Suspected stolen property|Cell .. |          1        0.01       11.66
+                                   None |      6,777       83.79       95.45
+           Other contraband or evidence |        103        1.27       96.72
+Other contraband or evidence|Drug par.. |          3        0.04       96.76
+Other contraband or evidence|Drugs/na.. |          2        0.02       96.79
+Other contraband or evidence|Drugs/na.. |          1        0.01       96.80
+Other contraband or evidence|Suspecte.. |          2        0.02       96.82
+Other contraband or evidence|Weapon(s.. |          3        0.04       96.86
+              Suspected stolen property |        124        1.53       98.39
+Suspected stolen property|Ammunition|.. |          1        0.01       98.41
+Suspected stolen property|Cell phone(.. |          2        0.02       98.43
+Suspected stolen property|Cell phone(.. |          1        0.01       98.44
+Suspected stolen property|Cell phone(.. |          1        0.01       98.45
+Suspected stolen property|Drug paraph.. |          1        0.01       98.47
+Suspected stolen property|Other contr.. |          3        0.04       98.50
+         Weapon(s) other than a firearm |         92        1.14       99.64
+ Weapon(s) other than a firearm|Alcohol |          1        0.01       99.65
+Weapon(s) other than a firearm|Alcoho.. |          2        0.02       99.68
+Weapon(s) other than a firearm|Cell p.. |          1        0.01       99.69
+Weapon(s) other than a firearm|Drug p.. |          6        0.07       99.77
+Weapon(s) other than a firearm|Drug p.. |          1        0.01       99.78
+Weapon(s) other than a firearm|Drugs/.. |          2        0.02       99.80
+Weapon(s) other than a firearm|Drugs/.. |          2        0.02       99.83
+Weapon(s) other than a firearm|Drugs/.. |          1        0.01       99.84
+Weapon(s) other than a firearm|Drugs/.. |          1        0.01       99.85
+Weapon(s) other than a firearm|Drugs/.. |          1        0.01       99.86
+Weapon(s) other than a firearm|Drugs/.. |          1        0.01       99.88
+Weapon(s) other than a firearm|Drugs/.. |          2        0.02       99.90
+   Weapon(s) other than a firearm|Money |          1        0.01       99.91
+Weapon(s) other than a firearm|Other .. |          2        0.02       99.94
+Weapon(s) other than a firearm|Other .. |          1        0.01       99.95
+Weapon(s) other than a firearm|Suspec.. |          2        0.02       99.98
+Weapon(s) other than a firearm|Suspec.. |          1        0.01       99.99
+Weapon(s) other than a firearm|Suspec.. |          1        0.01      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      8,088      100.00
+
+. tab reason
+
+              reason |      Freq.     Percent        Cum.
+---------------------+-----------------------------------
+   Traffic Violation |      4,236       52.37       52.37
+Reasonable Suspicion |      3,521       43.53       95.91
+             Warrant |        203        2.51       98.42
+   Consensual Search |         45        0.56       98.97
+               Other |         83        1.03      100.00
+---------------------+-----------------------------------
+               Total |      8,088      100.00
+
+. longstop
+command longstop is unrecognized
+r(199);
+
+. tab longstop
+
+                        longstop |      Freq.     Percent        Cum.
+---------------------------------+-----------------------------------
+Normal/shorter than average stop |      5,686       70.30       70.30
+        Longer than average stop |      2,402       29.70      100.00
+---------------------------------+-----------------------------------
+                           Total |      8,088      100.00
+
+. tab far
+
+                    far |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+Not far from university |      6,182       76.43       76.43
+    Far from university |      1,906       23.57      100.00
+------------------------+-----------------------------------
+                  Total |      8,088      100.00
+
+. tab distancefromcalsimple
+
+distancefro |
+ mcalsimple |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         .1 |          6        0.07        0.07
+         .2 |         54        0.67        0.74
+         .3 |        154        1.90        2.65
+         .4 |        280        3.46        6.11
+         .5 |        466        5.76       11.87
+         .6 |        576        7.12       18.99
+         .7 |        469        5.80       24.79
+         .8 |        590        7.29       32.08
+         .9 |        295        3.65       35.73
+          1 |        288        3.56       39.29
+        1.1 |        377        4.66       43.95
+        1.2 |        280        3.46       47.42
+        1.3 |        329        4.07       51.48
+        1.4 |        366        4.53       56.01
+        1.5 |        248        3.07       59.08
+        1.6 |        247        3.05       62.13
+        1.7 |        253        3.13       65.26
+        1.8 |        356        4.40       69.66
+        1.9 |        410        5.07       74.73
+          2 |        305        3.77       78.50
+        2.1 |        366        4.53       83.02
+        2.2 |        429        5.30       88.33
+        2.3 |        316        3.91       92.24
+        2.4 |        166        2.05       94.29
+        2.5 |        141        1.74       96.03
+        2.6 |        127        1.57       97.60
+        2.7 |         55        0.68       98.28
+        2.8 |         29        0.36       98.64
+        2.9 |         12        0.15       98.79
+          3 |         28        0.35       99.13
+        3.1 |          6        0.07       99.21
+        3.2 |         12        0.15       99.36
+        3.3 |         51        0.63       99.99
+        3.4 |          1        0.01      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. br
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. gen reasonablesuspicion = 1 if reasonforstop = 2
+type mismatch
+r(109);
+
+end of do-file
+
+r(109);
+
+. tab reasonforstop
+
+                        Reason for Stop |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Consensual encounter resulting in sea.. |         45        0.56        0.56
+Investigation to determine whether pe.. |         33        0.41        0.96
+Knowledge of outstanding arrest warra.. |        203        2.51        3.47
+Parole/probation/PRCS/mandatory super.. |         50        0.62        4.09
+                   Reasonable suspicion |      3,521       43.53       47.63
+                      Traffic Violation |      4,236       52.37      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      8,088      100.00
+
+. tab reason
+
+              reason |      Freq.     Percent        Cum.
+---------------------+-----------------------------------
+   Traffic Violation |      4,236       52.37       52.37
+Reasonable Suspicion |      3,521       43.53       95.91
+             Warrant |        203        2.51       98.42
+   Consensual Search |         45        0.56       98.97
+               Other |         83        1.03      100.00
+---------------------+-----------------------------------
+               Total |      8,088      100.00
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. gen reasonablesuspicion = 1 if reason = 2
+invalid syntax
+r(198);
+
+end of do-file
+
+r(198);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. gen reasonablesuspicion = 1 if reason == 2
+(4,567 missing values generated)
+
+. replace reasonablesuspicion = 0 if reason != 2
+(4,567 real changes made)
+
+. lab def reasonablesuspicion 1 "Stop based on 'Reasonable Suspicion'" 0 "Stop Not based on 'Reasonable Suspicion'" 
+
+. lab value reasonablesuspicion reasonablesuspicion
+
+. 
+end of do-file
+
+. tab reasonablesuspicion
+
+                    reasonablesuspicion |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Stop Not based on 'Reasonable Suspicion |      4,567       56.47       56.47
+   Stop based on 'Reasonable Suspicion' |      3,521       43.53      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      8,088      100.00
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. logit arrest race far racepercieved, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3076.6276  
+Iteration 2:   log likelihood = -3070.3542  
+Iteration 3:   log likelihood = -3070.3442  
+Iteration 4:   log likelihood = -3070.3442  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =     298.09
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3070.3442                     Pseudo R2         =     0.0463
+
+-------------------------------------------------------------------------------
+       arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         race |   1.007323   .0346158     0.21   0.832     .9417114    1.077506
+          far |   .7628278   .0645816    -3.20   0.001     .6461943    .9005129
+racepercieved |   3.017019   .2072846    16.07   0.000     2.636915    3.451914
+        _cons |   .0916633   .0103744   -21.11   0.000     .0734271    .1144285
+-------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05)
+>  symbol(***, **, *) replace
+file \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrest-.xls is read-only; cannot be modified or erased
+The file needs to be closed if being used by another software such as Excel.
+r(608);
+
+end of do-file
+
+r(608);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. logit arrest race far racepercieved, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3076.6276  
+Iteration 2:   log likelihood = -3070.3542  
+Iteration 3:   log likelihood = -3070.3442  
+Iteration 4:   log likelihood = -3070.3442  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =     298.09
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3070.3442                     Pseudo R2         =     0.0463
+
+-------------------------------------------------------------------------------
+       arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+         race |   1.007323   .0346158     0.21   0.832     .9417114    1.077506
+          far |   .7628278   .0645816    -3.20   0.001     .6461943    .9005129
+racepercieved |   3.017019   .2072846    16.07   0.000     2.636915    3.451914
+        _cons |   .0916633   .0103744   -21.11   0.000     .0734271    .1144285
+-------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05)
+>  symbol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrest-.xls
+dir : seeout
+
+. logit arrest race far racepercieved reason reasonablesuspicion, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -2893.4274  
+Iteration 2:   log likelihood = -2834.0883  
+Iteration 3:   log likelihood = -2832.0024  
+Iteration 4:   log likelihood = -2832.0006  
+Iteration 5:   log likelihood = -2832.0006  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(5)        =     774.78
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2832.0006                     Pseudo R2         =     0.1203
+
+-------------------------------------------------------------------------------------
+             arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+               race |    1.02743   .0381572     0.73   0.466     .9553003    1.105006
+                far |   .9158802   .0810499    -0.99   0.321     .7700384    1.089344
+      racepercieved |   1.396842   .1098246     4.25   0.000     1.197354    1.629565
+             reason |   2.518193   .1289728    18.03   0.000     2.277685    2.784098
+reasonablesuspicion |   1.945066   .1564724     8.27   0.000     1.661341    2.277246
+              _cons |   .0169387   .0026059   -26.51   0.000     .0125293    .0228998
+-------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05)
+>  symbol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrest-.xls
+dir : seeout
+
+. 
+end of do-file
+
+. tab informationbasedstop
+
+Information |
+ Based Stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         no |      2,603       58.59       58.59
+        yes |      1,840       41.41      100.00
+------------+-----------------------------------
+      Total |      4,443      100.00
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. logit arrest nonwhite far racepercieved, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3073.0287  
+Iteration 2:   log likelihood = -3066.4603  
+Iteration 3:   log likelihood = -3066.4494  
+Iteration 4:   log likelihood = -3066.4494  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =     305.88
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3066.4494                     Pseudo R2         =     0.0475
+
+-------------------------------------------------------------------------------
+       arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+     nonwhite |   1.214954   .0851052     2.78   0.005     1.059095     1.39375
+          far |   .7672099    .064994    -3.13   0.002     .6498376    .9057817
+racepercieved |   3.083435   .2127572    16.32   0.000     2.693406    3.529944
+        _cons |   .0813529   .0062696   -32.56   0.000     .0699478    .0946177
+-------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05)
+>  symbol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results -.xls
+dir : seeout
+
+. logit arrest nonwhite far racepercieved informationbasedstop reason reasonablesuspicion, or   //Model 1
+no observations
+r(2000);
+
+end of do-file
+
+r(2000);
+
+. br
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. gen infobased = 1 if informationbasedstop == "no"
+(5,485 missing values generated)
+
+. replace infobased = 0 if informationbasedstop != "no"
+(5,485 real changes made)
+
+. lab def infobased 1 "Stop based on previous information" 0 "Stop Not based on previous information" 
+
+. lab value infobased infobased
+
+. 
+end of do-file
+
+. tab infobased
+
+                             infobased |      Freq.     Percent        Cum.
+---------------------------------------+-----------------------------------
+Stop Not based on previous information |      5,485       67.82       67.82
+    Stop based on previous information |      2,603       32.18      100.00
+---------------------------------------+-----------------------------------
+                                 Total |      8,088      100.00
+
+. logit arrest i.infobased, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3195.9748  
+Iteration 2:   log likelihood = -3195.7237  
+Iteration 3:   log likelihood = -3195.7237  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      47.33
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3195.7237                     Pseudo R2         =     0.0074
+
+-----------------------------------------------------------------------------------------------------
+                             arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+------------------------------------+----------------------------------------------------------------
+                          infobased |
+Stop based on previous information  |   .6045958   .0456574    -6.66   0.000     .5214165    .7010444
+                              _cons |    .181975     .00681   -45.53   0.000     .1691055     .195824
+-----------------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest infobased, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3195.9748  
+Iteration 2:   log likelihood = -3195.7237  
+Iteration 3:   log likelihood = -3195.7237  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      47.33
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3195.7237                     Pseudo R2         =     0.0074
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   infobased |   .6045958   .0456574    -6.66   0.000     .5214165    .7010444
+       _cons |    .181975     .00681   -45.53   0.000     .1691055     .195824
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. logit arrest nonwhite far racepercieved, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3073.0287  
+Iteration 2:   log likelihood = -3066.4603  
+Iteration 3:   log likelihood = -3066.4494  
+Iteration 4:   log likelihood = -3066.4494  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(3)        =     305.88
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3066.4494                     Pseudo R2         =     0.0475
+
+-------------------------------------------------------------------------------
+       arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------+----------------------------------------------------------------
+     nonwhite |   1.214954   .0851052     2.78   0.005     1.059095     1.39375
+          far |   .7672099    .064994    -3.13   0.002     .6498376    .9057817
+racepercieved |   3.083435   .2127572    16.32   0.000     2.693406    3.529944
+        _cons |   .0813529   .0062696   -32.56   0.000     .0699478    .0946177
+-------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05)
+>  symbol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrest-.xls
+dir : seeout
+
+. logit arrest nonwhite far racepercieved infobased reason reasonablesuspicion, or   //Model 1
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -2891.1832  
+Iteration 2:   log likelihood = -2831.5294  
+Iteration 3:   log likelihood = -2829.4561  
+Iteration 4:   log likelihood = -2829.4544  
+Iteration 5:   log likelihood = -2829.4544  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(6)        =     779.87
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2829.4544                     Pseudo R2         =     0.1211
+
+-------------------------------------------------------------------------------------
+             arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+           nonwhite |   1.185099   .0854313     2.36   0.018     1.028948    1.364948
+                far |    .919906   .0814454    -0.94   0.346     .7733586    1.094223
+      racepercieved |   1.410078   .1112668     4.35   0.000     1.208026    1.645925
+          infobased |   .9965558   .0808651    -0.04   0.966     .8500241    1.168347
+             reason |   2.516288   .1307508    17.76   0.000     2.272639    2.786059
+reasonablesuspicion |   1.944448   .1572015     8.23   0.000      1.65951    2.278311
+              _cons |   .0162868   .0021099   -31.78   0.000     .0126348    .0209945
+-------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05)
+>  symbol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results arrest-.xls
+dir : seeout
+
+. 
+end of do-file
+
+. tab raceperceivedpriortostop
+
+       Race |
+  Perceived |
+   Prior To |
+       Stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+      False |      4,649       57.48       57.48
+       True |      3,439       42.52      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. tab race
+
+                  race |      Freq.     Percent        Cum.
+-----------------------+-----------------------------------
+                 Other |        635        7.85        7.85
+                 White |      2,854       35.29       43.14
+Black/African American |      2,892       35.76       78.89
+       Hispanic/Latino |      1,190       14.71       93.61
+                 Asian |        517        6.39      100.00
+-----------------------+-----------------------------------
+                 Total |      8,088      100.00
+
+. tab racepercieved
+
+           racepercieved |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+Race Not Percieved Prior |      4,649       57.48       57.48
+    Race Percieved Prior |      3,439       42.52      100.00
+-------------------------+-----------------------------------
+                   Total |      8,088      100.00
+
+. tab basisforsearch
+
+                       Basis for Search |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Condition of parole/probation/PRCS/ma.. |        192       12.14       12.14
+Condition of parole/probation/PRCS/ma.. |         49        3.10       15.24
+Condition of parole/probation/PRCS/ma.. |          1        0.06       15.31
+Condition of parole/probation/PRCS/ma.. |          1        0.06       15.37
+Condition of parole/probation/PRCS/ma.. |          2        0.13       15.50
+Condition of parole/probation/PRCS/ma.. |          1        0.06       15.56
+Condition of parole/probation/PRCS/ma.. |          7        0.44       16.00
+Condition of parole/probation/PRCS/ma.. |          5        0.32       16.32
+Condition of parole/probation/PRCS/ma.. |         10        0.63       16.95
+Condition of parole/probation/PRCS/ma.. |          1        0.06       17.01
+Condition of parole/probation/PRCS/ma.. |          1        0.06       17.08
+Condition of parole/probation/PRCS/ma.. |          5        0.32       17.39
+Condition of parole/probation/PRCS/ma.. |          6        0.38       17.77
+Condition of parole/probation/PRCS/ma.. |          1        0.06       17.84
+Condition of parole/probation/PRCS/ma.. |          1        0.06       17.90
+Condition of parole/probation/PRCS/ma.. |          1        0.06       17.96
+Condition of parole/probation/PRCS/ma.. |          1        0.06       18.03
+Condition of parole/probation/PRCS/ma.. |          7        0.44       18.47
+Condition of parole/probation/PRCS/ma.. |          1        0.06       18.53
+Condition of parole/probation/PRCS/ma.. |          2        0.13       18.66
+Condition of parole/probation/PRCS/ma.. |          2        0.13       18.79
+                          Consent given |        106        6.70       25.49
+      Consent given| Incident to arrest |         28        1.77       27.26
+Consent given| Incident to arrest| Ve.. |          1        0.06       27.32
+Consent given| Incident to arrest|Evi.. |          5        0.32       27.64
+Consent given| Incident to arrest|Evi.. |          1        0.06       27.70
+Consent given| Incident to arrest|Off.. |          2        0.13       27.83
+Consent given| Incident to arrest|Vis.. |          1        0.06       27.89
+       Consent given| Vehicle inventory |          2        0.13       28.02
+Consent given| Vehicle inventory| Inc.. |          1        0.06       28.08
+Consent given| Vehicle inventory|Visi.. |          1        0.06       28.15
+Consent given|Condition of parole/pro.. |         24        1.52       29.66
+Consent given|Condition of parole/pro.. |          4        0.25       29.92
+Consent given|Condition of parole/pro.. |          1        0.06       29.98
+Consent given|Condition of parole/pro.. |          1        0.06       30.04
+Consent given|Condition of parole/pro.. |          1        0.06       30.11
+Consent given|Condition of parole/pro.. |          1        0.06       30.17
+        Consent given|Evidence of crime |         12        0.76       30.93
+Consent given|Evidence of crime| Inci.. |          3        0.19       31.12
+Consent given|Evidence of crime| Inci.. |          1        0.06       31.18
+Consent given|Evidence of crime|Visib.. |          2        0.13       31.31
+       Consent given|Odor of contraband |          4        0.25       31.56
+Consent given|Odor of contraband| Veh.. |          2        0.13       31.69
+Consent given|Odor of contraband|Visi.. |          2        0.13       31.82
+Consent given|Officer safety/safety o.. |         61        3.86       35.67
+Consent given|Officer safety/safety o.. |         13        0.82       36.50
+Consent given|Officer safety/safety o.. |          1        0.06       36.56
+Consent given|Officer safety/safety o.. |          1        0.06       36.62
+Consent given|Officer safety/safety o.. |          1        0.06       36.69
+Consent given|Officer safety/safety o.. |          4        0.25       36.94
+Consent given|Officer safety/safety o.. |          3        0.19       37.13
+Consent given|Officer safety/safety o.. |          1        0.06       37.19
+Consent given|Officer safety/safety o.. |          1        0.06       37.25
+Consent given|Officer safety/safety o.. |          2        0.13       37.38
+Consent given|Officer safety/safety o.. |          2        0.13       37.51
+Consent given|Officer safety/safety o.. |          1        0.06       37.57
+Consent given|Officer safety/safety o.. |         14        0.89       38.46
+Consent given|Officer safety/safety o.. |          2        0.13       38.58
+Consent given|Officer safety/safety o.. |          1        0.06       38.65
+Consent given|Officer safety/safety o.. |          4        0.25       38.90
+Consent given|Officer safety/safety o.. |          1        0.06       38.96
+Consent given|Officer safety/safety o.. |          3        0.19       39.15
+Consent given|Officer safety/safety o.. |          1        0.06       39.22
+Consent given|Officer safety/safety o.. |          1        0.06       39.28
+Consent given|Search warrant| Inciden.. |          1        0.06       39.34
+Consent given|Search warrant|Visible .. |          1        0.06       39.41
+        Consent given|Suspected weapons |          5        0.32       39.72
+Consent given|Suspected weapons|Condi.. |          1        0.06       39.78
+       Consent given|Visible contraband |         11        0.70       40.48
+Consent given|Visible contraband| Inc.. |          1        0.06       40.54
+Consent given|Visible contraband|Evid.. |          3        0.19       40.73
+Consent given|Visible contraband|Evid.. |          1        0.06       40.80
+Consent given|Visible contraband|Odor.. |          5        0.32       41.11
+Consent given|Visible contraband|Odor.. |          1        0.06       41.18
+                      Evidence of crime |         26        1.64       42.82
+  Evidence of crime| Incident to arrest |         12        0.76       43.58
+Evidence of crime| Incident to arrest.. |          5        0.32       43.90
+   Evidence of crime| Vehicle inventory |          2        0.13       44.02
+Evidence of crime|Condition of parole.. |          1        0.06       44.09
+        Evidence of crime|Consent given |          1        0.06       44.15
+Evidence of crime|Officer safety/safe.. |          1        0.06       44.21
+Evidence of crime|Officer safety/safe.. |          1        0.06       44.28
+   Evidence of crime|Visible contraband |          5        0.32       44.59
+Evidence of crime|Visible contraband|.. |          1        0.06       44.66
+        Exigent circumstances/emergency |          2        0.13       44.78
+                     Incident to arrest |        324       20.49       65.28
+  Incident to arrest| Vehicle inventory |          4        0.25       65.53
+Incident to arrest|Condition of parol.. |         11        0.70       66.22
+       Incident to arrest|Consent given |          2        0.13       66.35
+   Incident to arrest|Evidence of crime |         11        0.70       67.05
+Incident to arrest|Officer safety/saf.. |         10        0.63       67.68
+  Incident to arrest|Visible contraband |          5        0.32       67.99
+Incident to arrest|Visible contraband.. |          1        0.06       68.06
+Incident to arrest|Visible contraband.. |          1        0.06       68.12
+                     Odor of contraband |          4        0.25       68.37
+ Odor of contraband| Incident to arrest |          1        0.06       68.44
+Odor of contraband|Officer safety/saf.. |          1        0.06       68.50
+  Odor of contraband|Visible contraband |          5        0.32       68.82
+Odor of contraband|Visible contraband.. |          1        0.06       68.88
+Odor of contraband|Visible contraband.. |          1        0.06       68.94
+        Officer safety/safety of others |        155        9.80       78.75
+Officer safety/safety of others| Exig.. |          3        0.19       78.94
+Officer safety/safety of others| Exig.. |          1        0.06       79.00
+Officer safety/safety of others| Inci.. |         64        4.05       83.05
+Officer safety/safety of others| Inci.. |          3        0.19       83.24
+Officer safety/safety of others| Inci.. |          1        0.06       83.30
+Officer safety/safety of others| Inci.. |          1        0.06       83.36
+Officer safety/safety of others| Inci.. |          5        0.32       83.68
+Officer safety/safety of others| Vehi.. |          7        0.44       84.12
+Officer safety/safety of others|Condi.. |         14        0.89       85.01
+Officer safety/safety of others|Condi.. |         10        0.63       85.64
+Officer safety/safety of others|Condi.. |          1        0.06       85.71
+Officer safety/safety of others|Condi.. |          1        0.06       85.77
+Officer safety/safety of others|Condi.. |          1        0.06       85.83
+Officer safety/safety of others|Condi.. |          2        0.13       85.96
+Officer safety/safety of others|Condi.. |          2        0.13       86.08
+Officer safety/safety of others|Condi.. |          1        0.06       86.15
+Officer safety/safety of others|Condi.. |          2        0.13       86.27
+Officer safety/safety of others|Condi.. |          1        0.06       86.34
+Officer safety/safety of others|Conse.. |          8        0.51       86.84
+Officer safety/safety of others|Conse.. |          3        0.19       87.03
+Officer safety/safety of others|Conse.. |          1        0.06       87.10
+Officer safety/safety of others|Evide.. |          4        0.25       87.35
+Officer safety/safety of others|Evide.. |          7        0.44       87.79
+Officer safety/safety of others|Searc.. |          1        0.06       87.86
+Officer safety/safety of others|Searc.. |          1        0.06       87.92
+Officer safety/safety of others|Searc.. |          1        0.06       87.98
+Officer safety/safety of others|Searc.. |          1        0.06       88.05
+Officer safety/safety of others|Suspe.. |         19        1.20       89.25
+Officer safety/safety of others|Suspe.. |          5        0.32       89.56
+Officer safety/safety of others|Suspe.. |          1        0.06       89.63
+Officer safety/safety of others|Suspe.. |          1        0.06       89.69
+Officer safety/safety of others|Suspe.. |          3        0.19       89.88
+Officer safety/safety of others|Suspe.. |          5        0.32       90.20
+Officer safety/safety of others|Suspe.. |          1        0.06       90.26
+Officer safety/safety of others|Suspe.. |          1        0.06       90.32
+Officer safety/safety of others|Suspe.. |          4        0.25       90.58
+Officer safety/safety of others|Suspe.. |          2        0.13       90.70
+Officer safety/safety of others|Suspe.. |          2        0.13       90.83
+Officer safety/safety of others|Visib.. |          9        0.57       91.40
+Officer safety/safety of others|Visib.. |          1        0.06       91.46
+Officer safety/safety of others|Visib.. |          1        0.06       91.52
+Officer safety/safety of others|Visib.. |          4        0.25       91.78
+Officer safety/safety of others|Visib.. |          1        0.06       91.84
+                         Search warrant |          3        0.19       92.03
+Search warrant|Condition of parole/pr.. |          1        0.06       92.09
+Search warrant|Officer safety/safety .. |          1        0.06       92.16
+Search warrant|Visible contraband|Evi.. |          1        0.06       92.22
+Search warrant|Visible contraband|Evi.. |          1        0.06       92.28
+                      Suspected weapons |          3        0.19       92.47
+  Suspected weapons| Incident to arrest |          3        0.19       92.66
+    Suspected weapons|Evidence of crime |          1        0.06       92.73
+Suspected weapons|Evidence of crime| .. |          2        0.13       92.85
+Suspected weapons|Evidence of crime|C.. |          1        0.06       92.92
+   Suspected weapons|Odor of contraband |          1        0.06       92.98
+Suspected weapons|Officer safety/safe.. |          1        0.06       93.04
+Suspected weapons|Officer safety/safe.. |          1        0.06       93.11
+Suspected weapons|Officer safety/safe.. |          1        0.06       93.17
+Suspected weapons|Officer safety/safe.. |          1        0.06       93.23
+Suspected weapons|Officer safety/safe.. |          1        0.06       93.30
+   Suspected weapons|Visible contraband |          1        0.06       93.36
+Suspected weapons|Visible contraband|.. |          2        0.13       93.49
+Suspected weapons|Visible contraband|.. |          1        0.06       93.55
+                      Vehicle inventory |         10        0.63       94.18
+  Vehicle inventory| Incident to arrest |          1        0.06       94.24
+Vehicle inventory| Incident to arrest.. |          1        0.06       94.31
+Vehicle inventory|Condition of parole.. |          1        0.06       94.37
+    Vehicle inventory|Evidence of crime |          2        0.13       94.50
+Vehicle inventory|Odor of contraband|.. |          1        0.06       94.56
+Vehicle inventory|Officer safety/safe.. |          1        0.06       94.62
+                     Visible contraband |         54        3.42       98.04
+ Visible contraband| Incident to arrest |          5        0.32       98.36
+Visible contraband| Incident to arres.. |          1        0.06       98.42
+Visible contraband| Incident to arres.. |          1        0.06       98.48
+Visible contraband|Condition of parol.. |          1        0.06       98.55
+Visible contraband|Condition of parol.. |          2        0.13       98.67
+       Visible contraband|Consent given |          2        0.13       98.80
+Visible contraband|Consent given| Inc.. |          1        0.06       98.86
+   Visible contraband|Evidence of crime |          4        0.25       99.11
+Visible contraband|Evidence of crime|.. |          2        0.13       99.24
+Visible contraband|Evidence of crime|.. |          1        0.06       99.30
+Visible contraband|Evidence of crime|.. |          1        0.06       99.37
+  Visible contraband|Odor of contraband |          6        0.38       99.75
+Visible contraband|Odor of contraband.. |          1        0.06       99.81
+Visible contraband|Odor of contraband.. |          1        0.06       99.87
+Visible contraband|Odor of contraband.. |          1        0.06       99.94
+Visible contraband|Suspected weapons|.. |          1        0.06      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      1,581      100.00
+
+. tab suspicionsubtype
+
+                      Suspicion SubType |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Actions indicative of a drug transact.. |         12        0.34        0.34
+Actions indicative of a drug transact.. |          1        0.03        0.37
+Actions indicative of a drug transact.. |          1        0.03        0.40
+Actions indicative of casing a victim.. |         35        0.99        1.39
+Actions indicative of casing a victim.. |          1        0.03        1.42
+Actions indicative of casing a victim.. |          1        0.03        1.45
+Actions indicative of casing a victim.. |          4        0.11        1.56
+Actions indicative of casing a victim.. |          1        0.03        1.59
+Actions indicative of engaging in a v.. |         13        0.37        1.96
+Actions indicative of engaging in a v.. |          2        0.06        2.02
+             Carrying suspicious object |         11        0.31        2.33
+Carrying suspicious object|Other reas.. |          2        0.06        2.39
+Carrying suspicious object|Suspected .. |          3        0.09        2.47
+            Matched suspect description |        921       26.16       28.63
+Matched suspect description|Actions i.. |          2        0.06       28.69
+Matched suspect description|Actions i.. |         14        0.40       29.08
+Matched suspect description|Actions i.. |          1        0.03       29.11
+Matched suspect description|Actions i.. |          5        0.14       29.25
+Matched suspect description|Actions i.. |          1        0.03       29.28
+Matched suspect description|Carrying .. |         12        0.34       29.62
+Matched suspect description|Carrying .. |          1        0.03       29.65
+Matched suspect description|Carrying .. |          1        0.03       29.68
+Matched suspect description|Carrying .. |          1        0.03       29.71
+Matched suspect description|Officer w.. |         29        0.82       30.53
+Matched suspect description|Officer w.. |          1        0.03       30.56
+Matched suspect description|Officer w.. |          7        0.20       30.76
+Matched suspect description|Officer w.. |          1        0.03       30.79
+Matched suspect description|Officer w.. |          1        0.03       30.82
+Matched suspect description|Other rea.. |         28        0.80       31.61
+Matched suspect description|Suspected.. |          1        0.03       31.64
+Matched suspect description|Witness o.. |        319        9.06       40.70
+Matched suspect description|Witness o.. |          1        0.03       40.73
+Matched suspect description|Witness o.. |          8        0.23       40.95
+Matched suspect description|Witness o.. |          7        0.20       41.15
+Matched suspect description|Witness o.. |          2        0.06       41.21
+Matched suspect description|Witness o.. |          8        0.23       41.44
+Matched suspect description|Witness o.. |          1        0.03       41.47
+Matched suspect description|Witness o.. |          5        0.14       41.61
+Matched suspect description|Witness o.. |          4        0.11       41.72
+Matched suspect description|Witness o.. |          1        0.03       41.75
+Officer witnessed commission of a crime |        534       15.17       56.92
+Officer witnessed commission of a cri.. |          2        0.06       56.97
+Officer witnessed commission of a cri.. |          2        0.06       57.03
+Officer witnessed commission of a cri.. |          2        0.06       57.09
+Officer witnessed commission of a cri.. |          2        0.06       57.14
+Officer witnessed commission of a cri.. |          1        0.03       57.17
+Officer witnessed commission of a cri.. |         48        1.36       58.53
+Officer witnessed commission of a cri.. |          1        0.03       58.56
+Officer witnessed commission of a cri.. |          1        0.03       58.59
+Officer witnessed commission of a cri.. |          2        0.06       58.65
+Officer witnessed commission of a cri.. |          1        0.03       58.68
+Officer witnessed commission of a cri.. |         24        0.68       59.36
+Officer witnessed commission of a cri.. |          1        0.03       59.39
+Officer witnessed commission of a cri.. |          1        0.03       59.41
+Officer witnessed commission of a cri.. |          1        0.03       59.44
+Officer witnessed commission of a cri.. |          2        0.06       59.50
+Officer witnessed commission of a cri.. |          4        0.11       59.61
+Officer witnessed commission of a cri.. |          1        0.03       59.64
+Officer witnessed commission of a cri.. |          1        0.03       59.67
+Officer witnessed commission of a cri.. |         16        0.45       60.12
+Officer witnessed commission of a cri.. |          4        0.11       60.24
+Officer witnessed commission of a cri.. |          1        0.03       60.27
+  Other reasonable suspicion of a crime |      1,004       28.51       88.78
+Other reasonable suspicion of a crime.. |          3        0.09       88.87
+Other reasonable suspicion of a crime.. |          1        0.03       88.90
+Other reasonable suspicion of a crime.. |          8        0.23       89.12
+Other reasonable suspicion of a crime.. |          1        0.03       89.15
+       Suspected of acting as a lookout |          2        0.06       89.21
+Suspected of acting as a lookout|Acti.. |          1        0.03       89.24
+Suspected of acting as a lookout|Matc.. |          1        0.03       89.26
+Witness or victim ID of suspect at th.. |        296        8.41       97.67
+Witness or victim ID of suspect at th.. |          6        0.17       97.84
+Witness or victim ID of suspect at th.. |          3        0.09       97.93
+Witness or victim ID of suspect at th.. |          3        0.09       98.01
+Witness or victim ID of suspect at th.. |         53        1.51       99.52
+Witness or victim ID of suspect at th.. |          1        0.03       99.55
+Witness or victim ID of suspect at th.. |          1        0.03       99.57
+Witness or victim ID of suspect at th.. |          3        0.09       99.66
+Witness or victim ID of suspect at th.. |          1        0.03       99.69
+Witness or victim ID of suspect at th.. |          6        0.17       99.86
+Witness or victim ID of suspect at th.. |          1        0.03       99.89
+Witness or victim ID of suspect at th.. |          4        0.11      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      3,521      100.00
+
+. resultofstop
+command resultofstop is unrecognized
+r(199);
+
+. tab resultofstop
+
+                         Result of Stop |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                Citation for infraction |      1,903       23.53       23.53
+Citation for infraction| Psychiatric .. |          1        0.01       23.54
+Citation for infraction|Contacted par.. |          3        0.04       23.58
+Citation for infraction|Custodial arr.. |          2        0.02       23.60
+Citation for infraction|In-field cite.. |          5        0.06       23.66
+Citation for infraction|Warning (verb.. |         16        0.20       23.86
+Contacted parent/legal guardian or ot.. |          2        0.02       23.89
+Contacted parent/legal guardian or ot.. |          1        0.01       23.90
+Contacted parent/legal guardian or ot.. |          1        0.01       23.91
+Custodial arrest pursuant to outstand.. |        212        2.62       26.53
+Custodial arrest pursuant to outstand.. |          2        0.02       26.56
+Custodial arrest pursuant to outstand.. |          1        0.01       26.57
+Custodial arrest pursuant to outstand.. |          1        0.01       26.58
+Custodial arrest pursuant to outstand.. |         96        1.19       27.77
+Custodial arrest pursuant to outstand.. |          1        0.01       27.78
+Custodial arrest pursuant to outstand.. |          1        0.01       27.79
+Custodial arrest pursuant to outstand.. |          2        0.02       27.82
+       Custodial arrest without warrant |        734        9.08       36.89
+Custodial arrest without warrant| Psy.. |          5        0.06       36.96
+Custodial arrest without warrant|Cont.. |          1        0.01       36.97
+Custodial arrest without warrant|Cust.. |         43        0.53       37.50
+Custodial arrest without warrant|Cust.. |          1        0.01       37.51
+Custodial arrest without warrant|Fiel.. |          1        0.01       37.52
+Custodial arrest without warrant|In-f.. |          1        0.01       37.54
+Custodial arrest without warrant|Nonc.. |          1        0.01       37.55
+         Field interview card completed |         73        0.90       38.45
+Field interview card completed| Psych.. |          3        0.04       38.49
+Field interview card completed|In-fie.. |          1        0.01       38.50
+Field interview card completed|Noncri.. |          5        0.06       38.56
+Field interview card completed|Noncri.. |          1        0.01       38.58
+Field interview card completed|Warnin.. |          5        0.06       38.64
+              In-field cite and release |        275        3.40       42.04
+In-field cite and release| Psychiatri.. |          4        0.05       42.09
+In-field cite and release|Citation fo.. |          3        0.04       42.12
+In-field cite and release|Custodial a.. |          1        0.01       42.14
+In-field cite and release|Custodial a.. |          2        0.02       42.16
+In-field cite and release|Field inter.. |          3        0.04       42.20
+In-field cite and release|Noncriminal.. |          2        0.02       42.22
+In-field cite and release|Noncriminal.. |          1        0.01       42.24
+                              No action |      1,324       16.37       58.61
+Noncriminal transport or caretaking t.. |         69        0.85       59.46
+Noncriminal transport or caretaking t.. |         22        0.27       59.73
+Noncriminal transport or caretaking t.. |          1        0.01       59.74
+Noncriminal transport or caretaking t.. |          1        0.01       59.76
+Noncriminal transport or caretaking t.. |          1        0.01       59.77
+Noncriminal transport or caretaking t.. |          1        0.01       59.78
+Psychiatric hold (W&I Code 5150 or 55.. |        371        4.59       64.37
+Psychiatric hold (W&I Code 5150 or 55.. |          1        0.01       64.38
+Psychiatric hold (W&I Code 5150 or 55.. |          2        0.02       64.40
+Psychiatric hold (W&I Code 5150 or 55.. |          4        0.05       64.45
+Psychiatric hold (W&I Code 5150 or 55.. |          1        0.01       64.47
+Psychiatric hold (W&I Code 5150 or 55.. |          2        0.02       64.49
+Psychiatric hold (W&I Code 5150 or 55.. |          6        0.07       64.56
+Psychiatric hold (W&I Code 5150 or 55.. |          1        0.01       64.58
+            Warning (verbal or written) |      2,800       34.62       99.20
+Warning (verbal or written)| Psychiat.. |          5        0.06       99.26
+Warning (verbal or written)|Citation .. |          6        0.07       99.33
+Warning (verbal or written)|Citation .. |          1        0.01       99.34
+Warning (verbal or written)|Custodial.. |          2        0.02       99.37
+Warning (verbal or written)|Custodial.. |          1        0.01       99.38
+Warning (verbal or written)|Field int.. |         45        0.56       99.94
+Warning (verbal or written)|In-field .. |          1        0.01       99.95
+Warning (verbal or written)|In-field .. |          1        0.01       99.96
+Warning (verbal or written)|Noncrimin.. |          3        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      8,088      100.00
+
+. tab resultofstoptype
+
+                resultofstoptype |      Freq.     Percent        Cum.
+---------------------------------+-----------------------------------
+         Citation for Infraction |      1,927       23.83       23.83
+             Contacted Guardians |          4        0.05       23.88
+   Custodial Arrest With Warrant |        316        3.91       27.79
+Custodial Arrest Without Warrant |        786        9.72       37.51
+            Field Interview Card |         89        1.10       38.61
+       In-Field Cite and Release |        291        3.60       42.21
+                       No Action |      1,324       16.38       58.59
+           Noncriminal Transport |         95        1.18       59.76
+                Psychiatric Hold |        388        4.80       64.56
+                         Warning |      2,865       35.44      100.00
+---------------------------------+-----------------------------------
+                           Total |      8,085      100.00
+
+. tab race
+
+                  race |      Freq.     Percent        Cum.
+-----------------------+-----------------------------------
+                 Other |        635        7.85        7.85
+                 White |      2,854       35.29       43.14
+Black/African American |      2,892       35.76       78.89
+       Hispanic/Latino |      1,190       14.71       93.61
+                 Asian |        517        6.39      100.00
+-----------------------+-----------------------------------
+                 Total |      8,088      100.00
+
+. tab reason
+
+              reason |      Freq.     Percent        Cum.
+---------------------+-----------------------------------
+   Traffic Violation |      4,236       52.37       52.37
+Reasonable Suspicion |      3,521       43.53       95.91
+             Warrant |        203        2.51       98.42
+   Consensual Search |         45        0.56       98.97
+               Other |         83        1.03      100.00
+---------------------+-----------------------------------
+               Total |      8,088      100.00
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. sum typeofstop racepercieved perceivedgender perceivedage reasonforstop resultofstoptype distancefromcalsimple racepercieved race reason reasonablesuspicion inf
+> obased 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  typeofstop |          0
+racepercie~d |      8,088    .4251978    .4944035          0          1
+perceivedg~r |          0
+perceivedage |      8,088    37.34607    12.99484          5         99
+reasonfors~p |          0
+-------------+---------------------------------------------------------
+resultofst~e |      8,085    6.232282    3.602527          1         10
+distancefr~e |      8,088    1.374555    .6972985         .1        3.4
+racepercie~d |      8,088    .4251978    .4944035          0          1
+        race |      8,088    2.765084     1.00731          1          5
+      reason |      8,088    1.543274    .6744699          1          5
+-------------+---------------------------------------------------------
+reasonable~n |      8,088    .4353363    .4958316          0          1
+   infobased |      8,088    .3218348    .4672089          0          1
+
+. corr arrest longstop typeofstop racepercieved perceivedgender perceivedage reasonforstop resultofstoptype distancefromcalsimple racepercieved race reason reason
+> ablesuspicion infobased 
+(typeofstop ignored because string variable)
+(perceivedgender ignored because string variable)
+(reasonforstop ignored because string variable)
+(obs=8,085)
+
+             |   arrest longstop racepe~d percei~e result~e distan~e racepe~d     race   reason reason~n infoba~d
+-------------+---------------------------------------------------------------------------------------------------
+      arrest |   1.0000
+    longstop |   0.4047   1.0000
+racepercie~d |   0.1892   0.1685   1.0000
+perceivedage |   0.0107  -0.0326   0.1107   1.0000
+resultofst~e |  -0.2778   0.0046  -0.0109  -0.0189   1.0000
+distancefr~e |  -0.0534   0.0103  -0.1876  -0.0247  -0.0277   1.0000
+racepercie~d |   0.1892   0.1685   1.0000   0.1107  -0.0109  -0.1876   1.0000
+        race |  -0.0144   0.0066  -0.0859  -0.1091  -0.0179   0.0474  -0.0859   1.0000
+      reason |   0.3105   0.3027   0.4649   0.0675   0.1395  -0.2035   0.4649  -0.0617   1.0000
+reasonable~n |   0.2138   0.3570   0.4891   0.0770   0.2295  -0.2164   0.4891  -0.0651   0.5955   1.0000
+   infobased |  -0.0747  -0.1209  -0.1427  -0.0027  -0.0710   0.0349  -0.1427   0.0035  -0.2267  -0.2021   1.0000
+
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. sum typeofstop racepercieved perceivedgender perceivedage reasonforstop resultofstoptype distancefromcalsimple racepercieved race reason reasonablesuspicion infobased 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  typeofstop |          0
+racepercie~d |      8,088    .4251978    .4944035          0          1
+perceivedg~r |          0
+perceivedage |      8,088    37.34607    12.99484          5         99
+reasonfors~p |          0
+-------------+---------------------------------------------------------
+resultofst~e |      8,085    6.232282    3.602527          1         10
+distancefr~e |      8,088    1.374555    .6972985         .1        3.4
+racepercie~d |      8,088    .4251978    .4944035          0          1
+        race |      8,088    2.765084     1.00731          1          5
+      reason |      8,088    1.543274    .6744699          1          5
+-------------+---------------------------------------------------------
+reasonable~n |      8,088    .4353363    .4958316          0          1
+   infobased |      8,088    .3218348    .4672089          0          1
+
+. corr arrest longstop typeofstop racepercieved perceivedgender perceivedage reasonforstop resultofstoptype distancefromcalsimple racepercieved race reason reasonablesuspicion infobased 
+(typeofstop ignored because string variable)
+(perceivedgender ignored because string variable)
+(reasonforstop ignored because string variable)
+(obs=8,085)
+
+             |   arrest longstop racepe~d percei~e result~e distan~e racepe~d     race   reason reason~n infoba~d
+-------------+---------------------------------------------------------------------------------------------------
+      arrest |   1.0000
+    longstop |   0.4047   1.0000
+racepercie~d |   0.1892   0.1685   1.0000
+perceivedage |   0.0107  -0.0326   0.1107   1.0000
+resultofst~e |  -0.2778   0.0046  -0.0109  -0.0189   1.0000
+distancefr~e |  -0.0534   0.0103  -0.1876  -0.0247  -0.0277   1.0000
+racepercie~d |   0.1892   0.1685   1.0000   0.1107  -0.0109  -0.1876   1.0000
+        race |  -0.0144   0.0066  -0.0859  -0.1091  -0.0179   0.0474  -0.0859   1.0000
+      reason |   0.3105   0.3027   0.4649   0.0675   0.1395  -0.2035   0.4649  -0.0617   1.0000
+reasonable~n |   0.2138   0.3570   0.4891   0.0770   0.2295  -0.2164   0.4891  -0.0651   0.5955   1.0000
+   infobased |  -0.0747  -0.1209  -0.1427  -0.0027  -0.0710   0.0349  -0.1427   0.0035  -0.2267  -0.2021   1.0000
+
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\3\STD1ed4_000000.tmp"
+
+. sum typeofstop racepercieved nonwhite perceivedgender perceivedage reasonforstop resultofstoptype distancefromcalsimple racepercieved race reason reasonablesuspicion infobased 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  typeofstop |          0
+racepercie~d |      8,088    .4251978    .4944035          0          1
+    nonwhite |      8,088    .6471316    .4778918          0          1
+perceivedg~r |          0
+perceivedage |      8,088    37.34607    12.99484          5         99
+-------------+---------------------------------------------------------
+reasonfors~p |          0
+resultofst~e |      8,085    6.232282    3.602527          1         10
+distancefr~e |      8,088    1.374555    .6972985         .1        3.4
+racepercie~d |      8,088    .4251978    .4944035          0          1
+        race |      8,088    2.765084     1.00731          1          5
+-------------+---------------------------------------------------------
+      reason |      8,088    1.543274    .6744699          1          5
+reasonable~n |      8,088    .4353363    .4958316          0          1
+   infobased |      8,088    .3218348    .4672089          0          1
+
+. corr arrest longstop typeofstop racepercieved nonwhite perceivedgender perceivedage reasonforstop resultofstoptype distancefromcalsimple racepercieved race reason reasonablesuspicion infobased 
+(typeofstop ignored because string variable)
+(perceivedgender ignored because string variable)
+(reasonforstop ignored because string variable)
+(obs=8,085)
+
+             |   arrest longstop racepe~d nonwhite percei~e result~e distan~e racepe~d     race   reason reason~n infoba~d
+-------------+------------------------------------------------------------------------------------------------------------
+      arrest |   1.0000
+    longstop |   0.4047   1.0000
+racepercie~d |   0.1892   0.1685   1.0000
+    nonwhite |   0.0090   0.0198  -0.1189   1.0000
+perceivedage |   0.0107  -0.0326   0.1107  -0.1343   1.0000
+resultofst~e |  -0.2778   0.0046  -0.0109   0.0314  -0.0189   1.0000
+distancefr~e |  -0.0534   0.0103  -0.1876   0.0505  -0.0247  -0.0277   1.0000
+racepercie~d |   0.1892   0.1685   1.0000  -0.1189   0.1107  -0.0109  -0.1876   1.0000
+        race |  -0.0144   0.0066  -0.0859   0.5609  -0.1091  -0.0179   0.0474  -0.0859   1.0000
+      reason |   0.3105   0.3027   0.4649  -0.0418   0.0675   0.1395  -0.2035   0.4649  -0.0617   1.0000
+reasonable~n |   0.2138   0.3570   0.4891  -0.0493   0.0770   0.2295  -0.2164   0.4891  -0.0651   0.5955   1.0000
+   infobased |  -0.0747  -0.1209  -0.1427  -0.0169  -0.0027  -0.0710   0.0349  -0.1427   0.0035  -0.2267  -0.2021   1.0000
+
+
+. 
+end of do-file
+
+. tab reasonforstop
+
+                        Reason for Stop |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Consensual encounter resulting in sea.. |         45        0.56        0.56
+Investigation to determine whether pe.. |         33        0.41        0.96
+Knowledge of outstanding arrest warra.. |        203        2.51        3.47
+Parole/probation/PRCS/mandatory super.. |         50        0.62        4.09
+                   Reasonable suspicion |      3,521       43.53       47.63
+                      Traffic Violation |      4,236       52.37      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      8,088      100.00
+
+. logit arrest nonwhite
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3219.0646  
+Iteration 2:   log likelihood = -3219.0646  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.65
+                                                Prob > chi2       =     0.4198
+Log likelihood = -3219.0646                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    nonwhite |    .054939   .0682465     0.81   0.421    -.0788217    .1886997
+       _cons |  -1.882154   .0552847   -34.04   0.000     -1.99051   -1.773798
+------------------------------------------------------------------------------
+
+. logit arrest nonwhite, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3219.0646  
+Iteration 2:   log likelihood = -3219.0646  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.65
+                                                Prob > chi2       =     0.4198
+Log likelihood = -3219.0646                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    nonwhite |   1.056476   .0721008     0.81   0.421     .9242047    1.207678
+       _cons |   .1522617   .0084177   -34.04   0.000     .1366257    .1696872
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest i.nonwhite, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3219.0646  
+Iteration 2:   log likelihood = -3219.0646  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.65
+                                                Prob > chi2       =     0.4198
+Log likelihood = -3219.0646                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    nonwhite |
+   Nonwhite  |   1.056476   .0721008     0.81   0.421     .9242047    1.207678
+       _cons |   .1522617   .0084177   -34.04   0.000     .1366257    .1696872
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest hispanic, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3219.1053  
+Iteration 2:   log likelihood = -3219.1052  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =       0.57
+                                                Prob > chi2       =     0.4505
+Log likelihood = -3219.1052                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |   .9325043    .086887    -0.75   0.453     .7768538    1.119341
+       _cons |   .1594081   .0055747   -52.51   0.000     .1488479    .1707176
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest black, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood =   -3200.18  
+Iteration 2:   log likelihood = -3200.0446  
+Iteration 3:   log likelihood = -3200.0446  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(1)        =      38.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3200.0446                     Pseudo R2         =     0.0060
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.509265   .0991289     6.27   0.000     1.326962    1.716614
+       _cons |   .1342795   .0057668   -46.75   0.000     .1234394    .1460714
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. tab hispanic
+
+    hispanic |      Freq.     Percent        Cum.
+-------------+-----------------------------------
+Not Hispanic |      6,898       85.29       85.29
+    Hispanic |      1,190       14.71      100.00
+-------------+-----------------------------------
+       Total |      8,088      100.00
+
+. logit arrest hispanic far, or
+
+Iteration 0:   log likelihood =   -3219.39  
+Iteration 1:   log likelihood = -3208.0333  
+Iteration 2:   log likelihood = -3207.9676  
+Iteration 3:   log likelihood = -3207.9676  
+
+Logistic regression                             Number of obs     =      8,085
+                                                LR chi2(2)        =      22.84
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3207.9676                     Pseudo R2         =     0.0035
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |   .9634279   .0901282    -0.40   0.690     .8020283    1.157307
+         far |     .68275    .056887    -4.58   0.000     .5798815    .8038669
+       _cons |   .1719869   .0065326   -46.34   0.000     .1596482    .1852793
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+

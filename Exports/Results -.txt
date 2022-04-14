@@ -1,0 +1,17 @@
+	(1)
+VARIABLES	arrest
+	
+arrest	.
+	(.)
+nonwhite	1.215**
+	(0.085)
+far	0.767**
+	(0.065)
+racepercieved	3.083***
+	(0.213)
+Constant	0.081***
+	(0.006)
+	
+Observations	8,085
+seEform in parentheses	
+*** p<0.001, ** p<0.01, * p<0.05	

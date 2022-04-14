@@ -1,0 +1,23 @@
+	(1)	(2)
+VARIABLES	arrest	arrest
+		
+arrest	.	.
+	(.)	(.)
+nonwhite	1.215**	1.185*
+	(0.085)	(0.085)
+far	0.767**	0.920
+	(0.065)	(0.081)
+racepercieved	3.083***	1.410***
+	(0.213)	(0.111)
+infobased		0.997
+		(0.081)
+reason		2.516***
+		(0.131)
+reasonablesuspicion		1.944***
+		(0.157)
+Constant	0.081***	0.016***
+	(0.006)	(0.002)
+		
+Observations	8,085	8,085
+seEform in parentheses		
+*** p<0.001, ** p<0.01, * p<0.05		
