@@ -1,0 +1,16 @@
+	(1)
+VARIABLES	arrpi
+	
+nonwhite	0.858***
+	(0.018)
+far	1.146***
+	(0.020)
+racepercieved	-0.087***
+	(0.017)
+Constant	-0.788***
+	(0.018)
+	
+Observations	8,088
+R-squared	0.413
+Standard errors in parentheses	
+*** p<0.001, ** p<0.01, * p<0.05	
