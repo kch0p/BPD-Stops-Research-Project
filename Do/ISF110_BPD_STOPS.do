@@ -10,13 +10,13 @@ local study "BPDSTOPS"
 
 // log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
-use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
-
-sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+// use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
+//
+// sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
 // ssc install mcp2
-// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
 
-// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
 //
 // cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
 // ls
@@ -168,6 +168,32 @@ gen far = 1 if distancefromcal >= 2
 replace far = 0 if distancefromcal < 2
 lab def far 1 "Far from university" 0 "Not far from university" 
 lab value far far
+
+gen infobased = 1 if informationbasedstop == "yes"
+replace infobased = 0 if informationbasedstop != "yes"
+lab def infobased 1 "Stop based on previous information" 0 "Stop not based on previous information" 
+lab value infobased infobased
+
+gen reasonablesuspicion = 1 if reasonforstop == "Reasonable suspicion"
+replace reasonablesuspicion = 0 if reasonforstop != "Reasonable suspicion"
+lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop based on other reason" 
+lab value reasonablesuspicion reasonablesuspicion
+
+gen trafficstop = 1 if reasonforstop == "Traffic Violation" | typeofstop == "Vehicle"
+replace trafficstop = 0 if reasonforstop != "Traffic Violation" | typeofstop != "Vehicle"
+lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
+lab value trafficstop trafficstop
+
+gen noactions = 1 if resultofstoptype == 7 | resultofstoptype == 10
+replace noactions = 0 if !inlist(noaction,1)
+lab def noactions 1 "Released with no citation or arrest" 0 "Other" 
+lab value noactions noactions
+
+gen warning = 1 if resultofstoptype == 10 
+replace warning = 0 if !inlist(warning,1)
+lab def warning 1 "Let off with Warning" 0 "Other"
+lab value warning warning
+
 
 // replace arrest = 0 if resultofstop!="Custodial Arrest Without Warrant" & resultofstoptype!="Custodial Arrest With Warrant"
 // lab def arrest 1 "Arrest" 2 "Other" 
