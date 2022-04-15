@@ -14,15 +14,14 @@ local study "BPDSTOPS"
 //
 // sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
 // ssc install mcp2
-use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large.dta"
+// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta"
 
-sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
 //
 // cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
 // ls
 
 
-drop if durationofstop >270
 
 
 gen racepercieved = 1 if raceperceivedpriortostop=="True"
@@ -208,16 +207,16 @@ lab value warning warning
 
 // logit arrest black distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
 
-logit arrest black perceivedage racepercieved distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
-margins, at(distancefromcalsimple =(1(.25)4))
-marginsplot, xdimension(at(distancefromcalsimple))
-mcp2 distancefromcalsimple black 
+logit arrest black perceivedage racepercieved distancefromcal c.distancefromcal#c.distancefromcal, or
+margins, at(distancefromcal =(1(.25)4))
+marginsplot, xdimension(at(distancefromcal))
+mcp2 distancefromcal black 
 
 
-logit longstop racepercieved white black hispanic asian other distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
-margins, at(distancefromcalsimple =(1(.25)4))
-marginsplot, xdimension(at(distancefromcalsimple))
-mcp2 distancefromcalsimple
+logit longstop racepercieved white black hispanic asian other distancefromcal c.distancefromcal#c.distancefromcal, or
+margins, at(distancefromcal =(1(.25)4))
+marginsplot, xdimension(at(distancefromcal))
+mcp2 distancefromcal
 
 
 // exit, clear 
