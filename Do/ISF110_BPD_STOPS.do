@@ -1,13 +1,13 @@
 // log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
-// use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
-//
-// sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
+
+sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
 // ssc install mcp2
-use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
-
-sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
-
+// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+//
+// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+//
 
 
 gen race = 1
@@ -19,14 +19,14 @@ replace race = 1 if !inlist(race,1,2,3,4,5)
 lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
 lab value race race
 
-gen gender = 1 if perceivedgender=="Male"
-replace gender = 0 if perceivedgender=="Female"
-replace gender = 2 if perceivedgender=="Other"
-lab def gender 1 "Male" 2 "Female" 3 "Other"
-lab value gender gender
+gen perceivedgender = 1 if gender=="Male"
+replace perceivedgender = 2 if gender=="Female"
+replace perceivedgender = 0 if gender=="Other"
+lab def perceivedgender 1 "Male" 2 "Female" 0 "Other"
+lab value perceivedgender perceivedgender
 
-gen male = 1 if gender==1
-replace male = 0 if gender!=1
+gen male = 1 if gender=="Male"
+replace male = 0 if !inlist(male,1)
 lab def male 1 "Male" 0 "Non-male"
 lab value male male
 

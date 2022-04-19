@@ -8,15 +8,18 @@ capt log close
 local c_date = c(current_date)
 local study "BPDSTOPS"
 
-log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+log using "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
-// use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
+use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta", clear
 //
-// sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
 // ssc install mcp2
-use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta"
 
-sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+
+// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta"
+
+// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
 //
 // cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
 // ls
@@ -32,11 +35,12 @@ replace race = 1 if !inlist(race,1,2,3,4,5)
 lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
 lab value race race
 
-gen gender = 1 if perceivedgender=="Male"
-replace gender = 0 if perceivedgender=="Female"
-replace gender = 2 if perceivedgender=="Other"
-lab def gender 1 "Male" 0 "Female" 2 "Other"
+replace gender = 1 if perceivedgender=="Male"
+replace gender = 2 if perceivedgender=="Female"
+replace gender = 0 if perceivedgender=="Other"
+lab def gender 1 "Male" 2 "Female" 0 "Other"
 lab value gender gender
+
 
 gen male = 1 if gender==1
 replace male = 0 if gender!=1

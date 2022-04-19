@@ -94,6 +94,7 @@ rotate
 predict lpi
 label var lpi "Poverty factor scores"
 alpha wofood wowater womedi wofuel woincome, item
+//THIS IS HOW YOU PUT MULTIPLE VARIABLES INTO ONE 
 
 gen fearcrim = 0 if inlist(q9b,0,9)
 replace fearcrim = 1 if inlist(q9b,1,2,3,4)
@@ -257,7 +258,10 @@ reg lii egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p 
 reg lii egrid pwater sewage road ps army rule_law control_cor demo_sat goveff_p qual_bur urban east_africa_only southern_africa_only north_africa_only   //Model 4
 	outreg2 using "\\Client\C$\ISF_110\Lab 8\Results\Results `study'-`c_date'.xls", dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append
 
-*
+
+	
+	
+	*
 
 /*MULTILEVEL MODELING: DO THIS PART IF YOUR COMPUTER SUPPORTS
 
