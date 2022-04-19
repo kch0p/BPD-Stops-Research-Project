@@ -1,17 +1,29 @@
-	(1)
-VARIABLES	arrest
-	
-arrest	.
-	(.)
-nonwhite	1.215**
-	(0.085)
-far	0.767**
-	(0.065)
-racepercieved	3.083***
-	(0.213)
-Constant	0.081***
-	(0.006)
-	
-Observations	8,085
-seEform in parentheses	
-*** p<0.001, ** p<0.01, * p<0.05	
+	(1)	(2)	(3)
+VARIABLES	arrest	arrest	arrest
+			
+arrest	.	.	.
+	(.)	(.)	(.)
+black	1.586***	1.557***	1.640***
+	(0.097)	(0.095)	(0.103)
+perceivedage	1.010***	1.011***	1.012***
+	(0.003)	(0.002)	(0.002)
+gender	2.053***	1.801***	1.808***
+	(0.162)	(0.138)	(0.140)
+reason		1.203***	1.201***
+		(0.021)	(0.021)
+distancefromcal			0.702***
+			(0.049)
+area_totalpop			1.000**
+			(0.000)
+area_medianincome			1.000***
+			(0.000)
+area_annualstops			1.000
+			(0.000)
+nonwhitecomp			1.632
+			(0.467)
+Constant	0.006***	0.005***	0.002***
+	(0.001)	(0.001)	(0.001)
+			
+Observations	61,702	61,702	60,897
+seEform in parentheses			
+*** p<0.001, ** p<0.01, * p<0.05			

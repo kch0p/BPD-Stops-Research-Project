@@ -3,21 +3,21 @@ use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted
 
 
 
-factor race distancefromcalsimple durationofstop, pcf
-rotate
-predict arrest
-label var arrest "Arrest Factor Scores"
-alpha race distancefromcalsimple durationofstop, item
-
-
-
 local study "arrest"
 local model "arrest"
 
-logit arrest nonwhite far racepercieved, or   //Model 1
-	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) replace
-logit arrest nonwhite far racepercieved infobased reason reasonablesuspicion, or   //Model 1
-	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\Results `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append
+
+logit arrest black perceivedage gender, or   //Model 1
+	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) replace
+logit arrest black perceivedage gender type infobased racepercieved reason, or   //Model 2
+	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append
+logit arrest black perceivedage gender reason distancefromcal area_totalpop area_medianincome area_annualstops nonwhitecomp, or   //Model 3
+	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append
+
+
+
+
+
 
 	
 

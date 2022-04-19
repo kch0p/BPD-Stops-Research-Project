@@ -8,7 +8,7 @@ capt log close
 local c_date = c(current_date)
 local study "BPDSTOPS"
 
-// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
 // use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
 //
@@ -35,7 +35,7 @@ lab value race race
 gen gender = 1 if perceivedgender=="Male"
 replace gender = 0 if perceivedgender=="Female"
 replace gender = 2 if perceivedgender=="Other"
-lab def gender 1 "Male" 2 "Female" 3 "Other"
+lab def gender 1 "Male" 0 "Female" 2 "Other"
 lab value gender gender
 
 gen male = 1 if gender==1
@@ -122,6 +122,12 @@ lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Con
 lab value reason reason
 
 
+gen type = 1 if typeofstop == "Bicycle"
+replace type = 2 if typeofstop == "Pedestrian"
+replace type = 3 if typeofstop == "Vehicle"
+lab def type 1 "Vehicle" 2 "Pedestrian" 3 "Vehicle"
+lab value type type 
+
 gen arrest = 1 if inlist(resultofstoptype,3,4)
 replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest without warrant" 
 replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
@@ -186,12 +192,12 @@ lab def close 1 "Close to university" 0 "Not close to university"
 lab value close close
 
 gen reasonablesuspicion = 1 if reasonforstop == "Reasonable suspicion" | reasonforstop=="Reas. Susp."
-replace reasonablesuspicion = 0 if reasonforstop != "Reasonable suspicion" | reasonforstop!="Reas. Susp."
+replace reasonablesuspicion = 0 if !inlist(reasonablesuspicion, 1)
 lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop based on other reason" 
 lab value reasonablesuspicion reasonablesuspicion
 
 gen trafficstop = 1 if reason == 2 | typeofstop == "Vehicle"
-replace trafficstop = 0 if reason != 2 & typeofstop != "Vehicle"
+replace trafficstop = 0 if !inlist(trafficstop,1)
 lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
 lab value trafficstop trafficstop
 
@@ -201,15 +207,16 @@ lab def noactions 1 "Released with no citation or arrest" 0 "Other"
 lab value noactions noactions
 
 gen warning = 1 if resultofstoptype == 10 
-replace warning = 0 if resultofstoptype != 10
+replace warning = 0 if !inlist(warning,1)
 lab def warning 1 "Let off with Warning" 0 "Other"
 lab value warning warning
 
 // replace perceivedgender = 2 if !inlist(perceivedgender,0,1)
 
 
-sum arrest reason resultofstoptype arrest nonwhite poc race trafficstop noactions warning area_totalstops area_annualstops area_medianincome
-corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest nonwhite poc race reasonablesuspicion trafficstop noactions warning area_totalstops area_annualstops area_medianincome
+sum arrest reason resultofstoptype arrest perceivedage nonwhite poc race trafficstop noactions warning area_totalstops area_annualstops area_medianincome
+
+corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest perceivedage nonwhite poc race reasonablesuspicion trafficstop noactions warning area_totalstops area_annualstops area_medianincome
 
 
 
