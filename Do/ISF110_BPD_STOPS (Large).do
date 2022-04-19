@@ -32,6 +32,16 @@ replace race = 1 if !inlist(race,1,2,3,4,5)
 lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
 lab value race race
 
+gen gender = 1 if perceivedgender=="Male"
+replace gender = 0 if perceivedgender=="Female"
+replace gender = 2 if perceivedgender=="Other"
+lab def gender 1 "Male" 2 "Female" 3 "Other"
+lab value gender gender
+
+gen male = 1 if gender==1
+replace male = 0 if gender!=1
+lab def male 1 "Male" 0 "Non-male"
+lab value male male
 
 gen resultofstoptype = 1 if resultofstop=="Citation for infraction" | resultofstop=="Citation"
 replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
@@ -56,7 +66,7 @@ replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|
 replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other person responsible for the minor"
 replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
 replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
-replace resultofstoptype = 5 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
+replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
 replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
 replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
 replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
@@ -113,7 +123,14 @@ lab value reason reason
 
 
 gen arrest = 1 if inlist(resultofstoptype,3,4)
-replace arrest = 0 if inlist(resultofstoptype, 1,2,5,6,7,8,9,10)
+replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest without warrant" 
+replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+replace arrest = 1 if resultofstop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+replace arrest = 1 if resultofstop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+replace arrest = 1 if resultofstop == "In-field cite and release|Custodial arrest without warrant"
+replace arrest = 1 if resultofstop == "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+// replace arrest if resultofstop == 
+replace arrest = 0 if !inlist(arrest, 1)
 lab def arrest 1 "Arrested" 0 "Not Arrested"
 lab value arrest arrest
 
@@ -163,6 +180,11 @@ replace far = 0 if distancefromcal < 2
 lab def far 1 "Far from university" 0 "Not far from university" 
 lab value far far
 
+gen close = 1 if distancefromcal <= 1.5
+replace close = 0 if distancefromcal > 1.5
+lab def close 1 "Close to university" 0 "Not close to university" 
+lab value close close
+
 gen reasonablesuspicion = 1 if reasonforstop == "Reasonable suspicion" | reasonforstop=="Reas. Susp."
 replace reasonablesuspicion = 0 if reasonforstop != "Reasonable suspicion" | reasonforstop!="Reas. Susp."
 lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop based on other reason" 
@@ -183,30 +205,22 @@ replace warning = 0 if resultofstoptype != 10
 lab def warning 1 "Let off with Warning" 0 "Other"
 lab value warning warning
 
+// replace perceivedgender = 2 if !inlist(perceivedgender,0,1)
 
-sum arrest perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest nonwhite poc race reasonablesuspicion trafficstop noactions warning area_totalstops area_annualstops area_medianincome
+
+sum arrest reason resultofstoptype arrest nonwhite poc race trafficstop noactions warning area_totalstops area_annualstops area_medianincome
 corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest nonwhite poc race reasonablesuspicion trafficstop noactions warning area_totalstops area_annualstops area_medianincome
 
 
 
 
-// mcp2 perceivedage black
-
-// logit arrest black distancefromcalsimple c.distancefromcalsimple#c.distancefromcalsimple, or
-
-logit arrest black area_totalstops c.area_totalstops#c.area_totalstops, or
-margins, at(area_totalstops =(1(.25)4))
-marginsplot, xdimension(at(area_totalstops))
-mcp2 area_totalstops black 
-//
-//
-// logit longstop racepercieved white black hispanic asian other distancefromcal c.distancefromcal#c.distancefromcal, or
-// margins, at(distancefromcal =(1(.25)4))
-// marginsplot, xdimension(at(distancefromcal))
-// mcp2 distancefromcal
 
 
-// exit, clear 
+// logit arrest black area_totalstops c.area_totalstops#c.area_totalstops, or
+// margins, at(area_totalstops =(1(.25)4))
+// marginsplot, xdimension(at(area_totalstops))
+// mcp2 area_totalstops black 
+
 
 
 
