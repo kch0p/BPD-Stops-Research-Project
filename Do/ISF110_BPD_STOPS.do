@@ -1,13 +1,18 @@
-// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 
-use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
 
-sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+// use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
+// sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+// log using "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
 // ssc install mcp2
-// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
-//
-// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
-//
+
+
+
+use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+// ssc install mcp2
+
+
 
 
 gen race = 1
@@ -21,7 +26,7 @@ lab value race race
 
 gen perceivedgender = 1 if gender=="Male"
 replace perceivedgender = 2 if gender=="Female"
-replace perceivedgender = 0 if gender=="Other"
+replace perceivedgender = 0 if gender=="Transgender Man/Boy" | gender=="Transgender Woman/Girl"
 lab def perceivedgender 1 "Male" 2 "Female" 0 "Other"
 lab value perceivedgender perceivedgender
 
@@ -207,7 +212,9 @@ corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstopty
 
 
 
+sum arrest durationofstop infobased perceivedage distancefromcal area_totalstops area_medianincome area_annualstops nonwhitecomp race perceivedgender reason nonwhite poc far close reasonablesuspicion trafficstop noactions warning racepercieved longstop 
 
+corr arrest durationofstop infobased type perceivedage distancefromcal area_totalstops area_medianincome area_annualstops nonwhitecomp race perceivedgender reason nonwhite poc far close reasonablesuspicion trafficstop noactions warning racepercieved longstop 
 
 
 

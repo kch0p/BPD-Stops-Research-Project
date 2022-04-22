@@ -1,0 +1,16 @@
+	(1)
+VARIABLES	annualstops
+	
+totalpop	-0.020
+	(0.047)
+medianincome	-0.003*
+	(0.001)
+distancefromcal	186.057
+	(100.573)
+Constant	358.184
+	(311.202)
+	
+Observations	32
+R-squared	0.243
+Standard errors in parentheses	
+*** p<0.001, ** p<0.01, * p<0.05	

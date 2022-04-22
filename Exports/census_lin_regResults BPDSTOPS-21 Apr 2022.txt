@@ -1,0 +1,20 @@
+	(1)	(2)	(3)
+VARIABLES	totalnumstops	totalnumstops	totalnumstops
+			
+totalpop	-0.159	-0.206	0.000
+	(0.375)	(0.376)	(0.000)
+medianincome	-0.022*	-0.029*	0.000
+	(0.009)	(0.011)	(0.000)
+distancefromcal	1,489.030	2,111.889*	0.785
+	(804.761)	(978.696)	(0.964)
+poccomp		-4,499.267	-3.564
+		(4,057.274)	(3.776)
+annualstops			8.002***
+			(0.001)
+Constant	2,863.784	3,757.407	-1.523
+	(2,490.178)	(2,607.660)	(2.463)
+			
+Observations	32	32	32
+R-squared	0.243	0.276	1.000
+Standard errors in parentheses			
+*** p<0.001, ** p<0.01, * p<0.05			

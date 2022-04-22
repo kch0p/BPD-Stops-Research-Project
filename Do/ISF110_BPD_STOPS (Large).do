@@ -1,4 +1,3 @@
-*******************************************
 *********CLASS PROJECT ISF 110*************
 *************By KC HARRIS *****************
 *******************************************
@@ -8,36 +7,36 @@ capt log close
 local c_date = c(current_date)
 local study "BPDSTOPS"
 
-log using "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
-
-use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta", clear
-//
-sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+// log using "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+// use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta", clear
+// sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
 // ssc install mcp2
 
-// log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
-
-// use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded).dta"
-
-// sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
-//
-// cd "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data
-// ls
 
 
 
-gen race = 1
-replace race = 2 if perceivedraceorethnicity=="White"  
-replace race = 3 if perceivedraceorethnicity=="Black/African American" |  perceivedraceorethnicity=="Black"
-replace race = 4 if perceivedraceorethnicity=="Hispanic/Latino" |  perceivedraceorethnicity=="Hispanic"
-replace race = 5 if perceivedraceorethnicity=="Asian"   
+
+log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded)(2).dta"
+sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+// ssc install mcp2
+
+
+
+
+
+gen race = 2 if perceived_race_or_ethnicity=="White"  
+replace race = 3 if perceived_race_or_ethnicity=="Black/African American" |  perceived_race_or_ethnicity=="Black"
+replace race = 4 if perceived_race_or_ethnicity=="Hispanic/Latino" |  perceived_race_or_ethnicity=="Hispanic"
+replace race = 5 if perceived_race_or_ethnicity=="Asian"   
 replace race = 1 if !inlist(race,1,2,3,4,5)
 lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
 lab value race race
 
-replace gender = 1 if perceivedgender=="Male"
-replace gender = 2 if perceivedgender=="Female"
-replace gender = 0 if perceivedgender=="Other"
+gen gender = 1
+replace gender = 1 if perceived_gender=="Male"
+replace gender = 2 if perceived_gender=="Female"
+replace gender = 0 if perceived_gender=="Other"
 lab def gender 1 "Male" 2 "Female" 0 "Other"
 lab value gender gender
 
@@ -47,99 +46,99 @@ replace male = 0 if gender!=1
 lab def male 1 "Male" 0 "Non-male"
 lab value male male
 
-gen resultofstoptype = 1 if resultofstop=="Citation for infraction" | resultofstop=="Citation"
-replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
-replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Contacted parent/legal guardian or other person responsible for the minor"
-replace resultofstoptype = 1 if resultofstop=="Citation for infraction|In-field cite and release"
-replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Warning (verbal or written)"
-replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor"
-replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Warning (verbal or written)"
-replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Warning (verbal or written)"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Citation for infraction"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Field interview card completed"
-replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Warning (verbal or written)"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Contacted parent/legal guardian or other person responsible for the minor"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other person responsible for the minor"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
-replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
-replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Warning (verbal or written)"
-replace resultofstoptype = 6 if resultofstop== "In-field cite and release" 
-replace resultofstoptype = 6 if resultofstop==  "In-field cite and release| Psychiatric hold (W&I Code 5150 or 5585.20)" 
-replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Citation for infraction" 
-replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
-replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest without warrant" 
-replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Field interview card completed" 
-replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
-replace resultofstoptype = 6 if resultofstop== "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
-replace resultofstoptype = 7 if resultofstop== "No action" 
-replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
-replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
-replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
-replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Citation for infraction" 
-replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible for the minor" 
-replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for infraction" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview card completed" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
-replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal or written)" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)" | resultofstop=="Warning"
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction|Field interview card completed" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest without warrant" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Field interview card completed" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release|Field interview card completed" 
-replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
-replace resultofstoptype = 11 if !inlist(resultofstoptype,1,2,3,4,5,6,7,8,9,10)
-lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6 "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning" 11 "Other"
-lab value resultofstoptype resultofstoptype
+gen result_of_stoptype = 1 if result_of_stop=="Citation for infraction" | result_of_stop=="Citation"
+replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
+replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction|Contacted parent/legal guardian or other person responsible for the minor"
+replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction|In-field cite and release"
+replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction|Warning (verbal or written)"
+replace result_of_stoptype = 2 if result_of_stop=="Contacted parent/legal guardian or other person responsible for the minor"
+replace result_of_stoptype = 2 if result_of_stop=="Contacted parent/legal guardian or other person responsible for the minor|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Warning (verbal or written)"
+replace result_of_stoptype = 2 if result_of_stop=="Contacted parent/legal guardian or other person responsible for the minor|Warning (verbal or written)"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant|Citation for infraction"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant|Field interview card completed"
+replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant to outstanding warrant|Warning (verbal or written)"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant|Contacted parent/legal guardian or other person responsible for the minor"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other person responsible for the minor"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant|In-field cite and release"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
+replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without warrant|Field interview card completed"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed|In-field cite and release"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed|In-field cite and release"
+replace result_of_stoptype = 5 if result_of_stop=="Field interview card completed|Warning (verbal or written)"
+replace result_of_stoptype = 6 if result_of_stop== "In-field cite and release" 
+replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and release| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and release|Citation for infraction" 
+replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and release|Custodial arrest without warrant" 
+replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and release|Field interview card completed" 
+replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+replace result_of_stoptype = 6 if result_of_stop== "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+replace result_of_stoptype = 7 if result_of_stop== "No action" 
+replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
+replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Citation for infraction" 
+replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible for the minor" 
+replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for infraction" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview card completed" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal or written)" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)" | result_of_stop=="Warning"
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|Citation for infraction" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|Citation for infraction|Field interview card completed" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|Custodial arrest without warrant" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|Field interview card completed" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|In-field cite and release" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|In-field cite and release|Field interview card completed" 
+replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or written)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)"
+replace result_of_stoptype = 11 if !inlist(result_of_stoptype,1,2,3,4,5,6,7,8,9,10)
+lab def result_of_stoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6 "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning" 11 "Other"
+lab value result_of_stoptype result_of_stoptype
 
-gen reason = 1 if reasonforstop=="Traffic Violation" | reasonforstop=="Traffic"
-replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
-replace reason = 2 if reasonforstop=="Reasonable suspicion" | reasonforstop=="Reas. Susp."
-replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
-replace reason = 5 if reasonforstop=="Investigation"| reasonforstop=="Investigation to determine whether person was truant"
-replace reason = 6 if reasonforstop=="Prob./Parole"| reasonforstop=="Parole/probation/PRCS/mandatory supervision"
+gen reason = 1 if reason_for_stop=="Traffic Violation" | reason_for_stop=="Traffic"
+replace reason = 3 if reason_for_stop=="Knowledge of outstanding arrest warrant/wanted person"
+replace reason = 2 if reason_for_stop=="Reasonable suspicion" | reason_for_stop=="Reas. Susp."
+replace reason = 4 if reason_for_stop=="Consensual encounter resulting in search"
+replace reason = 5 if reason_for_stop=="Investigation"| reason_for_stop=="Investigation to determine whether person was truant"
+replace reason = 6 if reason_for_stop=="Prob./Parole"| reason_for_stop=="Parole/probation/PRCS/mandatory supervision"
 replace reason = 7 if !inlist(reason,1,2,3,4,5,6)
 lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Investigation" 6 "Probation/Parole" 7 "Other" 
 lab value reason reason
 
 
-gen type = 1 if typeofstop == "Bicycle"
-replace type = 2 if typeofstop == "Pedestrian"
-replace type = 3 if typeofstop == "Vehicle"
+gen type = 1 if type_of_stop  == "Bicycle"
+replace type = 2 if type_of_stop  == "Pedestrian"
+replace type = 3 if type_of_stop  == "Vehicle"
 lab def type 1 "Vehicle" 2 "Pedestrian" 3 "Vehicle"
 lab value type type 
 
-gen arrest = 1 if inlist(resultofstoptype,3,4)
-replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest without warrant" 
-replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
-replace arrest = 1 if resultofstop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
-replace arrest = 1 if resultofstop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
-replace arrest = 1 if resultofstop == "In-field cite and release|Custodial arrest without warrant"
-replace arrest = 1 if resultofstop == "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
-// replace arrest if resultofstop == 
+gen arrest = 1 if inlist(result_of_stoptype,3,4)
+replace arrest = 1 if result_of_stop == "Warning (verbal or written)|Custodial arrest without warrant" 
+replace arrest = 1 if result_of_stop == "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+replace arrest = 1 if result_of_stop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+replace arrest = 1 if result_of_stop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+replace arrest = 1 if result_of_stop == "In-field cite and release|Custodial arrest without warrant"
+replace arrest = 1 if result_of_stop == "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+// replace arrest if result_of_stop == 
 replace arrest = 0 if !inlist(arrest, 1)
 lab def arrest 1 "Arrested" 0 "Not Arrested"
 lab value arrest arrest
@@ -185,159 +184,38 @@ replace poc = 0 if !inlist(poc,1)
 lab def poc 0 "Not POC" 1 "POC"
 lab value poc poc
 
-gen far = 1 if distancefromcal >= 2
-replace far = 0 if distancefromcal < 2
+gen far = 1 if tract_distancefromcal  >= 2
+replace far = 0 if tract_distancefromcal  < 2
 lab def far 1 "Far from university" 0 "Not far from university" 
 lab value far far
 
-gen close = 1 if distancefromcal <= 1.5
-replace close = 0 if distancefromcal > 1.5
+gen close = 1 if tract_distancefromcal  <= 1.5
+replace close = 0 if tract_distancefromcal  > 1.5
 lab def close 1 "Close to university" 0 "Not close to university" 
 lab value close close
 
-gen reasonablesuspicion = 1 if reasonforstop == "Reasonable suspicion" | reasonforstop=="Reas. Susp."
+gen reasonablesuspicion = 1 if reason_for_stop == "Reasonable suspicion" | reason_for_stop=="Reas. Susp."
 replace reasonablesuspicion = 0 if !inlist(reasonablesuspicion, 1)
 lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop based on other reason" 
 lab value reasonablesuspicion reasonablesuspicion
 
-gen trafficstop = 1 if reason == 2 | typeofstop == "Vehicle"
+gen trafficstop = 1 if reason == 2 | type_of_stop == "Vehicle"
 replace trafficstop = 0 if !inlist(trafficstop,1)
 lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
 lab value trafficstop trafficstop
 
-gen noactions = 1 if resultofstoptype == 7 | resultofstoptype == 10
+gen noactions = 1 if result_of_stoptype == 7 | result_of_stoptype == 10
 replace noactions = 0 if !inlist(noaction,1)
 lab def noactions 1 "Released with no citation or arrest" 0 "Other" 
 lab value noactions noactions
 
-gen warning = 1 if resultofstoptype == 10 
+gen warning = 1 if result_of_stoptype == 10 
 replace warning = 0 if !inlist(warning,1)
 lab def warning 1 "Let off with Warning" 0 "Other"
 lab value warning warning
 
-// replace perceivedgender = 2 if !inlist(perceivedgender,0,1)
+// replace perceived_gender = 2 if !inlist(perceived_gender,0,1)
 
 
-sum arrest reason resultofstoptype arrest perceivedage nonwhite poc race trafficstop noactions warning area_totalstops area_annualstops area_medianincome
-
-corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest perceivedage nonwhite poc race reasonablesuspicion trafficstop noactions warning area_totalstops area_annualstops area_medianincome
-
-
-
-
-
-
-// logit arrest black area_totalstops c.area_totalstops#c.area_totalstops, or
-// margins, at(area_totalstops =(1(.25)4))
-// marginsplot, xdimension(at(area_totalstops))
-// mcp2 area_totalstops black 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//https://www.stata.com/manuals/spintro4.pdf#spIntro4
-// ssc install shp2dta, replace
-// // ssc install spshape2dta, replace
-//
-// unzipfile Census_Tract_Polygons_2010.zip
-//
-// spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f replace
-//
-// use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
-// describe
-// list in 1/5
-//
-//
-// // generate long fips = real(ID)
-// // // bysort fips: assert _N==1
-// // assert fips != .
-//
-//
-// // gen pop = totalpop  //population for each tract
-//
-// // ssc install spmap, replace
-//
-// spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Blues)  
-// // spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Reds)
-//
-// set more off
-// clear all
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// //EVERYTHING AFTER THIS IS UNDER DEVELOPMENT. GRAPHS
-// use usdata, clear
-// ren subreg_id subreg
-// encode subreg, gen(subreg_id)
-//
-// keep subreg_id unhappy housing_price unemployment
-//
-// merge 1:1 subreg_id using usdb.dta
-// drop _merge
-//
-// merge 1:1 subreg_id using uslabelcoord.dta
-// drop _merge
-//
-//
-// spmap unhappy using uscoord.dta, id(subreg_id) ///
-// label(label(subreg_id) xcoord(xcoord) ycoord(ycoord)) ///
-// fcolor(Reds) legtitle("Fraction of respondents who were unhappy") ///
-// title("Figure 3: Unhappiness by Census Division, 2012")
-//
-//
-//
-//
-//
-// gen Y = housing_price
-// format Y %4.1f 
-//
-// spmap unhappy using uscoord.dta, id(subreg_id)  ///
-// point(x(xcoord) y(ycoord) proportional(Y) fcolor(red) ocolor(white) size(*3.5))  ///
-// label(label(subreg_id) xcoord(xcoord) ycoord(ycoord))  /// 
-// fcolor(Whites) legtitle("Fraction of respondents who were unhappy")  ///
-// title("Figure 3: Housing Price and Unhappiness by Census Division, 2012")
-
-
-
-
-
+sum arrest reason result_of_stoptype arrest perceived_age nonwhite poc race trafficstop noactions warning tract_totalnumstops tract_annualstops tract_medianincome tract_pocpop
 
