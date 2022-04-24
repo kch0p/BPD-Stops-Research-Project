@@ -125,11 +125,11 @@ lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Con
 lab value reason reason
 
 
-gen type = 1 if type_of_stop  == "Bicycle"
-replace type = 2 if type_of_stop  == "Pedestrian"
-replace type = 3 if type_of_stop  == "Vehicle"
-lab def type 1 "Vehicle" 2 "Pedestrian" 3 "Vehicle"
-lab value type type 
+// gen type = 1 if type_of_stop  == "Vehicle"
+// replace type = 2 if type_of_stop  == "Pedestrian"
+// replace type = 3 if type_of_stop  == "Bicycle"
+// lab def type 1 "Vehicle" 2 "Pedestrian" 3 "Bicycle"
+// lab value type type 
 
 gen arrest = 1 if inlist(result_of_stoptype,3,4)
 replace arrest = 1 if result_of_stop == "Warning (verbal or written)|Custodial arrest without warrant" 
@@ -199,7 +199,7 @@ replace reasonablesuspicion = 0 if !inlist(reasonablesuspicion, 1)
 lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop based on other reason" 
 lab value reasonablesuspicion reasonablesuspicion
 
-gen trafficstop = 1 if reason == 2 | type_of_stop == "Vehicle"
+gen trafficstop = 1 if reason == 1 | type_of_stop == "Vehicle"
 replace trafficstop = 0 if !inlist(trafficstop,1)
 lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
 lab value trafficstop trafficstop
@@ -218,4 +218,44 @@ lab value warning warning
 
 
 sum arrest reason result_of_stoptype arrest perceived_age nonwhite poc race trafficstop noactions warning tract_totalnumstops tract_annualstops tract_medianincome tract_pocpop
+
+
+
+
+// https://www.stata.com/manuals/spintro4.pdf#spIntro4
+// ssc install shp2dta, replace
+// ssc install spshape2dta, replace
+//
+// unzipfile Census_Tract_Polygons_2010.zip
+//
+// spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f
+//
+// use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+// describe
+// list in 1/5
+
+
+// generate long fips = real(ID)
+// // bysort fips: assert _N==1
+// assert fips != .
+
+
+// gen pop = totalpop  //population for each tract
+
+// ssc install spmap, replace
+
+spmap tract_totalnumstops using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Blues)  
+// spmap totalpop using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f_shp, id(ID) fcolor(Reds)
+
+set more off
+clear all
+
+
+
+
+
+
+
+
+
 

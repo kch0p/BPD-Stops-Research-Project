@@ -1,0 +1,29 @@
+	(1)	(2)	(3)
+VARIABLES	arrest	arrest	arrest
+			
+arrest	.	.	.
+	(.)	(.)	(.)
+black	1.574***	1.535***	1.618***
+	(0.096)	(0.094)	(0.101)
+perceived_age	1.009***	1.010***	1.010***
+	(0.003)	(0.003)	(0.003)
+gender	0.471***	0.506***	0.509***
+	(0.039)	(0.042)	(0.042)
+reason		1.214***	1.210***
+		(0.021)	(0.021)
+tract_distancefromcal			0.853
+			(0.104)
+tract_totalpop			1.000**
+			(0.000)
+tract_medianincome			1.000**
+			(0.000)
+tract_annualstops			1.000
+			(0.000)
+tract_poccomp			0.422*
+			(0.179)
+Constant	0.028***	0.018***	0.013***
+	(0.004)	(0.003)	(0.004)
+			
+Observations	61,702	61,702	60,897
+seEform in parentheses			
+*** p<0.001, ** p<0.01, * p<0.05			
