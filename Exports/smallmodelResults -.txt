@@ -3,33 +3,31 @@ VARIABLES	arrest	arrest	arrest
 			
 arrest	.	.	.
 	(.)	(.)	(.)
-black	1.486***	1.285***	1.275***
-	(0.098)	(0.089)	(0.090)
-perceivedage	1.001	0.994*	0.994*
+black	1.490***	1.411***	1.408***
+	(0.098)	(0.096)	(0.097)
+perceivedage	1.001	0.996	0.996
 	(0.003)	(0.003)	(0.003)
-perceivedgender	0.541***	0.629***	0.624***
-	(0.047)	(0.057)	(0.057)
-type		0.539***	0.501***
-		(0.044)	(0.041)
-infobased		1.457***	1.476***
-		(0.108)	(0.110)
-racepercieved		1.396***	1.429***
-		(0.113)	(0.117)
-reason		1.915***	1.898***
-		(0.095)	(0.093)
-distancefromcal			1.338***
-			(0.107)
-area_totalpop			1.000*
+perceivedgender	0.544***	0.579***	0.577***
+	(0.046)	(0.050)	(0.051)
+trafficstop		0.319***	0.313***
+		(0.034)	(0.034)
+infobased		1.614***	1.605***
+		(0.118)	(0.118)
+racepercieved		2.580***	2.565***
+		(0.182)	(0.186)
+tract_distancefromcal			1.034
+			(0.089)
+tract_totalpop			1.000
 			(0.000)
-area_medianincome			1.000***
+tract_medianincome			1.000***
 			(0.000)
-area_annualstops			0.997***
-			(0.001)
-nonwhitecomp			2.805**
+tract_annualstops			1.000*
+			(0.000)
+tract_nonwhitecomp			2.818**
 			(0.899)
-Constant	0.276***	0.341***	0.084***
-	(0.040)	(0.100)	(0.041)
+Constant	0.271***	0.479***	0.150***
+	(0.039)	(0.087)	(0.066)
 			
-Observations	8,066	8,066	7,988
+Observations	8,086	8,086	8,008
 seEform in parentheses			
 *** p<0.001, ** p<0.01, * p<0.05			

@@ -173,13 +173,13 @@ replace poc = 0 if !inlist(poc,1)
 lab def poc 0 "Not POC" 1 "POC"
 lab value poc poc
 
-gen far = 1 if distancefromcal >= 2
-replace far = 0 if distancefromcal < 2
+gen far = 1 if tract_distancefromcal >= 2
+replace far = 0 if tract_distancefromcal < 2
 lab def far 1 "Far from university" 0 "Not far from university" 
 lab value far far
 
-gen close = 1 if distancefromcal <= 1.5
-replace close = 0 if distancefromcal > 1.5
+gen close = 1 if tract_distancefromcal <= 1.5
+replace close = 0 if tract_distancefromcal > 1.5
 lab def close 1 "Close to university" 0 "Not close to university" 
 lab value close close
 
@@ -212,9 +212,9 @@ corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstopty
 
 
 
-sum arrest durationofstop infobased perceivedage distancefromcal area_totalstops area_medianincome area_annualstops nonwhitecomp race perceivedgender reason nonwhite poc far close reasonablesuspicion trafficstop noactions warning racepercieved longstop 
-
-corr arrest durationofstop infobased type perceivedage distancefromcal area_totalstops area_medianincome area_annualstops nonwhitecomp race perceivedgender reason nonwhite poc far close reasonablesuspicion trafficstop noactions warning racepercieved longstop 
+// sum arrest durationofstop infobased perceivedage distancefromcal area_totalstops area_medianincome area_annualstops nonwhitecomp race perceivedgender reason nonwhite poc far close reasonablesuspicion trafficstop noactions warning racepercieved longstop 
+//
+// corr arrest durationofstop infobased type perceivedage distancefromcal area_totalstops area_medianincome area_annualstops nonwhitecomp race perceivedgender reason nonwhite poc far close reasonablesuspicion trafficstop noactions warning racepercieved longstop 
 
 
 
@@ -225,9 +225,9 @@ corr arrest durationofstop infobased type perceivedage distancefromcal area_tota
 ////////////////////THIS CODE ONLY APPLIES FOR THE SMALLER DATASET
 drop if durationofstop >270
 
-gen racepercieved = 1 if raceperceivedpriortostop=="True"
+replace racepercieved = 1 if raceperceivedpriortostop=="TRUE"
 // replace stop = 1 if raceperceivedpriortostop=="True"
-replace racepercieved = 0 if raceperceivedpriortostop == "False"
+replace racepercieved = 0 if raceperceivedpriortostop == "FALSE"
 replace racepercieved = 0 if !inlist(racepercieved,1)
 lab def racepercieved 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
 lab value racepercieved racepercieved
@@ -241,6 +241,11 @@ gen infobased = 1 if informationbasedstop == "yes"
 replace infobased = 0 if !inlist(infobased,1)
 lab def infobased 1 "Stop based on previous information" 0 "Stop not based on previous information" 
 lab value infobased infobased
+
+gen notinfobased = 1 if infobased == 1
+replace notinfobased = 0 if !inlist(notinfobased,1)
+lab def notinfobasednotinfobased 1 "Stop not based on previous information" 0 "Stop  based on previous information" 
+lab value notinfobased notinfobased
 
 
 

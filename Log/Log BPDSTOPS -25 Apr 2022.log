@@ -1,0 +1,2727 @@
+------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\
+> Log BPDSTOPS -25 Apr 2022.log
+  log type:  text
+ opened on:  25 Apr 2022, 23:45:58
+
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\forma
+> tted_allstops_large(expanded)(2).dta"
+
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-11
+> 0"
+
+. // ssc install mcp2
+. 
+. 
+. 
+. 
+. 
+. gen race = 2 if perceived_race_or_ethnicity=="White"  
+(39,773 missing values generated)
+
+. replace race = 3 if perceived_race_or_ethnicity=="Black/African American" | 
+>  perceived_race_or_ethnicity=="Black"
+(20,494 real changes made)
+
+. replace race = 4 if perceived_race_or_ethnicity=="Hispanic/Latino" |  percei
+> ved_race_or_ethnicity=="Hispanic"
+(8,156 real changes made)
+
+. replace race = 5 if perceived_race_or_ethnicity=="Asian"   
+(4,759 real changes made)
+
+. replace race = 1 if !inlist(race,1,2,3,4,5)
+(6,364 real changes made)
+
+. lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Lati
+> no" 5 "Asian" 
+
+. lab value race race
+
+. 
+. gen gender = 1
+
+. replace gender = 1 if perceived_gender=="Male"
+(0 real changes made)
+
+. replace gender = 2 if perceived_gender=="Female"
+(17,700 real changes made)
+
+. replace gender = 0 if perceived_gender=="Other"
+(0 real changes made)
+
+. lab def gender 1 "Male" 2 "Female" 0 "Other"
+
+. lab value gender gender
+
+. 
+. 
+. gen male = 1 if gender==1
+(17,700 missing values generated)
+
+. replace male = 0 if gender!=1
+(17,700 real changes made)
+
+. lab def male 1 "Male" 0 "Non-male"
+
+. lab value male male
+
+. 
+. gen result_of_stoptype = 1 if result_of_stop=="Citation for infraction" | re
+> sult_of_stop=="Citation"
+(40,893 missing values generated)
+
+. replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction| 
+> Psychiatric hol(W&I Code 5150 or 5585.20)"
+(0 real changes made)
+
+. replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction|C
+> ontacted parent/legal guardian or other person responsible for the minor"
+(3 real changes made)
+
+. replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction|I
+> n-field cite and release"
+(5 real changes made)
+
+. replace result_of_stoptype = 1 if result_of_stop=="Citation for infraction|W
+> arning (verbal or written)"
+(16 real changes made)
+
+. replace result_of_stoptype = 2 if result_of_stop=="Contacted parent/legal gu
+> ardian or other person responsible for the minor"
+(2 real changes made)
+
+. replace result_of_stoptype = 2 if result_of_stop=="Contacted parent/legal gu
+> ardian or other person responsible for the minor|Noncriminal transport or ca
+> retaking transport (including transport by officer / ambulance or other agen
+> cy)|Warning (verbal or written)"
+(1 real change made)
+
+. replace result_of_stoptype = 2 if result_of_stop=="Contacted parent/legal gu
+> ardian or other person responsible for the minor|Warning (verbal or written)
+> "
+(1 real change made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant"
+(212 real changes made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(2 real changes made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncrim
+> inal transport or caretaking transport (including transport by officer / amb
+> ulance or other agency)"
+(1 real change made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant|Citation for infraction"
+(1 real change made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant|Custodial arrest without warrant"
+(97 real changes made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (
+> W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant|Field interview card completed"
+(1 real change made)
+
+. replace result_of_stoptype = 3 if result_of_stop=="Custodial arrest pursuant
+>  to outstanding warrant|Warning (verbal or written)"
+(2 real changes made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant"
+(734 real changes made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(5 real changes made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant|Contacted parent/legal guardian or other person responsible for the 
+> minor"
+(1 real change made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant|Custodial arrest pursuant to outstanding warrant"
+(43 real changes made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/le
+> gal guardian or other person responsible for the minor"
+(1 real change made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant|In-field cite and release"
+(1 real change made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant|Noncriminal transport or caretaking transport (including transport b
+> y officer / ambulance or other agency)"
+(1 real change made)
+
+. replace result_of_stoptype = 4 if result_of_stop=="Custodial arrest without 
+> warrant|Field interview card completed"
+(1 real change made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted"
+(73 real changes made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(3 real changes made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted|In-field cite and release"
+(1 real change made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted|Noncriminal transport or caretaking transport (including transport by 
+> officer / ambulance or other agency)"
+(5 real changes made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted|Noncriminal transport or caretaking transport (including transport by 
+> officer / ambulance or other agency)|Contacted parent/legal guardian or othe
+> r person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.
+> 20)"
+(1 real change made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted|In-field cite and release"
+(0 real changes made)
+
+. replace result_of_stoptype = 5 if result_of_stop=="Field interview card comp
+> leted|Warning (verbal or written)"
+(5 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop== "In-field cite and releas
+> e" 
+(275 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and relea
+> se| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(4 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and relea
+> se|Citation for infraction" 
+(3 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and relea
+> se|Custodial arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and relea
+> se|Custodial arrest without warrant" 
+(2 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and relea
+> se|Field interview card completed" 
+(3 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop==  "In-field cite and relea
+> se|Noncriminal transport or caretaking transport (including transport by off
+> icer / ambulance or other agency)" 
+(2 real changes made)
+
+. replace result_of_stoptype = 6 if result_of_stop== "In-field cite and releas
+> e|Noncriminal transport or caretaking transport (including transport by offi
+> cer / ambulance or other agency)| Psychiatric hold (W&I Code 5150 or 5585.20
+> )" 
+(1 real change made)
+
+. replace result_of_stoptype = 7 if result_of_stop== "No action" 
+(1,324 real changes made)
+
+. replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or
+>  caretaking transport (including transport by officer / ambulance or other a
+> gency)" 
+(69 real changes made)
+
+. replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or
+>  caretaking transport (including transport by officer / ambulance or other a
+> gency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(22 real changes made)
+
+. replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or
+>  caretaking transport (including transport by officer / ambulance or other a
+> gency)| Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and releas
+> e" 
+(1 real change made)
+
+. replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or
+>  caretaking transport (including transport by officer / ambulance or other a
+> gency)|Citation for infraction" 
+(1 real change made)
+
+. replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or
+>  caretaking transport (including transport by officer / ambulance or other a
+> gency)|Contacted parent/legal guardian or other person responsible for the m
+> inor" 
+(1 real change made)
+
+. replace result_of_stoptype = 8 if result_of_stop== "Noncriminal transport or
+>  caretaking transport (including transport by officer / ambulance or other a
+> gency)|Contacted parent/legal guardian or other person responsible for the m
+> inor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)" 
+(372 real changes made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|Citation for infraction" 
+(1 real change made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|Field interview card completed" 
+(1 real change made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|In-field cite and release" 
+(2 real changes made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|Noncriminal transport or caretaking transport (including
+>  transport by officer / ambulance or other agency)" 
+(6 real changes made)
+
+. replace result_of_stoptype = 9 if result_of_stop== "Psychiatric hold (W&I Co
+> de 5150 or 5585.20)|Warning (verbal or written)" 
+(1 real change made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)" | result_of_stop=="Warning"
+(34,476 real changes made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(5 real changes made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|Citation for infraction" 
+(6 real changes made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|Citation for infraction|Field interview card completed" 
+(1 real change made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|Custodial arrest without warrant" 
+(1 real change made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|Field interview card completed" 
+(45 real changes made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|In-field cite and release" 
+(1 real change made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|In-field cite and release|Field interview card completed" 
+(1 real change made)
+
+. replace result_of_stoptype = 10 if result_of_stop== "Warning (verbal or writ
+> ten)|Noncriminal transport or caretaking transport (including transport by o
+> fficer / ambulance or other agency)"
+(3 real changes made)
+
+. replace result_of_stoptype = 11 if !inlist(result_of_stoptype,1,2,3,4,5,6,7,
+> 8,9,10)
+(3,033 real changes made)
+
+. lab def result_of_stoptype 1 "Citation for Infraction" 2 "Contacted Guardian
+> s" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 
+> "Field Interview Card" 6 "In-Field Cite and Release" 7 "No Action" 8 "Noncri
+> minal Transport" 9 "Psychiatric Hold" 10 "Warning" 11 "Other"
+
+. lab value result_of_stoptype result_of_stoptype
+
+. 
+. gen reason = 1 if reason_for_stop=="Traffic Violation" | reason_for_stop=="T
+> raffic"
+(12,550 missing values generated)
+
+. replace reason = 3 if reason_for_stop=="Knowledge of outstanding arrest warr
+> ant/wanted person"
+(203 real changes made)
+
+. replace reason = 2 if reason_for_stop=="Reasonable suspicion" | reason_for_s
+> top=="Reas. Susp."
+(5,739 real changes made)
+
+. replace reason = 4 if reason_for_stop=="Consensual encounter resulting in se
+> arch"
+(45 real changes made)
+
+. replace reason = 5 if reason_for_stop=="Investigation"| reason_for_stop=="In
+> vestigation to determine whether person was truant"
+(5,051 real changes made)
+
+. replace reason = 6 if reason_for_stop=="Prob./Parole"| reason_for_stop=="Par
+> ole/probation/PRCS/mandatory supervision"
+(969 real changes made)
+
+. replace reason = 7 if !inlist(reason,1,2,3,4,5,6)
+(543 real changes made)
+
+. lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 
+> "Consensual Search" 5 "Investigation" 6 "Probation/Parole" 7 "Other" 
+
+. lab value reason reason
+
+. 
+. 
+. // gen type = 1 if type_of_stop  == "Vehicle"
+. // replace type = 2 if type_of_stop  == "Pedestrian"
+. // replace type = 3 if type_of_stop  == "Bicycle"
+. // lab def type 1 "Vehicle" 2 "Pedestrian" 3 "Bicycle"
+. // lab value type type 
+. 
+. gen arrest = 1 if inlist(result_of_stoptype,3,4)
+(60,598 missing values generated)
+
+. replace arrest = 1 if result_of_stop == "Warning (verbal or written)|Custodi
+> al arrest without warrant" 
+(1 real change made)
+
+. replace arrest = 1 if result_of_stop == "Warning (verbal or written)|Custodi
+> al arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace arrest = 1 if result_of_stop == "Psychiatric hold (W&I Code 5150 or 
+> 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace arrest = 1 if result_of_stop == "Psychiatric hold (W&I Code 5150 or 
+> 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace arrest = 1 if result_of_stop == "In-field cite and release|Custodial
+>  arrest without warrant"
+(2 real changes made)
+
+. replace arrest = 1 if result_of_stop == "In-field cite and release|Custodial
+>  arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. // replace arrest if result_of_stop == 
+. replace arrest = 0 if !inlist(arrest, 1)
+(60,586 real changes made)
+
+. lab def arrest 1 "Arrested" 0 "Not Arrested"
+
+. lab value arrest arrest
+
+. 
+. 
+. gen other = 1 if race == 1
+(55,338 missing values generated)
+
+. replace other = 0 if race !=1
+(55,338 real changes made)
+
+. lab def other 1 "Other " 0 "Not Other " 
+
+. lab value other other
+
+. 
+. 
+. gen white = 1 if race == 2
+(39,773 missing values generated)
+
+. replace white = 0 if race !=2
+(39,773 real changes made)
+
+. lab def white  1 "White" 0 "Not White"
+
+. lab value white white
+
+. 
+. 
+. gen black = 1 if race == 3
+(41,208 missing values generated)
+
+. replace black = 0 if race !=3
+(41,208 real changes made)
+
+. lab def black 1 "Black/African American" 0 "Not Black/African American" 
+
+. lab value black black
+
+. 
+. 
+. gen hispanic = 1 if race == 4
+(53,546 missing values generated)
+
+. replace hispanic = 0 if race !=4
+(53,546 real changes made)
+
+. lab def hispanic 1 "Hispanic" 0 "Not Hispanic" 
+
+. lab value hispanic hispanic
+
+. 
+. 
+. gen asian = 1 if race == 5
+(56,943 missing values generated)
+
+. replace asian = 0 if race !=5
+(56,943 real changes made)
+
+. lab def asian 1 "Asian " 0 "Not Asian " 
+
+. lab value asian asian
+
+. 
+. 
+. gen nonwhite = 1 if inlist(race,1,3,4,5) 
+(21,929 missing values generated)
+
+. replace nonwhite = 0 if inlist(race,2)
+(21,929 real changes made)
+
+. lab def nonwhite 0 "White" 1 "Nonwhite"
+
+. lab value nonwhite nonwhite
+
+. 
+. gen poc = 1 if inlist(race,1,3,4) 
+(26,688 missing values generated)
+
+. replace poc = 0 if !inlist(poc,1)
+(26,688 real changes made)
+
+. lab def poc 0 "Not POC" 1 "POC"
+
+. lab value poc poc
+
+. 
+. gen far = 1 if tract_distancefromcal  >= 2
+(46,893 missing values generated)
+
+. replace far = 0 if tract_distancefromcal  < 2
+(46,893 real changes made)
+
+. lab def far 1 "Far from university" 0 "Not far from university" 
+
+. lab value far far
+
+. 
+. gen close = 1 if tract_distancefromcal  <= 1.5
+(29,381 missing values generated)
+
+. replace close = 0 if tract_distancefromcal  > 1.5
+(29,381 real changes made)
+
+. lab def close 1 "Close to university" 0 "Not close to university" 
+
+. lab value close close
+
+. 
+. gen reasonablesuspicion = 1 if reason_for_stop == "Reasonable suspicion" | r
+> eason_for_stop=="Reas. Susp."
+(55,963 missing values generated)
+
+. replace reasonablesuspicion = 0 if !inlist(reasonablesuspicion, 1)
+(55,963 real changes made)
+
+. lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop b
+> ased on other reason" 
+
+. lab value reasonablesuspicion reasonablesuspicion
+
+. 
+. gen trafficstop = 1 if reason == 1 | type_of_stop == "Vehicle"
+(12,091 missing values generated)
+
+. replace trafficstop = 0 if !inlist(trafficstop,1)
+(12,091 real changes made)
+
+. lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
+
+. lab value trafficstop trafficstop
+
+. 
+. gen noactions = 1 if result_of_stoptype == 7 | result_of_stoptype == 10
+(25,837 missing values generated)
+
+. replace noactions = 0 if !inlist(noaction,1)
+(25,837 real changes made)
+
+. lab def noactions 1 "Released with no citation or arrest" 0 "Other" 
+
+. lab value noactions noactions
+
+. 
+. gen warning = 1 if result_of_stoptype == 10 
+(27,161 missing values generated)
+
+. replace warning = 0 if !inlist(warning,1)
+(27,161 real changes made)
+
+. lab def warning 1 "Let off with Warning" 0 "Other"
+
+. lab value warning warning
+
+. 
+. // replace perceived_gender = 2 if !inlist(perceived_gender,0,1)
+. 
+. 
+. sum arrest reason result_of_stoptype arrest perceived_age nonwhite poc race 
+> trafficstop noactions warning tract_totalnumstops tract_annualstops tract_me
+> dianincome tract_pocpop
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      arrest |     61,702    .0180869     .133267          0          1
+      reason |     61,702    1.560549    1.348241          1          7
+result_of_~e |     61,702     6.79764    4.263199          1         11
+      arrest |     61,702    .0180869     .133267          0          1
+perceived_~e |          0
+-------------+---------------------------------------------------------
+    nonwhite |     61,702    .6445982    .4786388          0          1
+         poc |     61,702    .5674694     .495431          0          1
+        race |     61,702    2.724758    1.064389          1          5
+ trafficstop |     61,702     .804042    .3969396          0          1
+   noactions |     61,702    .5812615    .4933564          0          1
+-------------+---------------------------------------------------------
+     warning |     61,702    .5598036    .4964147          0          1
+tract_tota~s |     61,702    4307.167    3673.784         87      11450
+tract_annu~s |     61,702    538.4017    459.0856         11       1431
+tract_medi~e |     60,897    88052.36    34370.36      20579     206199
+tract_pocpop |     60,897    672.1871    418.4064        106       1693
+
+. 
+. 
+. 
+. 
+. // https://www.stata.com/manuals/spintro4.pdf#spIntro4
+. // ssc install shp2dta, replace
+. // ssc install spshape2dta, replace
+. //
+. // unzipfile Census_Tract_Polygons_2010.zip
+. //
+. // spshape2dta geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f
+. //
+. // use geo_export_c67dd96f-bd48-4ef9-88a6-0902237d752f, clear
+. // describe
+. // list in 1/5
+. 
+. 
+. // generate long fips = real(ID)
+. // // bysort fips: assert _N==1
+. // assert fips != .
+. 
+. 
+. // gen pop = totalpop  //population for each tract
+. 
+. // ssc install spmap, replace
+. 
+. spmap tract_totalnumstops using geo_export_c67dd96f-bd48-4ef9-88a6-0902237d7
+> 52f_shp, id(ID) fcolor(Blues)  
+variable ID not found
+(error in option id())
+r(111);
+
+end of do-file
+
+r(111);
+
+. corr reasonablesuspicion race_perceived_prior_to_stop
+(race_perceived_prior_to_stop ignored because string variable)
+(obs=61,702)
+
+             | reason~n
+-------------+---------
+reasonable~n |   1.0000
+
+
+. race_perceived_prior_to_stop
+command race_perceived_prior_to_stop is unrecognized
+r(199);
+
+. tab race_perceived_prior_to_stop
+
+race_percei |
+ved_prior_t |
+     o_stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+      False |      4,649        7.53        7.53
+       True |      3,441        5.58       13.11
+        nan |     53,612       86.89      100.00
+------------+-----------------------------------
+      Total |     61,702      100.00
+
+. corr arrest black
+(obs=61,702)
+
+             |   arrest    black
+-------------+------------------
+      arrest |   1.0000
+       black |   0.0316   1.0000
+
+
+. corr arrest white
+(obs=61,702)
+
+             |   arrest    white
+-------------+------------------
+      arrest |   1.0000
+       white |  -0.0032   1.0000
+
+
+. logit arrest black, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood =  -5554.964  
+Iteration 2:   log likelihood = -5554.4036  
+Iteration 3:   log likelihood = -5554.4033  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      58.93
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5554.4033                     Pseudo R2         =     0.0053
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.605731   .0977806     7.78   0.000      1.42508    1.809283
+       _cons |   .0153505   .0006197  -103.46   0.000     .0141827    .0166144
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.5501  
+Iteration 2:   log likelihood =   -5583.55  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.64
+                                                Prob > chi2       =     0.4243
+Log likelihood =   -5583.55                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |    .950593   .0604379    -0.80   0.425     .8392202    1.076746
+       _cons |   .0187495   .0006995  -106.59   0.000     .0174275    .0201718
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest nonwhite, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.5501  
+Iteration 2:   log likelihood =   -5583.55  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.64
+                                                Prob > chi2       =     0.4243
+Log likelihood =   -5583.55                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    nonwhite |   1.051975   .0668837     0.80   0.425      .928724    1.191582
+       _cons |   .0178232   .0009176   -78.22   0.000     .0161125    .0197155
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest poc, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5573.1015  
+Iteration 2:   log likelihood = -5573.0482  
+Iteration 3:   log likelihood = -5573.0482  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      21.64
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5573.0482                     Pseudo R2         =     0.0019
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         poc |   1.334554   .0837122     4.60   0.000     1.180166    1.509139
+       _cons |   .0154865   .0007736   -83.44   0.000     .0140422    .0170793
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest hispanic, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.6496  
+Iteration 2:   log likelihood = -5583.6495  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.44
+                                                Prob > chi2       =     0.5074
+Log likelihood = -5583.6495                     Pseudo R2         =     0.0000
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |    1.06005   .0926328     0.67   0.505     .8931898    1.258081
+       _cons |   .0182752   .0005949  -122.95   0.000     .0171456    .0194791
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest black or
+variable or not found
+r(111);
+
+. logit arrest black, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood =  -5554.964  
+Iteration 2:   log likelihood = -5554.4036  
+Iteration 3:   log likelihood = -5554.4033  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      58.93
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5554.4033                     Pseudo R2         =     0.0053
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.605731   .0977806     7.78   0.000      1.42508    1.809283
+       _cons |   .0153505   .0006197  -103.46   0.000     .0141827    .0166144
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.5501  
+Iteration 2:   log likelihood =   -5583.55  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.64
+                                                Prob > chi2       =     0.4243
+Log likelihood =   -5583.55                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |    .950593   .0604379    -0.80   0.425     .8392202    1.076746
+       _cons |   .0187495   .0006995  -106.59   0.000     .0174275    .0201718
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest asian
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5550.3342  
+Iteration 2:   log likelihood = -5548.7999  
+Iteration 3:   log likelihood = -5548.7947  
+Iteration 4:   log likelihood = -5548.7947  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      70.15
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5548.7947                     Pseudo R2         =     0.0063
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       asian |  -1.393711   .2112397    -6.60   0.000    -1.807733   -.9796884
+       _cons |  -3.933743   .0305421  -128.80   0.000    -3.993605   -3.873882
+------------------------------------------------------------------------------
+
+. logit arrest asian  , o r
+option o not allowed
+r(198);
+
+. logit arrest asian, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5550.3342  
+Iteration 2:   log likelihood = -5548.7999  
+Iteration 3:   log likelihood = -5548.7947  
+Iteration 4:   log likelihood = -5548.7947  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      70.15
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5548.7947                     Pseudo R2         =     0.0063
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       asian |   .2481528   .0524197    -6.60   0.000     .1640256    .3754281
+       _cons |   .0195703   .0005977  -128.80   0.000     .0184331    .0207776
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.5501  
+Iteration 2:   log likelihood =   -5583.55  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.64
+                                                Prob > chi2       =     0.4243
+Log likelihood =   -5583.55                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |    .950593   .0604379    -0.80   0.425     .8392202    1.076746
+       _cons |   .0187495   .0006995  -106.59   0.000     .0174275    .0201718
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest black, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood =  -5554.964  
+Iteration 2:   log likelihood = -5554.4036  
+Iteration 3:   log likelihood = -5554.4033  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      58.93
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5554.4033                     Pseudo R2         =     0.0053
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.605731   .0977806     7.78   0.000      1.42508    1.809283
+       _cons |   .0153505   .0006197  -103.46   0.000     .0141827    .0166144
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest hispanic, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.6496  
+Iteration 2:   log likelihood = -5583.6495  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.44
+                                                Prob > chi2       =     0.5074
+Log likelihood = -5583.6495                     Pseudo R2         =     0.0000
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |    1.06005   .0926328     0.67   0.505     .8931898    1.258081
+       _cons |   .0182752   .0005949  -122.95   0.000     .0171456    .0194791
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest poc, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5573.1015  
+Iteration 2:   log likelihood = -5573.0482  
+Iteration 3:   log likelihood = -5573.0482  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      21.64
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5573.0482                     Pseudo R2         =     0.0019
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         poc |   1.334554   .0837122     4.60   0.000     1.180166    1.509139
+       _cons |   .0154865   .0007736   -83.44   0.000     .0140422    .0170793
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arres mixed, or
+variable mixed not found
+r(111);
+
+. logit arrest poc , or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5573.1015  
+Iteration 2:   log likelihood = -5573.0482  
+Iteration 3:   log likelihood = -5573.0482  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      21.64
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5573.0482                     Pseudo R2         =     0.0019
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         poc |   1.334554   .0837122     4.60   0.000     1.180166    1.509139
+       _cons |   .0154865   .0007736   -83.44   0.000     .0140422    .0170793
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest hispanic
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.6496  
+Iteration 2:   log likelihood = -5583.6495  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.44
+                                                Prob > chi2       =     0.5074
+Log likelihood = -5583.6495                     Pseudo R2         =     0.0000
+
+------------------------------------------------------------------------------
+      arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |   .0583158   .0873853     0.67   0.505    -.1129562    .2295879
+       _cons |  -4.002212   .0325515  -122.95   0.000    -4.066012   -3.938412
+------------------------------------------------------------------------------
+
+. logit arrest hispanic, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.6496  
+Iteration 2:   log likelihood = -5583.6495  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.44
+                                                Prob > chi2       =     0.5074
+Log likelihood = -5583.6495                     Pseudo R2         =     0.0000
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |    1.06005   .0926328     0.67   0.505     .8931898    1.258081
+       _cons |   .0182752   .0005949  -122.95   0.000     .0171456    .0194791
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. sum duration_of_stop
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+duration_o~p |      8,090    16.87342     24.8781          1       1440
+
+. tab duration_of_stop
+
+duration_of |
+      _stop |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         87        1.08        1.08
+          2 |        186        2.30        3.37
+          3 |        320        3.96        7.33
+          4 |        251        3.10       10.43
+          5 |      1,099       13.58       24.02
+          6 |        235        2.90       26.92
+          7 |        322        3.98       30.90
+          8 |        417        5.15       36.06
+          9 |        109        1.35       37.40
+         10 |      1,552       19.18       56.59
+         11 |         45        0.56       57.14
+         12 |        109        1.35       58.49
+         13 |         47        0.58       59.07
+         14 |         40        0.49       59.57
+         15 |        757        9.36       68.92
+         16 |         31        0.38       69.31
+         17 |         30        0.37       69.68
+         18 |         32        0.40       70.07
+         19 |         17        0.21       70.28
+         20 |        676        8.36       78.64
+         21 |         16        0.20       78.84
+         22 |         19        0.23       79.07
+         23 |         20        0.25       79.32
+         24 |         20        0.25       79.57
+         25 |        183        2.26       81.83
+         26 |          8        0.10       81.93
+         27 |          7        0.09       82.01
+         28 |         16        0.20       82.21
+         29 |          5        0.06       82.27
+         30 |        562        6.95       89.22
+         31 |          4        0.05       89.27
+         32 |          4        0.05       89.32
+         33 |          4        0.05       89.37
+         34 |          7        0.09       89.46
+         35 |         58        0.72       90.17
+         36 |          5        0.06       90.23
+         37 |          7        0.09       90.32
+         38 |          7        0.09       90.41
+         39 |          2        0.02       90.43
+         40 |        148        1.83       92.26
+         41 |          2        0.02       92.29
+         42 |          9        0.11       92.40
+         43 |          2        0.02       92.42
+         44 |          4        0.05       92.47
+         45 |        131        1.62       94.09
+         46 |          1        0.01       94.10
+         47 |          1        0.01       94.12
+         48 |          1        0.01       94.13
+         50 |         66        0.82       94.94
+         51 |          2        0.02       94.97
+         52 |          2        0.02       94.99
+         53 |          3        0.04       95.03
+         54 |          1        0.01       95.04
+         55 |          9        0.11       95.15
+         56 |          1        0.01       95.17
+         57 |          4        0.05       95.22
+         58 |          1        0.01       95.23
+         60 |        239        2.95       98.18
+         61 |          3        0.04       98.22
+         62 |          2        0.02       98.24
+         63 |          3        0.04       98.28
+         64 |          2        0.02       98.31
+         65 |         12        0.15       98.45
+         66 |          1        0.01       98.47
+         68 |          1        0.01       98.48
+         69 |          2        0.02       98.50
+         70 |         18        0.22       98.73
+         72 |          1        0.01       98.74
+         73 |          1        0.01       98.75
+         75 |          9        0.11       98.86
+         76 |          1        0.01       98.88
+         77 |          1        0.01       98.89
+         78 |          1        0.01       98.90
+         80 |          6        0.07       98.97
+         81 |          2        0.02       99.00
+         85 |          1        0.01       99.01
+         87 |          1        0.01       99.02
+         90 |         23        0.28       99.31
+         93 |          1        0.01       99.32
+         98 |          1        0.01       99.33
+        100 |          1        0.01       99.34
+        110 |          4        0.05       99.39
+        115 |          1        0.01       99.41
+        120 |         29        0.36       99.77
+        129 |          2        0.02       99.79
+        130 |          2        0.02       99.81
+        140 |          1        0.01       99.83
+        150 |          4        0.05       99.88
+        160 |          1        0.01       99.89
+        180 |          3        0.04       99.93
+        200 |          2        0.02       99.95
+        240 |          1        0.01       99.96
+        270 |          1        0.01       99.98
+        700 |          1        0.01       99.99
+       1440 |          1        0.01      100.00
+------------+-----------------------------------
+      Total |      8,090      100.00
+
+. logit arrest tract_distancefromcal
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5562.6948  
+Iteration 2:   log likelihood = -5562.5004  
+Iteration 3:   log likelihood = -5562.5003  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      42.74
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5562.5003                     Pseudo R2         =     0.0038
+
+---------------------------------------------------------------------------------------
+               arrest |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------------+----------------------------------------------------------------
+tract_distancefromcal |  -.2847323    .044013    -6.47   0.000    -.3709962   -.1984685
+                _cons |  -3.604731   .0647911   -55.64   0.000     -3.73172   -3.477743
+---------------------------------------------------------------------------------------
+
+. logit arrest far, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5567.2244  
+Iteration 2:   log likelihood = -5567.0824  
+Iteration 3:   log likelihood = -5567.0823  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      33.57
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5567.0823                     Pseudo R2         =     0.0030
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         far |   .6410198    .051521    -5.53   0.000     .5475923    .7503874
+       _cons |   .0201671    .000669  -117.67   0.000     .0188975    .0215219
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest close, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5567.5136  
+Iteration 2:   log likelihood = -5567.3977  
+Iteration 3:   log likelihood = -5567.3977  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      32.94
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5567.3977                     Pseudo R2         =     0.0029
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       close |   1.421291   .0879277     5.68   0.000     1.258994    1.604509
+       _cons |   .0150981   .0007277   -87.00   0.000     .0137372    .0165939
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest trafficstop black, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -4861.8689  
+Iteration 2:   log likelihood = -4720.8508  
+Iteration 3:   log likelihood = -4720.0912  
+Iteration 4:   log likelihood = -4720.0905  
+Iteration 5:   log likelihood = -4720.0905  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(2)        =    1727.56
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4720.0905                     Pseudo R2         =     0.1547
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ trafficstop |   .0730031   .0051855   -36.85   0.000     .0635154     .083908
+       black |    1.40539      .0874     5.47   0.000     1.244117    1.587568
+       _cons |   .0656006     .00297   -60.17   0.000     .0600302    .0716878
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest trafficstop white, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -4868.9275  
+Iteration 2:   log likelihood = -4731.1647  
+Iteration 3:   log likelihood = -4730.4473  
+Iteration 4:   log likelihood = -4730.4467  
+Iteration 5:   log likelihood = -4730.4467  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(2)        =    1706.84
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4730.4467                     Pseudo R2         =     0.1528
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ trafficstop |   .0709034   .0050369   -37.25   0.000     .0616877    .0814958
+       white |   .8267058   .0535987    -2.94   0.003      .728055    .9387238
+       _cons |   .0811697   .0034551   -59.00   0.000     .0746726     .088232
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest black, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood =  -5554.964  
+Iteration 2:   log likelihood = -5554.4036  
+Iteration 3:   log likelihood = -5554.4033  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =      58.93
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5554.4033                     Pseudo R2         =     0.0053
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.605731   .0977806     7.78   0.000      1.42508    1.809283
+       _cons |   .0153505   .0006197  -103.46   0.000     .0141827    .0166144
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white, or
+
+Iteration 0:   log likelihood = -5583.8692  
+Iteration 1:   log likelihood = -5583.5501  
+Iteration 2:   log likelihood =   -5583.55  
+
+Logistic regression                             Number of obs     =     61,702
+                                                LR chi2(1)        =       0.64
+                                                Prob > chi2       =     0.4243
+Log likelihood =   -5583.55                     Pseudo R2         =     0.0001
+
+------------------------------------------------------------------------------
+      arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |    .950593   .0604379    -0.80   0.425     .8392202    1.076746
+       _cons |   .0187495   .0006995  -106.59   0.000     .0174275    .0201718
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
+
+. do "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Do\ISF110_BPD_STOPS.do"
+
+. 
+. 
+. // use "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta", clear
+. // sysdir set PLUS "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110"
+. // log using "\\Client\C$\Users\timet\Desktop\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+. // ssc install mcp2
+. 
+. 
+. 
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops.dta"
+
+. sysdir set PLUS "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110"
+
+. // log using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Log\Log `study' -`c_date'.log", replace
+. // ssc install mcp2
+. 
+. 
+. 
+. 
+. gen race = 1
+
+. replace race = 2 if perceivedraceorethnicity=="White"  
+(2,854 real changes made)
+
+. replace race = 3 if perceivedraceorethnicity=="Black/African American" |  perceivedraceorethnicity=="Black"
+(2,893 real changes made)
+
+. replace race = 4 if perceivedraceorethnicity=="Hispanic/Latino" |  perceivedraceorethnicity=="Hispanic"
+(1,191 real changes made)
+
+. replace race = 5 if perceivedraceorethnicity=="Asian"   
+(517 real changes made)
+
+. replace race = 1 if !inlist(race,1,2,3,4,5)
+(0 real changes made)
+
+. lab def race 1 "Other" 2 "White" 3 "Black/African American" 4 "Hispanic/Latino" 5 "Asian" 
+
+. lab value race race
+
+. 
+. gen perceivedgender = 1 if gender=="Male"
+(2,024 missing values generated)
+
+. replace perceivedgender = 2 if gender=="Female"
+(2,002 real changes made)
+
+. replace perceivedgender = 0 if gender=="Transgender Man/Boy" | gender=="Transgender Woman/Girl"
+(20 real changes made)
+
+. lab def perceivedgender 1 "Male" 2 "Female" 0 "Other"
+
+. lab value perceivedgender perceivedgender
+
+. 
+. gen male = 1 if gender=="Male"
+(2,024 missing values generated)
+
+. replace male = 0 if !inlist(male,1)
+(2,024 real changes made)
+
+. lab def male 1 "Male" 0 "Non-male"
+
+. lab value male male
+
+. 
+. gen resultofstoptype = 1 if resultofstop=="Citation for infraction" | resultofstop=="Citation"
+(6,187 missing values generated)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction| Psychiatric hol(W&I Code 5150 or 5585.20)"
+(0 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Contacted parent/legal guardian or other person responsible for the minor"
+(3 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|In-field cite and release"
+(5 real changes made)
+
+. replace resultofstoptype = 1 if resultofstop=="Citation for infraction|Warning (verbal or written)"
+(16 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor"
+(2 real changes made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Noncriminal transport or caretaking transport (includ
+> ing transport by officer / ambulance or other agency)|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 2 if resultofstop=="Contacted parent/legal guardian or other person responsible for the minor|Warning (verbal or written)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant"
+(212 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(2 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant| Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaki
+> ng transport (including transport by officer / ambulance or other agency)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Citation for infraction"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant"
+(97 real changes made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 3 if resultofstop=="Custodial arrest pursuant to outstanding warrant|Warning (verbal or written)"
+(2 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant"
+(734 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(5 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Contacted parent/legal guardian or other person responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant"
+(43 real changes made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Custodial arrest pursuant to outstanding warrant|Contacted parent/legal guardian or other pers
+> on responsible for the minor"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Noncriminal transport or caretaking transport (including transport by officer / ambulance or o
+> ther agency)"
+(1 real change made)
+
+. replace resultofstoptype = 4 if resultofstop=="Custodial arrest without warrant|Field interview card completed"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed"
+(73 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(3 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)"
+(5 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Noncriminal transport or caretaking transport (including transport by officer / ambulance or oth
+> er agency)|Contacted parent/legal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)"
+(1 real change made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|In-field cite and release"
+(0 real changes made)
+
+. replace resultofstoptype = 5 if resultofstop=="Field interview card completed|Warning (verbal or written)"
+(5 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release" 
+(275 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(4 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Citation for infraction" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Custodial arrest without warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Field interview card completed" 
+(3 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop==  "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other 
+> agency)" 
+(2 real changes made)
+
+. replace resultofstoptype = 6 if resultofstop== "In-field cite and release|Noncriminal transport or caretaking transport (including transport by officer / ambulance or other a
+> gency)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 7 if resultofstop== "No action" 
+(1,324 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)" 
+(69 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)" 
+(22 real changes made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)| Psychiatric hold (
+> W&I Code 5150 or 5585.20)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Citation for infrac
+> tion" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor" 
+(1 real change made)
+
+. replace resultofstoptype = 8 if resultofstop== "Noncriminal transport or caretaking transport (including transport by officer / ambulance or other agency)|Contacted parent/le
+> gal guardian or other person responsible for the minor| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(372 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Citation for infraction" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|In-field cite and release" 
+(2 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Noncriminal transport or caretaking transport (including transport by officer / am
+> bulance or other agency)" 
+(6 real changes made)
+
+. replace resultofstoptype = 9 if resultofstop== "Psychiatric hold (W&I Code 5150 or 5585.20)|Warning (verbal or written)" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)" | resultofstop=="Warning"
+(2,800 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)| Psychiatric hold (W&I Code 5150 or 5585.20)" 
+(5 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction" 
+(6 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Citation for infraction|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Custodial arrest without warrant" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Field interview card completed" 
+(45 real changes made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|In-field cite and release|Field interview card completed" 
+(1 real change made)
+
+. replace resultofstoptype = 10 if resultofstop== "Warning (verbal or written)|Noncriminal transport or caretaking transport (including transport by officer / ambulance or othe
+> r agency)"
+(3 real changes made)
+
+. replace resultofstoptype = 11 if !inlist(resultofstoptype,1,2,3,4,5,6,7,8,9,10)
+(3 real changes made)
+
+. lab def resultofstoptype 1 "Citation for Infraction" 2 "Contacted Guardians" 3 "Custodial Arrest With Warrant" 4 "Custodial Arrest Without Warrant" 5 "Field Interview Card" 6
+>  "In-Field Cite and Release" 7 "No Action" 8 "Noncriminal Transport" 9 "Psychiatric Hold" 10 "Warning" 11 "Other"
+
+. lab value resultofstoptype resultofstoptype
+
+. 
+. gen reason = 1 if reasonforstop=="Traffic Violation" | reasonforstop=="Traffic"
+(3,854 missing values generated)
+
+. replace reason = 3 if reasonforstop=="Knowledge of outstanding arrest warrant/wanted person"
+(203 real changes made)
+
+. replace reason = 2 if reasonforstop=="Reasonable suspicion" | reasonforstop=="Reas. Susp."
+(3,523 real changes made)
+
+. replace reason = 4 if reasonforstop=="Consensual encounter resulting in search"
+(45 real changes made)
+
+. replace reason = 5 if reasonforstop=="Investigation"| reasonforstop=="Investigation to determine whether person was truant"
+(33 real changes made)
+
+. replace reason = 6 if reasonforstop=="Prob./Parole"| reasonforstop=="Parole/probation/PRCS/mandatory supervision"
+(50 real changes made)
+
+. replace reason = 7 if !inlist(reason,1,2,3,4,5,6)
+(0 real changes made)
+
+. lab def reason 1 "Traffic Violation" 2 "Reasonable Suspicion" 3 "Warrant" 4 "Consensual Search" 5 "Investigation" 6 "Probation/Parole" 7 "Other" 
+
+. lab value reason reason
+
+. 
+. 
+. gen type = 1 if typeofstop == "Bicycle"
+(7,949 missing values generated)
+
+. replace type = 2 if typeofstop == "Pedestrian"
+(3,419 real changes made)
+
+. replace type = 3 if typeofstop == "Vehicle"
+(4,530 real changes made)
+
+. lab def type 1 "Vehicle" 2 "Pedestrian" 3 "Vehicle"
+
+. lab value type type 
+
+. 
+. gen arrest = 1 if inlist(resultofstoptype,3,4)
+(6,986 missing values generated)
+
+. replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest without warrant" 
+(1 real change made)
+
+. replace arrest = 1 if resultofstop == "Warning (verbal or written)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace arrest = 1 if resultofstop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest without warrant" 
+(4 real changes made)
+
+. replace arrest = 1 if resultofstop == "Psychiatric hold (W&I Code 5150 or 5585.20)|Custodial arrest pursuant to outstanding warrant" 
+(2 real changes made)
+
+. replace arrest = 1 if resultofstop == "In-field cite and release|Custodial arrest without warrant"
+(2 real changes made)
+
+. replace arrest = 1 if resultofstop == "In-field cite and release|Custodial arrest pursuant to outstanding warrant" 
+(1 real change made)
+
+. // replace arrest if resultofstop == 
+. replace arrest = 0 if !inlist(arrest, 1)
+(6,974 real changes made)
+
+. lab def arrest 1 "Arrested" 0 "Not Arrested"
+
+. lab value arrest arrest
+
+. 
+. 
+. gen other = 1 if race == 1
+(7,455 missing values generated)
+
+. replace other = 0 if race !=1
+(7,455 real changes made)
+
+. lab def other 1 "Other " 0 "Not Other " 
+
+. lab value other other
+
+. 
+. 
+. gen white = 1 if race == 2
+(5,236 missing values generated)
+
+. replace white = 0 if race !=2
+(5,236 real changes made)
+
+. lab def white  1 "White" 0 "Not White"
+
+. lab value white white
+
+. 
+. 
+. gen black = 1 if race == 3
+(5,197 missing values generated)
+
+. replace black = 0 if race !=3
+(5,197 real changes made)
+
+. lab def black 1 "Black/African American" 0 "Not Black/African American" 
+
+. lab value black black
+
+. 
+. 
+. gen hispanic = 1 if race == 4
+(6,899 missing values generated)
+
+. replace hispanic = 0 if race !=4
+(6,899 real changes made)
+
+. lab def hispanic 1 "Hispanic" 0 "Not Hispanic" 
+
+. lab value hispanic hispanic
+
+. 
+. 
+. gen asian = 1 if race == 5
+(7,573 missing values generated)
+
+. replace asian = 0 if race !=5
+(7,573 real changes made)
+
+. lab def asian 1 "Asian " 0 "Not Asian " 
+
+. lab value asian asian
+
+. 
+. 
+. gen nonwhite = 1 if inlist(race,1,3,4,5) 
+(2,854 missing values generated)
+
+. replace nonwhite = 0 if inlist(race,2)
+(2,854 real changes made)
+
+. lab def nonwhite 0 "White" 1 "Nonwhite"
+
+. lab value nonwhite nonwhite
+
+. 
+. gen poc = 1 if inlist(race,1,3,4) 
+(3,371 missing values generated)
+
+. replace poc = 0 if !inlist(poc,1)
+(3,371 real changes made)
+
+. lab def poc 0 "Not POC" 1 "POC"
+
+. lab value poc poc
+
+. 
+. gen far = 1 if distancefromcal >= 2
+distancefromcal not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. 
+. gen close = 1 if tract_distancefromcal <= 1.5
+(3,583 missing values generated)
+
+. replace close = 0 if tract_distancefromcal > 1.5
+(3,583 real changes made)
+
+. lab def close 1 "Close to university" 0 "Not close to university" 
+
+. lab value close close
+
+. 
+. gen reasonablesuspicion = 1 if reasonforstop == "Reasonable suspicion" | reasonforstop=="Reas. Susp."
+(4,567 missing values generated)
+
+. replace reasonablesuspicion = 0 if !inlist(reasonablesuspicion, 1)
+(4,567 real changes made)
+
+. lab def reasonablesuspicion 1 "Stop based on reasonable suspicion" 0 "Stop based on other reason" 
+
+. lab value reasonablesuspicion reasonablesuspicion
+
+. 
+. gen trafficstop = 1 if reason == 2 | typeofstop == "Vehicle"
+(451 missing values generated)
+
+. replace trafficstop = 0 if !inlist(trafficstop,1)
+(451 real changes made)
+
+. lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
+
+. lab value trafficstop trafficstop
+
+. 
+. gen noactions = 1 if resultofstoptype == 7 | resultofstoptype == 10
+(3,901 missing values generated)
+
+. replace noactions = 0 if !inlist(noaction,1)
+(3,901 real changes made)
+
+. lab def noactions 1 "Released with no citation or arrest" 0 "Other" 
+
+. lab value noactions noactions
+
+. 
+. gen warning = 1 if resultofstoptype == 10 
+(5,225 missing values generated)
+
+. replace warning = 0 if !inlist(warning,1)
+(5,225 real changes made)
+
+. lab def warning 1 "Let off with Warning" 0 "Other"
+
+. lab value warning warning
+
+. 
+. // replace perceivedgender = 2 if !inlist(perceivedgender,0,1)
+. 
+. 
+. sum arrest reason resultofstoptype arrest perceivedage nonwhite poc race trafficstop noactions warning area_totalstops area_annualstops area_medianincome
+variable area_totalstops not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. drop if durationofstop >270
+(2 observations deleted)
+
+. 
+. gen racepercieved = 1 if raceperceivedpriortostop=="True"
+(8,088 missing values generated)
+
+. // replace stop = 1 if raceperceivedpriortostop=="True"
+. replace racepercieved = 0 if raceperceivedpriortostop == "False"
+(0 real changes made)
+
+. replace racepercieved = 0 if !inlist(racepercieved,1)
+(8,088 real changes made)
+
+. lab def racepercieved 1 "Race Percieved Prior" 0 "Race Not Percieved Prior"
+
+. lab value racepercieved racepercieved
+
+. 
+. gen longstop = 1 if durationofstop >= 20
+(5,686 missing values generated)
+
+. replace longstop = 0 if durationofstop < 20
+(5,686 real changes made)
+
+. lab def longstop 1 "Longer than average stop" 0 "Normal/shorter than average stop" 
+
+. lab value longstop longstop
+
+. 
+. gen infobased = 1 if informationbasedstop == "yes"
+(6,248 missing values generated)
+
+. replace infobased = 0 if !inlist(infobased,1)
+(6,248 real changes made)
+
+. lab def infobased 1 "Stop based on previous information" 0 "Stop not based on previous information" 
+
+. lab value infobased infobased
+
+. 
+end of do-file
+
+. tab infobased
+
+                             infobased |      Freq.     Percent        Cum.
+---------------------------------------+-----------------------------------
+Stop not based on previous information |      6,248       77.25       77.25
+    Stop based on previous information |      1,840       22.75      100.00
+---------------------------------------+-----------------------------------
+                                 Total |      8,088      100.00
+
+. tab racepercieved
+
+           racepercieved |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+Race Not Percieved Prior |      8,088      100.00      100.00
+-------------------------+-----------------------------------
+                   Total |      8,088      100.00
+
+. tab raceperceivedpriortostop
+
+raceperceiv |
+edpriortost |
+         op |      Freq.     Percent        Cum.
+------------+-----------------------------------
+      FALSE |      4,649       57.48       57.48
+       TRUE |      3,439       42.52      100.00
+------------+-----------------------------------
+      Total |      8,088      100.00
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. replace racepercieved = 1 if raceperceivedpriortostop=="TRUE"
+(3,439 real changes made)
+
+. // replace stop = 1 if raceperceivedpriortostop=="True"
+. replace racepercieved = 0 if raceperceivedpriortostop == "FALSE"
+(0 real changes made)
+
+. replace racepercieved = 0 if !inlist(racepercieved,1)
+(0 real changes made)
+
+. 
+end of do-file
+
+. tab racepercieved
+
+           racepercieved |      Freq.     Percent        Cum.
+-------------------------+-----------------------------------
+Race Not Percieved Prior |      4,649       57.48       57.48
+    Race Percieved Prior |      3,439       42.52      100.00
+-------------------------+-----------------------------------
+                   Total |      8,088      100.00
+
+. corr tract_distancefromcal arrest
+(obs=8,088)
+
+             | tract_~l   arrest
+-------------+------------------
+tract_dist~l |   1.0000
+      arrest |  -0.0549   1.0000
+
+
+. corr close tract_distancefromcal
+(obs=8,088)
+
+             |    close tract_~l
+-------------+------------------
+       close |   1.0000
+tract_dist~l |  -0.8738   1.0000
+
+
+. corr arrest close
+(obs=8,088)
+
+             |   arrest    close
+-------------+------------------
+      arrest |   1.0000
+       close |   0.0411   1.0000
+
+
+. corr arrest far
+variable far not found
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. replace far = 1 if tract_distancefromcal >= 2
+variable far not found
+r(111);
+
+end of do-file
+
+r(111);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. gen far = 1 if tract_distancefromcal >= 2
+(6,017 missing values generated)
+
+. replace far = 0 if tract_distancefromcal < 2
+(6,017 real changes made)
+
+. 
+end of do-file
+
+. corr arrest far
+(obs=8,088)
+
+             |   arrest      far
+-------------+------------------
+      arrest |   1.0000
+         far |  -0.0522   1.0000
+
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. logit arrest black perceivedage perceivedgender, or   //Model 1
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3194.5912  
+Iteration 2:   log likelihood = -3193.6308  
+Iteration 3:   log likelihood = -3193.6298  
+Iteration 4:   log likelihood = -3193.6298  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(3)        =      95.98
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3193.6298                     Pseudo R2         =     0.0148
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          black |   1.489743   .0978397     6.07   0.000      1.30981    1.694394
+   perceivedage |   1.001276   .0025053     0.51   0.610     .9963782    1.006199
+perceivedgender |     .54375   .0462118    -7.17   0.000      .460318    .6423039
+          _cons |   .2713306   .0392395    -9.02   0.000     .2043616    .3602454
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults -.xls
+dir : seeout
+
+. logit arrest black perceivedage perceivedgender trafficstop infobased racepercieved, or   //Model 2
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3016.9118  
+Iteration 2:   log likelihood = -2982.1399  
+Iteration 3:   log likelihood =  -2982.065  
+Iteration 4:   log likelihood =  -2982.065  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(6)        =     519.11
+                                                Prob > chi2       =     0.0000
+Log likelihood =  -2982.065                     Pseudo R2         =     0.0801
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          black |   1.410836   .0960528     5.06   0.000     1.234596    1.612234
+   perceivedage |   .9959001   .0026422    -1.55   0.122     .9907349    1.001092
+perceivedgender |    .578727    .050404    -6.28   0.000     .4879088    .6864499
+    trafficstop |   .3186877   .0344656   -10.57   0.000     .2578156    .3939322
+      infobased |   1.613517    .117807     6.55   0.000      1.39838    1.861753
+  racepercieved |   2.579672   .1821511    13.42   0.000     2.246265    2.962566
+          _cons |   .4788985   .0866178    -4.07   0.000     .3359601    .6826518
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults -.xls
+dir : seeout
+
+. logit arrest black perceivedage perceivedgender trafficstop infobased racepercieved tract_distancefromcal tract_totalpop tract_medianincome tract_annualstops tract_nonwhiteco
+> mp, or   //Model 3
+
+Iteration 0:   log likelihood = -3209.8835  
+Iteration 1:   log likelihood = -2980.8349  
+Iteration 2:   log likelihood = -2945.7657  
+Iteration 3:   log likelihood = -2945.6777  
+Iteration 4:   log likelihood = -2945.6777  
+
+Logistic regression                             Number of obs     =      8,008
+                                                LR chi2(11)       =     528.41
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2945.6777                     Pseudo R2         =     0.0823
+
+---------------------------------------------------------------------------------------
+               arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------------+----------------------------------------------------------------
+                black |    1.40769   .0970364     4.96   0.000      1.22979    1.611324
+         perceivedage |   .9957322   .0026569    -1.60   0.109     .9905384    1.000953
+      perceivedgender |   .5773933   .0505843    -6.27   0.000     .4862948    .6855573
+          trafficstop |   .3126422   .0344876   -10.54   0.000     .2518554    .3881002
+            infobased |   1.605304   .1180431     6.44   0.000     1.389843    1.854167
+        racepercieved |   2.565098   .1855849    13.02   0.000     2.225971    2.955891
+tract_distancefromcal |   1.034269   .0894133     0.39   0.697     .8730651    1.225238
+       tract_totalpop |   1.000058   .0000372     1.54   0.123     .9999845    1.000131
+   tract_medianincome |   1.000008   2.00e-06     3.75   0.000     1.000004    1.000011
+    tract_annualstops |   .9997523    .000097    -2.55   0.011     .9995623    .9999424
+   tract_nonwhitecomp |   2.818326   .8990318     3.25   0.001     1.508211    5.266478
+                _cons |   .1499137   .0659974    -4.31   0.000     .0632574    .3552801
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults -.xls
+dir : seeout
+
+. 
+end of do-file
+
+. logit arrest tract_medianincome , or
+
+Iteration 0:   log likelihood = -3212.0138  
+Iteration 1:   log likelihood = -3208.7571  
+Iteration 2:   log likelihood = -3208.7537  
+Iteration 3:   log likelihood = -3208.7537  
+
+Logistic regression                             Number of obs     =      8,010
+                                                LR chi2(1)        =       6.52
+                                                Prob > chi2       =     0.0107
+Log likelihood = -3208.7537                     Pseudo R2         =     0.0010
+
+------------------------------------------------------------------------------------
+            arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------------+----------------------------------------------------------------
+tract_medianincome |   .9999976   9.28e-07    -2.54   0.011     .9999958    .9999995
+             _cons |   .1960729   .0168094   -19.00   0.000     .1657463    .2319484
+------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit arrest white perceivedage perceivedgender trafficstop infobased racepercieved tract_distancefromcal tract_totalpop tract_medianincome tract_annualstops tract_nonwhiteco
+> mp, or
+
+Iteration 0:   log likelihood = -3209.8835  
+Iteration 1:   log likelihood = -2989.5617  
+Iteration 2:   log likelihood = -2955.3312  
+Iteration 3:   log likelihood = -2955.2491  
+Iteration 4:   log likelihood = -2955.2491  
+
+Logistic regression                             Number of obs     =      8,008
+                                                LR chi2(11)       =     509.27
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2955.2491                     Pseudo R2         =     0.0793
+
+---------------------------------------------------------------------------------------
+               arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------------+----------------------------------------------------------------
+                white |   .8488551    .061297    -2.27   0.023     .7368297    .9779126
+         perceivedage |   .9968439   .0026628    -1.18   0.237     .9916385    1.002077
+      perceivedgender |   .5784466   .0506363    -6.25   0.000     .4872484    .6867144
+          trafficstop |   .3148736   .0346837   -10.49   0.000     .2537321    .3907483
+            infobased |   1.616335   .1186396     6.54   0.000     1.399758    1.866422
+        racepercieved |   2.656016   .1924983    13.48   0.000     2.304298    3.061418
+tract_distancefromcal |   1.036421     .08944     0.41   0.678     .8751451    1.227418
+       tract_totalpop |   1.000049   .0000372     1.33   0.185     .9999764    1.000122
+   tract_medianincome |   1.000007   2.00e-06     3.57   0.000     1.000003    1.000011
+    tract_annualstops |   .9997373   .0000969    -2.71   0.007     .9995474    .9999272
+   tract_nonwhitecomp |   2.889175   .9206635     3.33   0.001     1.547142    5.395323
+                _cons |   .1791824   .0784467    -3.93   0.000     .0759689    .4226243
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. tab infobased
+
+                             infobased |      Freq.     Percent        Cum.
+---------------------------------------+-----------------------------------
+Stop not based on previous information |      6,248       77.25       77.25
+    Stop based on previous information |      1,840       22.75      100.00
+---------------------------------------+-----------------------------------
+                                 Total |      8,088      100.00
+
+. logit arrest i.infobased, or
+
+Iteration 0:   log likelihood = -3243.7492  
+Iteration 1:   log likelihood = -3192.8861  
+Iteration 2:   log likelihood = -3191.0024  
+Iteration 3:   log likelihood = -3191.0009  
+Iteration 4:   log likelihood = -3191.0009  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =     105.50
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3191.0009                     Pseudo R2         =     0.0163
+
+-----------------------------------------------------------------------------------------------------
+                             arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+------------------------------------+----------------------------------------------------------------
+                          infobased |
+Stop based on previous information  |   2.078728   .1440428    10.56   0.000     1.814742    2.381116
+                              _cons |   .1306551   .0051704   -51.43   0.000     .1209043    .1411922
+-----------------------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. gen notinfobased = 1 if infobased == 1
+(6,248 missing values generated)
+
+. replace infobased = 0 if !inlist(notinfobased,1)
+(0 real changes made)
+
+. lab def infobased 1 "Stop not based on previous information" 0 "Stop  based on previous information" 
+label infobased already defined
+r(110);
+
+end of do-file
+
+r(110);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. gen notinfobased = 1 if infobased == 1
+variable notinfobased already defined
+r(110);
+
+end of do-file
+
+r(110);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. replace infobased = 1 if informationbasedstop == "yes"
+(0 real changes made)
+
+. replace infobased = 0 if !inlist(infobased,1)
+(0 real changes made)
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. replace notinfobased = 1 if infobased == 1
+(0 real changes made)
+
+. replace notinfobased = 0 if !inlist(notinfobased,1)
+(6,248 real changes made)
+
+. lab def notinfobasednotinfobased 1 "Stop not based on previous information" 0 "Stop  based on previous information" 
+
+. lab value notinfobased notinfobased
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. 
+. // desktop version
+. logit arrest black perceivedage perceivedgender, or   //Model 1
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3194.5912  
+Iteration 2:   log likelihood = -3193.6308  
+Iteration 3:   log likelihood = -3193.6298  
+Iteration 4:   log likelihood = -3193.6298  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(3)        =      95.98
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3193.6298                     Pseudo R2         =     0.0148
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          black |   1.489743   .0978397     6.07   0.000      1.30981    1.694394
+   perceivedage |   1.001276   .0025053     0.51   0.610     .9963782    1.006199
+perceivedgender |     .54375   .0462118    -7.17   0.000      .460318    .6423039
+          _cons |   .2713306   .0392395    -9.02   0.000     .2043616    .3602454
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. logit arrest black perceivedage perceivedgender trafficstop notinfobased racepercieved, or   //Model 2
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3016.9118  
+Iteration 2:   log likelihood = -2982.1399  
+Iteration 3:   log likelihood =  -2982.065  
+Iteration 4:   log likelihood =  -2982.065  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(6)        =     519.11
+                                                Prob > chi2       =     0.0000
+Log likelihood =  -2982.065                     Pseudo R2         =     0.0801
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          black |   1.410836   .0960528     5.06   0.000     1.234596    1.612234
+   perceivedage |   .9959001   .0026422    -1.55   0.122     .9907349    1.001092
+perceivedgender |    .578727    .050404    -6.28   0.000     .4879088    .6864499
+    trafficstop |   .3186877   .0344656   -10.57   0.000     .2578156    .3939322
+   notinfobased |   1.613517    .117807     6.55   0.000      1.39838    1.861753
+  racepercieved |   2.579672   .1821511    13.42   0.000     2.246265    2.962566
+          _cons |   .4788985   .0866178    -4.07   0.000     .3359601    .6826518
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. logit arrest black perceivedage perceivedgender trafficstop notinfobased racepercieved tract_distancefromcal tract_totalpop tract_medianincome tract_annualstops tract_nonwhit
+> ecomp, or   //Model 3
+
+Iteration 0:   log likelihood = -3209.8835  
+Iteration 1:   log likelihood = -2980.8349  
+Iteration 2:   log likelihood = -2945.7657  
+Iteration 3:   log likelihood = -2945.6777  
+Iteration 4:   log likelihood = -2945.6777  
+
+Logistic regression                             Number of obs     =      8,008
+                                                LR chi2(11)       =     528.41
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2945.6777                     Pseudo R2         =     0.0823
+
+---------------------------------------------------------------------------------------
+               arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------------+----------------------------------------------------------------
+                black |    1.40769   .0970364     4.96   0.000      1.22979    1.611324
+         perceivedage |   .9957322   .0026569    -1.60   0.109     .9905384    1.000953
+      perceivedgender |   .5773933   .0505843    -6.27   0.000     .4862948    .6855573
+          trafficstop |   .3126422   .0344876   -10.54   0.000     .2518554    .3881002
+         notinfobased |   1.605304   .1180431     6.44   0.000     1.389843    1.854167
+        racepercieved |   2.565098   .1855849    13.02   0.000     2.225971    2.955891
+tract_distancefromcal |   1.034269   .0894133     0.39   0.697     .8730651    1.225238
+       tract_totalpop |   1.000058   .0000372     1.54   0.123     .9999845    1.000131
+   tract_medianincome |   1.000008   2.00e-06     3.75   0.000     1.000004    1.000011
+    tract_annualstops |   .9997523    .000097    -2.55   0.011     .9995623    .9999424
+   tract_nonwhitecomp |   2.818326   .8990318     3.25   0.001     1.508211    5.266478
+                _cons |   .1499137   .0659974    -4.31   0.000     .0632574    .3552801
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. // model code based on lab 8/lab 9
+. 
+. 
+. 
+. 
+. 
+. 
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. 
+. // desktop version
+. logit arrest white perceivedage perceivedgender, or   //Model 1
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3212.0378  
+Iteration 2:   log likelihood = -3211.7283  
+Iteration 3:   log likelihood = -3211.7283  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(3)        =      59.78
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3211.7283                     Pseudo R2         =     0.0092
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          white |   .9766597   .0671782    -0.34   0.731     .8534824    1.117614
+   perceivedage |   1.002011   .0025145     0.80   0.423     .9970952    1.006952
+perceivedgender |   .5403572   .0458197    -7.26   0.000     .4576181    .6380559
+          _cons |   .3135683   .0444346    -8.18   0.000     .2375262    .4139545
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) replace
+file \\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls is read-only; cannot be modified or erased
+The file needs to be closed if being used by another software such as Excel.
+r(608);
+
+end of do-file
+
+r(608);
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. 
+. 
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. 
+. // desktop version
+. logit arrest black perceivedage perceivedgender, or   //Model 1
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3194.5912  
+Iteration 2:   log likelihood = -3193.6308  
+Iteration 3:   log likelihood = -3193.6298  
+Iteration 4:   log likelihood = -3193.6298  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(3)        =      95.98
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3193.6298                     Pseudo R2         =     0.0148
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          black |   1.489743   .0978397     6.07   0.000      1.30981    1.694394
+   perceivedage |   1.001276   .0025053     0.51   0.610     .9963782    1.006199
+perceivedgender |     .54375   .0462118    -7.17   0.000      .460318    .6423039
+          _cons |   .2713306   .0392395    -9.02   0.000     .2043616    .3602454
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. logit arrest black perceivedage perceivedgender trafficstop notinfobased racepercieved, or   //Model 2
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3016.9118  
+Iteration 2:   log likelihood = -2982.1399  
+Iteration 3:   log likelihood =  -2982.065  
+Iteration 4:   log likelihood =  -2982.065  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(6)        =     519.11
+                                                Prob > chi2       =     0.0000
+Log likelihood =  -2982.065                     Pseudo R2         =     0.0801
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          black |   1.410836   .0960528     5.06   0.000     1.234596    1.612234
+   perceivedage |   .9959001   .0026422    -1.55   0.122     .9907349    1.001092
+perceivedgender |    .578727    .050404    -6.28   0.000     .4879088    .6864499
+    trafficstop |   .3186877   .0344656   -10.57   0.000     .2578156    .3939322
+   notinfobased |   1.613517    .117807     6.55   0.000      1.39838    1.861753
+  racepercieved |   2.579672   .1821511    13.42   0.000     2.246265    2.962566
+          _cons |   .4788985   .0866178    -4.07   0.000     .3359601    .6826518
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. logit arrest black perceivedage perceivedgender trafficstop notinfobased racepercieved tract_distancefromcal tract_totalpop tract_medianincome tract_annualstops tract_nonwhit
+> ecomp, or   //Model 3
+
+Iteration 0:   log likelihood = -3209.8835  
+Iteration 1:   log likelihood = -2980.8349  
+Iteration 2:   log likelihood = -2945.7657  
+Iteration 3:   log likelihood = -2945.6777  
+Iteration 4:   log likelihood = -2945.6777  
+
+Logistic regression                             Number of obs     =      8,008
+                                                LR chi2(11)       =     528.41
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2945.6777                     Pseudo R2         =     0.0823
+
+---------------------------------------------------------------------------------------
+               arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------------+----------------------------------------------------------------
+                black |    1.40769   .0970364     4.96   0.000      1.22979    1.611324
+         perceivedage |   .9957322   .0026569    -1.60   0.109     .9905384    1.000953
+      perceivedgender |   .5773933   .0505843    -6.27   0.000     .4862948    .6855573
+          trafficstop |   .3126422   .0344876   -10.54   0.000     .2518554    .3881002
+         notinfobased |   1.605304   .1180431     6.44   0.000     1.389843    1.854167
+        racepercieved |   2.565098   .1855849    13.02   0.000     2.225971    2.955891
+tract_distancefromcal |   1.034269   .0894133     0.39   0.697     .8730651    1.225238
+       tract_totalpop |   1.000058   .0000372     1.54   0.123     .9999845    1.000131
+   tract_medianincome |   1.000008   2.00e-06     3.75   0.000     1.000004    1.000011
+    tract_annualstops |   .9997523    .000097    -2.55   0.011     .9995623    .9999424
+   tract_nonwhitecomp |   2.818326   .8990318     3.25   0.001     1.508211    5.266478
+                _cons |   .1499137   .0659974    -4.31   0.000     .0632574    .3552801
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. 
+end of do-file
+
+. do "C:\Users\KC1558~1\AppData\Local\Temp\11\STD1bec_000000.tmp"
+
+. 
+. local study "arrest"
+
+. local model "arrest"
+
+. 
+. 
+. // desktop version
+. logit arrest white perceivedage perceivedgender, or   //Model 1
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood = -3212.0378  
+Iteration 2:   log likelihood = -3211.7283  
+Iteration 3:   log likelihood = -3211.7283  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(3)        =      59.78
+                                                Prob > chi2       =     0.0000
+Log likelihood = -3211.7283                     Pseudo R2         =     0.0092
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          white |   .9766597   .0671782    -0.34   0.731     .8534824    1.117614
+   perceivedage |   1.002011   .0025145     0.80   0.423     .9970952    1.006952
+perceivedgender |   .5403572   .0458197    -7.26   0.000     .4576181    .6380559
+          _cons |   .3135683   .0444346    -8.18   0.000     .2375262    .4139545
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) replace
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. logit arrest white perceivedage perceivedgender trafficstop notinfobased racepercieved, or   //Model 2
+
+Iteration 0:   log likelihood =  -3241.619  
+Iteration 1:   log likelihood =    -3026.1  
+Iteration 2:   log likelihood = -2992.1959  
+Iteration 3:   log likelihood = -2992.1273  
+Iteration 4:   log likelihood = -2992.1273  
+
+Logistic regression                             Number of obs     =      8,086
+                                                LR chi2(6)        =     498.98
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2992.1273                     Pseudo R2         =     0.0770
+
+---------------------------------------------------------------------------------
+         arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------+----------------------------------------------------------------
+          white |   .8511567   .0607687    -2.26   0.024     .7400101    .9789971
+   perceivedage |   .9970395    .002647    -1.12   0.264      .991865    1.002241
+perceivedgender |   .5798418   .0504564    -6.26   0.000     .4889227    .6876682
+    trafficstop |    .321724   .0347284   -10.51   0.000     .2603759    .3975266
+   notinfobased |   1.624401   .1183725     6.66   0.000     1.408202    1.873793
+  racepercieved |    2.67483   .1894712    13.89   0.000     2.328099    3.073201
+          _cons |   .5380992   .0967018    -3.45   0.001     .3783493       .7653
+---------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+. logit arrest white perceivedage perceivedgender trafficstop notinfobased racepercieved tract_distancefromcal tract_totalpop tract_medianincome tract_annualstops tract_nonwhit
+> ecomp, or   //Model 3
+
+Iteration 0:   log likelihood = -3209.8835  
+Iteration 1:   log likelihood = -2989.5617  
+Iteration 2:   log likelihood = -2955.3312  
+Iteration 3:   log likelihood = -2955.2491  
+Iteration 4:   log likelihood = -2955.2491  
+
+Logistic regression                             Number of obs     =      8,008
+                                                LR chi2(11)       =     509.27
+                                                Prob > chi2       =     0.0000
+Log likelihood = -2955.2491                     Pseudo R2         =     0.0793
+
+---------------------------------------------------------------------------------------
+               arrest | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+----------------------+----------------------------------------------------------------
+                white |   .8488551    .061297    -2.27   0.023     .7368297    .9779126
+         perceivedage |   .9968439   .0026628    -1.18   0.237     .9916385    1.002077
+      perceivedgender |   .5784466   .0506363    -6.25   0.000     .4872484    .6867144
+          trafficstop |   .3148736   .0346837   -10.49   0.000     .2537321    .3907483
+         notinfobased |   1.616335   .1186396     6.54   0.000     1.399758    1.866422
+        racepercieved |   2.656016   .1924983    13.48   0.000     2.304298    3.061418
+tract_distancefromcal |   1.036421     .08944     0.41   0.678     .8751451    1.227418
+       tract_totalpop |   1.000049   .0000372     1.33   0.185     .9999764    1.000122
+   tract_medianincome |   1.000007   2.00e-06     3.57   0.000     1.000003    1.000011
+    tract_annualstops |   .9997373   .0000969    -2.71   0.007     .9995474    .9999272
+   tract_nonwhitecomp |   2.889175   .9206635     3.33   0.001     1.547142    5.395323
+                _cons |   .1791824   .0784467    -3.93   0.000     .0759689    .4226243
+---------------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+.         outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) sym
+> bol(***, **, *) append
+\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls
+dir : seeout
+
+.         
+.         
+.         
+. 
+.         
+.         
+. 
+end of do-file
+
+. logit black longstop
+
+Iteration 0:   log likelihood = -5273.4192  
+Iteration 1:   log likelihood = -5231.3192  
+Iteration 2:   log likelihood = -5231.2697  
+Iteration 3:   log likelihood = -5231.2697  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      84.30
+                                                Prob > chi2       =     0.0000
+Log likelihood = -5231.2697                     Pseudo R2         =     0.0080
+
+------------------------------------------------------------------------------
+       black |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    longstop |   .4604055   .0499637     9.21   0.000     .3624784    .5583326
+       _cons |  -.7284434    .028302   -25.74   0.000    -.7839144   -.6729724
+------------------------------------------------------------------------------
+
+. logit longstop black, or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4877.7715  
+Iteration 2:   log likelihood = -4877.6713  
+Iteration 3:   log likelihood = -4877.6713  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      84.30
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4877.6713                     Pseudo R2         =     0.0086
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.584716   .0791783     9.21   0.000     1.436886    1.747756
+       _cons |   .3548892   .0111974   -32.83   0.000     .3336076    .3775284
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit longstop white, or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4918.1723  
+Iteration 2:   log likelihood = -4918.1721  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =       3.30
+                                                Prob > chi2       =     0.0694
+Log likelihood = -4918.1721                     Pseudo R2         =     0.0003
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |   .9113424   .0466888    -1.81   0.070     .8242782    1.007603
+       _cons |   .4363337   .0131144   -27.59   0.000     .4113724    .4628096
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit longstop poc, or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood =  -4902.994  
+Iteration 2:   log likelihood = -4902.9776  
+Iteration 3:   log likelihood = -4902.9776  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      33.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4902.9776                     Pseudo R2         =     0.0034
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         poc |   1.334999   .0668123     5.77   0.000     1.210267    1.472587
+       _cons |   .3554483   .0139185   -26.42   0.000     .3291892    .3838022
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit longstop hispanic or
+variable or not found
+r(111);
+
+. logit longstop hispanic , or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4919.6853  
+Iteration 2:   log likelihood = -4919.6853  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =       0.27
+                                                Prob > chi2       =     0.6027
+Log likelihood = -4919.6853                     Pseudo R2         =     0.0000
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    hispanic |   1.036282   .0708335     0.52   0.602     .9063484    1.184842
+       _cons |   .4202182   .0110849   -32.87   0.000     .3990444    .4425156
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit longstop black , or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4877.7715  
+Iteration 2:   log likelihood = -4877.6713  
+Iteration 3:   log likelihood = -4877.6713  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      84.30
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4877.6713                     Pseudo R2         =     0.0086
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       black |   1.584716   .0791783     9.21   0.000     1.436886    1.747756
+       _cons |   .3548892   .0111974   -32.83   0.000     .3336076    .3775284
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit longstop poc, or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood =  -4902.994  
+Iteration 2:   log likelihood = -4902.9776  
+Iteration 3:   log likelihood = -4902.9776  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =      33.69
+                                                Prob > chi2       =     0.0000
+Log likelihood = -4902.9776                     Pseudo R2         =     0.0034
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         poc |   1.334999   .0668123     5.77   0.000     1.210267    1.472587
+       _cons |   .3554483   .0139185   -26.42   0.000     .3291892    .3838022
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. logit longstop white, or
+
+Iteration 0:   log likelihood = -4919.8208  
+Iteration 1:   log likelihood = -4918.1723  
+Iteration 2:   log likelihood = -4918.1721  
+
+Logistic regression                             Number of obs     =      8,088
+                                                LR chi2(1)        =       3.30
+                                                Prob > chi2       =     0.0694
+Log likelihood = -4918.1721                     Pseudo R2         =     0.0003
+
+------------------------------------------------------------------------------
+    longstop | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       white |   .9113424   .0466888    -1.81   0.070     .8242782    1.007603
+       _cons |   .4363337   .0131144   -27.59   0.000     .4113724    .4628096
+------------------------------------------------------------------------------
+Note: _cons estimates baseline odds.
+
+. use "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Data\formatted_allstops_large(expanded)(2).dta", clear
+

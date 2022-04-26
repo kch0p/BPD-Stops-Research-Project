@@ -10,11 +10,11 @@ local model "arrest"
 
 
 // desktop version
-logit arrest black perceivedage perceivedgender, or   //Model 1
+logit arrest white perceivedage perceivedgender, or   //Model 1
 	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) replace
-logit arrest black perceivedage perceivedgender type infobased racepercieved reason, or   //Model 2
+logit arrest white perceivedage perceivedgender trafficstop notinfobased racepercieved, or   //Model 2
 	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append
-logit arrest black perceivedage perceivedgender type infobased racepercieved reason distancefromcal area_totalpop area_medianincome area_annualstops nonwhitecomp, or   //Model 3
+logit arrest white perceivedage perceivedgender trafficstop notinfobased racepercieved tract_distancefromcal tract_totalpop tract_medianincome tract_annualstops tract_nonwhitecomp, or   //Model 3
 	outreg2 using "\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults `study'-`c_date'.xls", eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append
 	
 	
