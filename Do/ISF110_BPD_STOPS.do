@@ -206,9 +206,9 @@ lab value warning warning
 // replace perceivedgender = 2 if !inlist(perceivedgender,0,1)
 
 
-sum arrest reason resultofstoptype arrest perceivedage nonwhite poc race trafficstop noactions warning area_totalstops area_annualstops area_medianincome
+sum arrest reason resultofstoptype arrest perceivedage nonwhite poc race trafficstop noactions warning tract_totalnumstops tract_annualstops tract_medianincome
 
-corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest perceivedage nonwhite poc race reasonablesuspicion trafficstop noactions warning area_totalstops area_annualstops area_medianincome
+corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstoptype arrest perceivedage nonwhite poc race reasonablesuspicion trafficstop noactions warning tract_totalnumstops tract_annualstops tract_medianincome
 
 
 
@@ -225,7 +225,7 @@ corr perceivedraceorethnicity perceivedgender perceivedage reason resultofstopty
 ////////////////////THIS CODE ONLY APPLIES FOR THE SMALLER DATASET
 drop if durationofstop >270
 
-replace racepercieved = 1 if raceperceivedpriortostop=="TRUE"
+gen racepercieved = 1 if raceperceivedpriortostop=="TRUE"
 // replace stop = 1 if raceperceivedpriortostop=="True"
 replace racepercieved = 0 if raceperceivedpriortostop == "FALSE"
 replace racepercieved = 0 if !inlist(racepercieved,1)

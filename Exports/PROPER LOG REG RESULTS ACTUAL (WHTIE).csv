@@ -1,32 +1,32 @@
 ,,,
-Models (White Comparison),Model 1,Model 2,Model 3
+Models (Black),Model 1,Model 2,Model 3
 ,,,
 Subject Arrested ,.,.,.
 ,(.),(.),(.)
-Subject is White,0.977,0.851*,0.849*
-,(0.067),(0.061),(0.061)
-Subject Age,1.002,0.997,0.997
+Subject is Black,1.490***,1.411***,1.408***
+,(0.098),(0.096),(0.097)
+Subject Age,1.001,0.996,0.996
 ,(0.003),(0.003),(0.003)
-Subject Perceived Gender,0.540***,0.580***,0.578***
+Subject Perceived Gender,0.544***,0.579***,0.577***
 ,(0.046),(0.050),(0.051)
-Stop is Traffic Stop,,0.322***,0.315***
-,,(0.035),(0.035)
-Stop Not Based on Previous Info,,1.624***,1.616***
-,,(0.118),(0.119)
-Race Perceived Prior to Stop,,2.675***,2.656***
-,,(0.189),(0.192)
-Distance of Local Census Tract to Cal,,,1.036
+Stop is Traffic Stop,,0.319***,0.313***
+,,(0.034),(0.034)
+Stop Not Based on Previous Info,,1.614***,1.605***
+,,(0.118),(0.118)
+Race Perceived Prior to Stop,,2.580***,2.565***
+,,(0.182),(0.186)
+Distance of Local Census Tract to Cal,,,1.034
 ,,,(0.089)
 Local Census Tract Total Population,,,1.000
 ,,,(0.000)
 Local Census Tract Median Income,,,1.000***
 ,,,(0.000)
-Local Census Tract Annual Average Stops,,,1.000**
+Local Census Tract Annual Average Stops,,,1.000*
 ,,,(0.000)
-Local Census Tract Nonwhite Composition,,,2.889***
-,,,(0.921)
-Constant,0.314***,0.538***,0.179***
-,(0.044),(0.097),(0.078)
+Local Census Tract Nonwhite Composition,,,2.818**
+,,,(0.899)
+Constant,0.271***,0.479***,0.150***
+,(0.039),(0.087),(0.066)
 ,,,
 Observations,"8,086","8,086","8,008"
 seEform in parentheses,,,
