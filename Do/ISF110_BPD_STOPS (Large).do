@@ -201,7 +201,7 @@ lab value reasonablesuspicion reasonablesuspicion
 
 gen trafficstop = 1 if reason == 1 | type_of_stop == "Vehicle"
 replace trafficstop = 0 if !inlist(trafficstop,1)
-lab def trafficstop 1 "Traffic Stop" 0 "Pedestrian or Bicycle stop" 
+lab def trafficstop 1 "Traffic Stop" 0 "Not Traffic Stop" 
 lab value trafficstop trafficstop
 
 gen noactions = 1 if result_of_stoptype == 7 | result_of_stoptype == 10

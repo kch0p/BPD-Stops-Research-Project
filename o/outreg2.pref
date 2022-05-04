@@ -1,3 +1,3 @@
-28 Apr 2022
-using `"\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\smallmodelResults arrest-.xls"'
+ 3 May 2022
+using `"\\Client\C$\Users\kharr\Documents\GitHub\Berkeley-PD-ISF-110\Exports\rough_final_Results arrest-.xls"'
 eform dec(3) alpha(0.001, 0.01, 0.05) symbol(***, **, *) append

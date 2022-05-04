@@ -1,0 +1,30 @@
+,,,
+VARIABLES (Small),Model 1,Model 2,Model 3
+Arrest,.,.,.
+,(.),(.),(.)
+Subject is Black,1.490***,1.430***,1.429***
+,(0.098),(0.097),(0.098)
+Age of Subject,1.001,0.997,0.996
+,(0.003),(0.003),(0.003)
+Perceived Gender of Subject,0.544***,0.572***,0.571***
+,(0.046),(0.050),(0.050)
+Traffic Stop,,0.306***,0.301***
+,,(0.033),(0.033)
+Race Was Perceived Prior,,2.769***,2.730***
+,,(0.193),(0.195)
+Tract Distance from University,,,1.001
+,,,(0.086)
+Tract Total Population,,,1.000
+,,,(0.000)
+Tract Median Income,,,1.000***
+,,,(0.000)
+Tract Average Annual Stops,,,1.000*
+,,,(0.000)
+Tract BIPOC Composition,,,2.782**
+,,,(0.885)
+Constant,0.271***,0.538***,0.173***
+,(0.039),(0.097),(0.076)
+,,,
+Observations,"8,086","8,086","8,008"
+seEform in parentheses,,,
+"*** p<0.001, ** p<0.01, * p<0.05",,,
