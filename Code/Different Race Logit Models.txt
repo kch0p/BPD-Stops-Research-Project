@@ -1,0 +1,380 @@
+                                                          OR  ...  Upper CI
+Intercept                                           2.670738  ...  5.916755
+C(report_risk_groups, Treatment(reference=0))[T.1]  1.416794  ...  1.632146
+C(gender, Treatment(reference=0))[T.2]              0.529680  ...  0.633882
+C(trafficstop, Treatment(reference=0))[T.1]         0.326447  ...  0.389328
+C(raceperceivedpriortostop, Treatment(reference...  1.996721  ...  2.351769
+perceivedage                                        0.978930  ...  0.984160
+tract_distancefromcal                               1.121059  ...  1.330808
+tract_totalpop                                      0.999575  ...  0.999638
+tract_medianincome                                  0.999991  ...  0.999995
+tract_annualstops                                   0.999220  ...  0.999411
+tract_nonwhitecomp                                  4.240734  ...  8.104211
+
+[11 rows x 3 columns]
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2967
+Time:                        15:43:02   Log-Likelihood:                -2879.7
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    0.9824      0.406      2.421      0.015       0.187       1.778
+C(report_risk_groups, Treatment(reference=0))[T.1]           0.3484      0.072      4.826      0.000       0.207       0.490
+C(gender, Treatment(reference=0))[T.2]                      -0.6355      0.092     -6.935      0.000      -0.815      -0.456
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1195      0.090    -12.456      0.000      -1.296      -0.943
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6915      0.084      8.281      0.000       0.528       0.855
+perceivedage                                                -0.0213      0.003     -7.832      0.000      -0.027      -0.016
+tract_distancefromcal                                        0.1143      0.088      1.306      0.192      -0.057       0.286
+tract_totalpop                                              -0.0004   3.21e-05    -13.266      0.000      -0.000      -0.000
+tract_medianincome                                       -8.937e-06   2.22e-06     -4.022      0.000   -1.33e-05   -4.58e-06
+tract_annualstops                                           -0.0008   9.75e-05     -8.001      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.4447      0.330      4.372      0.000       0.797       2.092
+============================================================================================================================
+Optimization terminated successfully.
+         Current function value: 0.360458
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           2.670738  ...  5.916755
+C(report_risk_groups, Treatment(reference=0))[T.1]  1.416794  ...  1.632146
+C(gender, Treatment(reference=0))[T.2]              0.529680  ...  0.633882
+C(trafficstop, Treatment(reference=0))[T.1]         0.326447  ...  0.389328
+C(raceperceivedpriortostop, Treatment(reference...  1.996721  ...  2.351769
+perceivedage                                        0.978930  ...  0.984160
+tract_distancefromcal                               1.121059  ...  1.330808
+tract_totalpop                                      0.999575  ...  0.999638
+tract_medianincome                                  0.999991  ...  0.999995
+tract_annualstops                                   0.999220  ...  0.999411
+tract_nonwhitecomp                                  4.240734  ...  8.104211
+
+[11 rows x 3 columns]
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2967
+Time:                        15:46:04   Log-Likelihood:                -2879.7
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    0.9824      0.406      2.421      0.015       0.187       1.778
+C(report_risk_groups, Treatment(reference=0))[T.1]           0.3484      0.072      4.826      0.000       0.207       0.490
+C(gender, Treatment(reference=0))[T.2]                      -0.6355      0.092     -6.935      0.000      -0.815      -0.456
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1195      0.090    -12.456      0.000      -1.296      -0.943
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6915      0.084      8.281      0.000       0.528       0.855
+perceivedage                                                -0.0213      0.003     -7.832      0.000      -0.027      -0.016
+tract_distancefromcal                                        0.1143      0.088      1.306      0.192      -0.057       0.286
+tract_totalpop                                              -0.0004   3.21e-05    -13.266      0.000      -0.000      -0.000
+tract_medianincome                                       -8.937e-06   2.22e-06     -4.022      0.000   -1.33e-05   -4.58e-06
+tract_annualstops                                           -0.0008   9.75e-05     -8.001      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.4447      0.330      4.372      0.000       0.797       2.092
+============================================================================================================================
+Optimization terminated successfully.
+         Current function value: 0.361460
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           3.649823  ...  8.014291
+C(white, Treatment(reference=0))[T.1]               0.817081  ...  0.943883
+C(gender, Treatment(reference=0))[T.2]              0.521030  ...  0.623306
+C(trafficstop, Treatment(reference=0))[T.1]         0.320711  ...  0.382285
+C(raceperceivedpriortostop, Treatment(reference...  1.985552  ...  2.337529
+perceivedage                                        0.979052  ...  0.984278
+tract_distancefromcal                               1.143864  ...  1.357035
+tract_totalpop                                      0.999567  ...  0.999630
+tract_medianincome                                  0.999991  ...  0.999995
+tract_annualstops                                   0.999201  ...  0.999392
+tract_nonwhitecomp                                  4.379324  ...  8.359532
+
+[11 rows x 3 columns]
+
+
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2947
+Time:                        15:46:04   Log-Likelihood:                -2887.7
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    1.2947      0.401      3.226      0.001       0.508       2.081
+C(white, Treatment(reference=0))[T.1]                       -0.2020      0.074     -2.745      0.006      -0.346      -0.058
+C(gender, Treatment(reference=0))[T.2]                      -0.6519      0.091     -7.129      0.000      -0.831      -0.473
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1372      0.090    -12.691      0.000      -1.313      -0.962
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6859      0.083      8.237      0.000       0.523       0.849
+perceivedage                                                -0.0212      0.003     -7.795      0.000      -0.026      -0.016
+tract_distancefromcal                                        0.1344      0.087      1.542      0.123      -0.036       0.305
+tract_totalpop                                              -0.0004    3.2e-05    -13.534      0.000      -0.000      -0.000
+tract_medianincome                                       -9.269e-06   2.22e-06     -4.179      0.000   -1.36e-05   -4.92e-06
+tract_annualstops                                           -0.0008   9.73e-05     -8.212      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.4769      0.330      4.477      0.000       0.830       2.123
+============================================================================================================================
+
+
+
+
+
+
+Optimization terminated successfully.
+         Current function value: 0.361857
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           3.490652  ...  7.651266
+C(black, Treatment(reference=0))[T.1]               1.082564  ...  1.241991
+C(gender, Treatment(reference=0))[T.2]              0.515644  ...  0.616713
+C(trafficstop, Treatment(reference=0))[T.1]         0.324454  ...  0.386861
+C(raceperceivedpriortostop, Treatment(reference...  1.963008  ...  2.309817
+perceivedage                                        0.978268  ...  0.983497
+tract_distancefromcal                               1.155833  ...  1.370824
+tract_totalpop                                      0.999560  ...  0.999623
+tract_medianincome                                  0.999990  ...  0.999995
+tract_annualstops                                   0.999184  ...  0.999374
+tract_nonwhitecomp                                  4.492543  ...  8.571520
+
+[11 rows x 3 columns]
+
+
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2940
+Time:                        15:46:04   Log-Likelihood:                -2890.9
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    1.2501      0.400      3.122      0.002       0.465       2.035
+C(black, Treatment(reference=0))[T.1]                        0.0793      0.070      1.132      0.258      -0.058       0.217
+C(gender, Treatment(reference=0))[T.2]                      -0.6623      0.091     -7.253      0.000      -0.841      -0.483
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1256      0.090    -12.541      0.000      -1.302      -0.950
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6745      0.083      8.126      0.000       0.512       0.837
+perceivedage                                                -0.0220      0.003     -8.077      0.000      -0.027      -0.017
+tract_distancefromcal                                        0.1448      0.087      1.664      0.096      -0.026       0.315
+tract_totalpop                                              -0.0004   3.21e-05    -13.722      0.000      -0.001      -0.000
+tract_medianincome                                        -9.52e-06   2.22e-06     -4.289      0.000   -1.39e-05   -5.17e-06
+tract_annualstops                                           -0.0008   9.71e-05     -8.406      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.5024      0.330      4.558      0.000       0.856       2.148
+============================================================================================================================
+
+
+
+
+
+
+
+Optimization terminated successfully.
+         Current function value: 0.361460
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           3.649823  ...  8.014291
+C(white, Treatment(reference=0))[T.1]               0.817081  ...  0.943883
+C(gender, Treatment(reference=0))[T.2]              0.521030  ...  0.623306
+C(trafficstop, Treatment(reference=0))[T.1]         0.320711  ...  0.382285
+C(raceperceivedpriortostop, Treatment(reference...  1.985552  ...  2.337529
+perceivedage                                        0.979052  ...  0.984278
+tract_distancefromcal                               1.143864  ...  1.357035
+tract_totalpop                                      0.999567  ...  0.999630
+tract_medianincome                                  0.999991  ...  0.999995
+tract_annualstops                                   0.999201  ...  0.999392
+tract_nonwhitecomp                                  4.379324  ...  8.359532
+
+[11 rows x 3 columns]
+
+
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2947
+Time:                        15:46:36   Log-Likelihood:                -2887.7
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    1.2947      0.401      3.226      0.001       0.508       2.081
+C(white, Treatment(reference=0))[T.1]                       -0.2020      0.074     -2.745      0.006      -0.346      -0.058
+C(gender, Treatment(reference=0))[T.2]                      -0.6519      0.091     -7.129      0.000      -0.831      -0.473
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1372      0.090    -12.691      0.000      -1.313      -0.962
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6859      0.083      8.237      0.000       0.523       0.849
+perceivedage                                                -0.0212      0.003     -7.795      0.000      -0.026      -0.016
+tract_distancefromcal                                        0.1344      0.087      1.542      0.123      -0.036       0.305
+tract_totalpop                                              -0.0004    3.2e-05    -13.534      0.000      -0.000      -0.000
+tract_medianincome                                       -9.269e-06   2.22e-06     -4.179      0.000   -1.36e-05   -4.92e-06
+tract_annualstops                                           -0.0008   9.73e-05     -8.212      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.4769      0.330      4.477      0.000       0.830       2.123
+============================================================================================================================
+
+
+
+
+
+
+Optimization terminated successfully.
+         Current function value: 0.361857
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           3.490652  ...  7.651266
+C(black, Treatment(reference=0))[T.1]               1.082564  ...  1.241991
+C(gender, Treatment(reference=0))[T.2]              0.515644  ...  0.616713
+C(trafficstop, Treatment(reference=0))[T.1]         0.324454  ...  0.386861
+C(raceperceivedpriortostop, Treatment(reference...  1.963008  ...  2.309817
+perceivedage                                        0.978268  ...  0.983497
+tract_distancefromcal                               1.155833  ...  1.370824
+tract_totalpop                                      0.999560  ...  0.999623
+tract_medianincome                                  0.999990  ...  0.999995
+tract_annualstops                                   0.999184  ...  0.999374
+tract_nonwhitecomp                                  4.492543  ...  8.571520
+
+[11 rows x 3 columns]
+
+
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2940
+Time:                        15:46:36   Log-Likelihood:                -2890.9
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    1.2501      0.400      3.122      0.002       0.465       2.035
+C(black, Treatment(reference=0))[T.1]                        0.0793      0.070      1.132      0.258      -0.058       0.217
+C(gender, Treatment(reference=0))[T.2]                      -0.6623      0.091     -7.253      0.000      -0.841      -0.483
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1256      0.090    -12.541      0.000      -1.302      -0.950
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6745      0.083      8.126      0.000       0.512       0.837
+perceivedage                                                -0.0220      0.003     -8.077      0.000      -0.027      -0.017
+tract_distancefromcal                                        0.1448      0.087      1.664      0.096      -0.026       0.315
+tract_totalpop                                              -0.0004   3.21e-05    -13.722      0.000      -0.001      -0.000
+tract_medianincome                                        -9.52e-06   2.22e-06     -4.289      0.000   -1.39e-05   -5.17e-06
+tract_annualstops                                           -0.0008   9.71e-05     -8.406      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.5024      0.330      4.558      0.000       0.856       2.148
+============================================================================================================================
+
+
+
+
+
+
+Optimization terminated successfully.
+         Current function value: 0.361460
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           3.649823  ...  8.014291
+C(white, Treatment(reference=0))[T.1]               0.817081  ...  0.943883
+C(gender, Treatment(reference=0))[T.2]              0.521030  ...  0.623306
+C(trafficstop, Treatment(reference=0))[T.1]         0.320711  ...  0.382285
+C(raceperceivedpriortostop, Treatment(reference...  1.985552  ...  2.337529
+perceivedage                                        0.979052  ...  0.984278
+tract_distancefromcal                               1.143864  ...  1.357035
+tract_totalpop                                      0.999567  ...  0.999630
+tract_medianincome                                  0.999991  ...  0.999995
+tract_annualstops                                   0.999201  ...  0.999392
+tract_nonwhitecomp                                  4.379324  ...  8.359532
+
+[11 rows x 3 columns]
+
+
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2947
+Time:                        15:46:40   Log-Likelihood:                -2887.7
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    1.2947      0.401      3.226      0.001       0.508       2.081
+C(white, Treatment(reference=0))[T.1]                       -0.2020      0.074     -2.745      0.006      -0.346      -0.058
+C(gender, Treatment(reference=0))[T.2]                      -0.6519      0.091     -7.129      0.000      -0.831      -0.473
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1372      0.090    -12.691      0.000      -1.313      -0.962
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6859      0.083      8.237      0.000       0.523       0.849
+perceivedage                                                -0.0212      0.003     -7.795      0.000      -0.026      -0.016
+tract_distancefromcal                                        0.1344      0.087      1.542      0.123      -0.036       0.305
+tract_totalpop                                              -0.0004    3.2e-05    -13.534      0.000      -0.000      -0.000
+tract_medianincome                                       -9.269e-06   2.22e-06     -4.179      0.000   -1.36e-05   -4.92e-06
+tract_annualstops                                           -0.0008   9.73e-05     -8.212      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.4769      0.330      4.477      0.000       0.830       2.123
+============================================================================================================================
+
+
+
+
+
+
+Optimization terminated successfully.
+         Current function value: 0.361857
+         Iterations 7
+                                                          OR  ...  Upper CI
+Intercept                                           3.490652  ...  7.651266
+C(black, Treatment(reference=0))[T.1]               1.082564  ...  1.241991
+C(gender, Treatment(reference=0))[T.2]              0.515644  ...  0.616713
+C(trafficstop, Treatment(reference=0))[T.1]         0.324454  ...  0.386861
+C(raceperceivedpriortostop, Treatment(reference...  1.963008  ...  2.309817
+perceivedage                                        0.978268  ...  0.983497
+tract_distancefromcal                               1.155833  ...  1.370824
+tract_totalpop                                      0.999560  ...  0.999623
+tract_medianincome                                  0.999990  ...  0.999995
+tract_annualstops                                   0.999184  ...  0.999374
+tract_nonwhitecomp                                  4.492543  ...  8.571520
+
+[11 rows x 3 columns]
+
+
+
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 arrest   No. Observations:                 7989
+Model:                          Logit   Df Residuals:                     7978
+Method:                           MLE   Df Model:                           10
+Date:                Thu, 05 May 2022   Pseudo R-squ.:                  0.2940
+Time:                        15:46:40   Log-Likelihood:                -2890.9
+converged:                       True   LL-Null:                       -4094.5
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+============================================================================================================================
+                                                               coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------------------
+Intercept                                                    1.2501      0.400      3.122      0.002       0.465       2.035
+C(black, Treatment(reference=0))[T.1]                        0.0793      0.070      1.132      0.258      -0.058       0.217
+C(gender, Treatment(reference=0))[T.2]                      -0.6623      0.091     -7.253      0.000      -0.841      -0.483
+C(trafficstop, Treatment(reference=0))[T.1]                 -1.1256      0.090    -12.541      0.000      -1.302      -0.950
+C(raceperceivedpriortostop, Treatment(reference=0))[T.1]     0.6745      0.083      8.126      0.000       0.512       0.837
+perceivedage                                                -0.0220      0.003     -8.077      0.000      -0.027      -0.017
+tract_distancefromcal                                        0.1448      0.087      1.664      0.096      -0.026       0.315
+tract_totalpop                                              -0.0004   3.21e-05    -13.722      0.000      -0.001      -0.000
+tract_medianincome                                        -9.52e-06   2.22e-06     -4.289      0.000   -1.39e-05   -5.17e-06
+tract_annualstops                                           -0.0008   9.71e-05     -8.406      0.000      -0.001      -0.001
+tract_nonwhitecomp                                           1.5024      0.330      4.558      0.000       0.856       2.148
+============================================================================================================================
+
+
+
+
+
+
