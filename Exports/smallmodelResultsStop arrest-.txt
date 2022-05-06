@@ -1,0 +1,31 @@
+	(1)	(2)	(3)
+VARIABLES	longstop	longstop	longstop
+			
+longstop	.	.	.
+	(.)	(.)	(.)
+white	0.941	0.858**	0.868**
+	(0.049)	(0.046)	(0.046)
+perceivedage	0.995**	0.991***	0.991***
+	(0.002)	(0.002)	(0.002)
+perceivedgender	0.779***	0.787***	0.775***
+	(0.045)	(0.046)	(0.046)
+trafficstop		1.106	1.059
+		(0.118)	(0.114)
+racepercieved		2.211***	2.297***
+		(0.112)	(0.120)
+tract_distancefromcal			1.109
+			(0.071)
+tract_totalpop			1.000
+			(0.000)
+tract_medianincome			1.000***
+			(0.000)
+tract_annualstops			1.000**
+			(0.000)
+tract_nonwhitecomp			2.127**
+			(0.517)
+Constant	0.720**	0.523***	0.240***
+	(0.075)	(0.076)	(0.081)
+			
+Observations	8,086	8,086	8,008
+seEform in parentheses			
+*** p<0.001, ** p<0.01, * p<0.05			

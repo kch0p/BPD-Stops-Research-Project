@@ -1,0 +1,28 @@
+,,,
+VARIABLES (Small),Model 1,Model 2,Model 3
+Subject is Black,1.590***,1.534***,1.534***
+,(0.080),(0.078),(0.079)
+Age of Subject,0.993***,0.990***,0.990***
+,(0.002),(0.002),(0.002)
+Perceived Gender of Subject,0.784***,0.788***,0.776***
+,(0.045),(0.046),(0.046)
+Traffic Stop,,1.101,1.057
+,,(0.118),(0.114)
+Race Was Perceived Prior,,2.132***,2.222***
+,,(0.108),(0.116)
+Tract Distance from University,,,1.100
+,,,(0.071)
+Tract Total Population,,,1.000
+,,,(0.000)
+Tract Median Income,,,1.000***
+,,,(0.000)
+Tract Average Annual Stops,,,1.000*
+,,,(0.000)
+tract_nonwhitecomp,,,2.036**
+,,,(0.497)
+Constant,0.610***,0.451***,0.194***
+,(0.065),(0.067),(0.066)
+,,,
+Observations,"8,086","8,086","8,008"
+seEform in parentheses,,,
+"*** p<0.001, ** p<0.01, * p<0.05",,,

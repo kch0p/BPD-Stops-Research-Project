@@ -1,31 +1,17 @@
-	(1)	(2)	(3)
-VARIABLES	arrest	arrest	arrest
-			
-arrest	.	.	.
-	(.)	(.)	(.)
-white	0.977	0.840*	0.836*
-	(0.067)	(0.060)	(0.060)
-perceivedage	1.002	0.998	0.998
-	(0.003)	(0.003)	(0.003)
-perceivedgender	0.540***	0.572***	0.571***
-	(0.046)	(0.050)	(0.050)
-trafficstop		0.309***	0.302***
-		(0.033)	(0.033)
-racepercieved		2.877***	2.834***
-		(0.201)	(0.203)
-tract_distancefromcal			1.002
-			(0.086)
-tract_totalpop			1.000
-			(0.000)
-tract_medianincome			1.000***
-			(0.000)
-tract_annualstops			1.000**
-			(0.000)
-tract_nonwhitecomp			2.849***
-			(0.906)
-Constant	0.314***	0.611**	0.210***
-	(0.044)	(0.109)	(0.091)
-			
-Observations	8,086	8,086	8,008
-seEform in parentheses			
-*** p<0.001, ** p<0.01, * p<0.05			
+	(1)
+VARIABLES	longstop
+	
+longstop	.
+	(.)
+black	1.590***
+	(0.080)
+perceivedage	0.993***
+	(0.002)
+perceivedgender	0.784***
+	(0.045)
+Constant	0.610***
+	(0.065)
+	
+Observations	8,086
+seEform in parentheses	
+*** p<0.001, ** p<0.01, * p<0.05	
