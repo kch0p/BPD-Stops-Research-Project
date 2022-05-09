@@ -61,6 +61,7 @@ np.where(df['hispanic'] == 3, 0,0)
         
 df['bipoc'] = np.where(df['perceivedraceorethnicity'] != 2, 1,0)
 np.where(df['bipoc'] == 3, 0,0)
+
 df['report_risk_groups'] = np.where(df['perceivedraceorethnicity'].isin([1,3,4]), 1,0)
 df.report_risk_groups[df.report_risk_groups == 3] = 0
 # df.drop(columns=['perceivedraceorethnicity'], inplace=True)
@@ -71,8 +72,8 @@ df.report_risk_groups[df.report_risk_groups == 3] = 0
 
 
 df.gender[df.gender == 'Male'] = 1
-df.gender[df.gender == 'Female'] = 2
-df[~df['gender'].isin([1,2])] = 3
+df.gender[df.gender == 'Female'] = 0
+df[~df['gender'].isin([1,0])] = 3
 # print(f'the value counts for gender are {df.gender.value_counts()}\n')
 # sys.exit('Look it worked!')
 
@@ -105,6 +106,7 @@ df_og = df[(df['black'] != 3) & (df['white'] != 3) & (df['asian'] != 3) & (df['h
 df = df_og[['arrest','black','white','hispanic','bipoc','asian','report_risk_groups','perceivedage','gender',
             'trafficstop','raceperceivedpriortostop',
             'tract_distancefromcal','tract_totalpop','tract_medianincome','tract_annualstops','tract_nonwhitecomp']]
+df = df[df['tract_totalpop'] > 1500]
 
 
 # cols = df.columns
@@ -115,18 +117,18 @@ df = df_og[['arrest','black','white','hispanic','bipoc','asian','report_risk_gro
 # for col in df: 
 #     print(col,'\n',df[col].value_counts(),'\n\n')
 
-
+# sys.exit('stop! one sec')
 
 
 #PART 2 BUILDING THE MODEL
 import pandas as pd
 import numpy as np
-import docx
 import statsmodels.formula.api as smf
 
 ######## OUTPUT ALL FORMULAS TO A .DOCX
 
 race_options = ['white','black','hispanic','asian','report_risk_groups','bipoc']
+race_options = ['white','black','report_risk_groups']
 
 # my_doc = docx.Document()
 
