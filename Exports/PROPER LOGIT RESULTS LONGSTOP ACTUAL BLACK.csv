@@ -18,7 +18,7 @@ Tract Median Income,,,1.000***
 ,,,(0.000)
 Tract Average Annual Stops,,,1.000*
 ,,,(0.000)
-tract_nonwhitecomp,,,2.036**
+Tract BIPOC Composition,,,2.036**
 ,,,(0.497)
 Constant,0.610***,0.451***,0.194***
 ,(0.065),(0.067),(0.066)

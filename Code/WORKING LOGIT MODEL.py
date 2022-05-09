@@ -147,7 +147,7 @@ for race in race_options:
 
     print(f"{race} model\n{np.exp(odds_ratios)}\n\n\n")
     print(f"{log_reg.summary()}\n\n\n\n\n\n\n\n\n")
-
+    
 
 
 
