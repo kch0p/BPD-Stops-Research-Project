@@ -128,7 +128,6 @@ import statsmodels.formula.api as smf
 ######## OUTPUT ALL FORMULAS TO A .DOCX
 
 race_options = ['white','black','hispanic','asian','report_risk_groups','bipoc']
-race_options = ['white','black','report_risk_groups']
 
 # my_doc = docx.Document()
 

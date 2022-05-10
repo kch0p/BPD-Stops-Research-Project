@@ -135,7 +135,6 @@ import statsmodels.formula.api as smf
 ######## OUTPUT ALL FORMULAS TO A .DOCX
 
 race_options = ['white','black','hispanic','asian','report_risk_groups','bipoc']
-race_options = ['white','black','report_risk_groups']
 
 # my_doc = docx.Document()
 
@@ -145,7 +144,7 @@ for race in race_options:
                 
     formula = f"arrest ~ C({race}, Treatment(reference=0))  + C(perceivedgender, Treatment(reference=0)) + \
                 C(trafficstop, Treatment(reference=0)) + \
-                tract_distancefromcal  + tract_annualstops + tract_nonwhitecomp"
+                tract_distancefromcal + tract_totalpop + tract_medianincome + tract_annualstops + tract_nonwhitecomp"
     log_reg = smf.logit(formula, data = df).fit()
     odds_ratios = pd.DataFrame(
         {
