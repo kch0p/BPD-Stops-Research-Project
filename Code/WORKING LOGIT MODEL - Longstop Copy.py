@@ -25,10 +25,9 @@ df = df[['durationofstop', 'raceperceivedpriortostop',
          'perceivedraceorethnicity', 'resultofstop',
         'gender', 'perceivedage',  
         'typeofstop', 'tract_medianincome',
-        'tract_totalpop', 'tract_whitepop', 'tract_nonwhitecomp',
-        'tract_poccomp', 'tract_nonwhitepop', 'tract_pocpop',
+        'tract_totalpop', 'tract_whitepop', 'tract_bipoccomp',
         'tract_aapop', 'tract_na_aipop', 'tract_aisianpop',
-        'tract_hawaiian', 'tract_mixed2', 'tract_totalnumstops',
+        'tract_hawaiianpop', 'tract_mixed2',
         'tract_annualstops', 'tract_distancefromcal']]
 
 
@@ -56,7 +55,7 @@ np.where(df['asian'] == 3, 0,0)
 df['hispanic'] = np.where(df['perceivedraceorethnicity'] == 4, 1,0)
 np.where(df['hispanic'] == 3, 0,0)
 
-# df.rename(columns={'tract_nonwhitecomp':'tract_bipoc','tract_poccomp':'tract_reportfocusgroupcomp',''})
+# df.rename(columns={'tract_bipoccomp':'tract_bipoc','tract_poccomp':'tract_reportfocusgroupcomp',''})
 
         
 df['bipoc'] = np.where(df['perceivedraceorethnicity'] != 2, 1,0)
@@ -105,7 +104,7 @@ df = df[df['durationofstop'] < 270]
 df_og = df[(df['black'] != 3) & (df['white'] != 3) & (df['asian'] != 3) & (df['hispanic'] != 3)]
 df = df_og[['arrest','black','white','hispanic','bipoc','asian','report_risk_groups','perceivedage','gender',
             'trafficstop','raceperceivedpriortostop',
-            'tract_distancefromcal','tract_totalpop','tract_medianincome','tract_annualstops','tract_nonwhitecomp']]
+            'tract_distancefromcal','tract_totalpop','tract_medianincome','tract_annualstops','tract_bipoccomp']]
 df = df[df['tract_totalpop'] > 1500]
 
 
@@ -135,7 +134,7 @@ race_options = ['white','black','hispanic','report_risk_groups']
 for race in race_options:
     formula = f"arrest ~ C({race}, Treatment(reference=0)) + perceivedage + C(gender, Treatment(reference=0)) + \
                 C(trafficstop, Treatment(reference=0)) + C(raceperceivedpriortostop, Treatment(reference=0)) + \
-                tract_distancefromcal + tract_totalpop + tract_medianincome + tract_annualstops + tract_nonwhitecomp"
+                tract_distancefromcal + tract_totalpop + tract_medianincome + tract_annualstops + tract_bipoccomp"
     log_reg = smf.logit(formula, data = df).fit()
     odds_ratios = pd.DataFrame(
         {

@@ -9,7 +9,7 @@ based on this guide: https://www.andrewvillazon.com/logistic-regression-python-s
 
 import pandas as pd
 import numpy as np
-import warnings
+import warningstrac
 import statistics as st 
 import sys
 
@@ -23,10 +23,10 @@ df = pd.read_csv('formatted_allstops_large(expanded) (2).csv')
 df = df[['perceivedraceorethnicity', 'resultofstop',
          'perceivedgender', 'perceivedage',  
          'typeofstop', 'tract_medianincome',
-         'tract_totalpop', 'tract_whitepop', 'tract_nonwhitecomp',
-         'tract_poccomp', 'tract_nonwhitepop', 'tract_pocpop',
+         'tract_totalpop', 'tract_medianincome',
+         'tract_totalpop', 'tract_whitepop', 'tract_bipoccomp',
          'tract_aapop', 'tract_na_aipop', 'tract_aisianpop',
-         'tract_hawaiian', 'tract_mixed2', 'tract_totalnumstops',
+         'tract_hawaiianpop', 'tract_mixed2',
          'tract_annualstops', 'tract_distancefromcal']]                  
          
 
@@ -94,7 +94,7 @@ df = df.drop(columns=['typeofstop'])
 df_og = df[(df['black'] != 3) & (df['white'] != 3) & (df['asian'] != 3) & (df['hispanic'] != 3)]
 df = df_og[['arrest','black','white','hispanic','bipoc','asian','report_risk_groups','perceivedage','perceivedgender',
             'trafficstop',
-            'tract_distancefromcal','tract_totalpop','tract_medianincome','tract_annualstops','tract_nonwhitecomp']]
+            'tract_distancefromcal','tract_totalpop','tract_medianincome','tract_annualstops','tract_bipoccomp']]
 df['perceivedage'] = df['perceivedage'].apply(pd.to_numeric, errors='coerce')
 df = df[df['tract_totalpop'] > 1500]
 
@@ -119,7 +119,7 @@ df = df[df['tract_totalpop'] > 1500]
 # ,df['trafficstop'].isnull().values.any()
 # ,df['tract_distancefromcal'].isnull().values.any()
 # ,df['tract_annualstops'].isnull().values.any()
-# ,df['tract_nonwhitecomp'].isnull().values.any()
+# ,df['tract_bipoccomp'].isnull().values.any()
 # )
 # sys.exit('okay stop here! check your val counts')
 
@@ -145,7 +145,7 @@ for race in race_options:
                 
     formula = f"arrest ~ C({race}, Treatment(reference=0))  + C(perceivedgender, Treatment(reference=0)) + \
                 C(trafficstop, Treatment(reference=0)) + \
-                tract_distancefromcal + tract_totalpop + tract_medianincome + tract_annualstops + tract_nonwhitecomp"
+                tract_distancefromcal + tract_totalpop + tract_medianincome + tract_annualstops + tract_bipoccomp"
     log_reg = smf.logit(formula, data = df).fit()
     odds_ratios = pd.DataFrame(
         {

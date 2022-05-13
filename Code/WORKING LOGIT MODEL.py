@@ -26,9 +26,8 @@ df = df[['durationofstop', 'raceperceivedpriortostop',
         'gender', 'perceivedage',  
         'typeofstop', 'tract_medianincome',
         'tract_totalpop', 'tract_whitepop', 'tract_nonwhitecomp',
-        'tract_poccomp', 'tract_nonwhitepop', 'tract_pocpop',
         'tract_aapop', 'tract_na_aipop', 'tract_aisianpop',
-        'tract_hawaiian', 'tract_mixed2', 'tract_totalnumstops',
+         'tract_mixed2',
         'tract_annualstops', 'tract_distancefromcal']]
 
 
@@ -56,7 +55,7 @@ np.where(df['asian'] == 3, 0,0)
 df['hispanic'] = np.where(df['perceivedraceorethnicity'] == 4, 1,0)
 np.where(df['hispanic'] == 3, 0,0)
 
-# df.rename(columns={'tract_nonwhitecomp':'tract_bipoc','tract_poccomp':'tract_reportfocusgroupcomp',''})
+# df.rename(columns={'tract_bipoccomp':'tract_bipoc','tract_poccomp':'tract_reportfocusgroupcomp',''})
 
         
 df['bipoc'] = np.where(df['perceivedraceorethnicity'] != 2, 1,0)
@@ -128,6 +127,7 @@ import statsmodels.formula.api as smf
 ######## OUTPUT ALL FORMULAS TO A .DOCX
 
 race_options = ['white','black','hispanic','asian','report_risk_groups','bipoc']
+race_options = ['white','black']
 
 # my_doc = docx.Document()
 
