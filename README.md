@@ -36,7 +36,7 @@ Current work is being done to do the following:
 If you'd like to see more of the work done in the project, I've linked the current resources below!
 * [Project Landing Page](https://www.notion.so/karatechop/ISF-BPD-Analysis-Landing-Page-162fb1015f8c4ff38b269d93c40ca216) (with more news/reports resources)
 * [Research Presentation from Junior Year](https://docs.google.com/presentation/d/1gxzAV4evgyhWNZ6g-F8-rggxMzqc0GQfbHAsvXd6KUs/edit#slide=id.p)
-* [Interactive Map](https://raw.githack.com/kch0p/BPD-Stops-Thesis-Project/main/Exports/Interactive%20Full%20Heatmap.html) of Berkeley Stops
-* [Web Notebook](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/Exports/Final%20Exports/Web%20Presentation/Web%20Presentation%20(BPD%20PROJECT%20KC%20HARRIS).html) Version of the Report
+* [Interactive Map](https://rawcdn.githack.com/kch0p/BPD-Stops-Thesis-Project/1bd281fb61243587499ac4c364757e938e14d491/Exports/Interactive%20Full%20Heatmap.html) of Berkeley Stops
+* [Web Notebook](https://rawcdn.githack.com/kch0p/BPD-Stops-Thesis-Project/1bd281fb61243587499ac4c364757e938e14d491/Exports/Final%20Exports/Web%20Presentation/Web%20Presentation%20(BPD%20PROJECT%20KC%20HARRIS).html) Version of the Report
 * [Original CPE Report](https://newspack-berkeleyside-cityside.s3.amazonaws.com/wp-content/uploads/2018/05/Berkeley-Report-May-2018.pdf)
 
