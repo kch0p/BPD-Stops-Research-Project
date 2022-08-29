@@ -27,7 +27,7 @@ Current work is being done to do the following:
 
 
 ![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/Duration%20Boxplot%20by%20Race%20(TEXT).png)
-![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/Full%20Heatmap%20All%20Incidents.png)
+![Gif](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/map_preview_gif.gif)
 ![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/logit_model_comparison.png)
 
 
