@@ -6,7 +6,8 @@ This is the github for a thesis project analyzing police stops in the city of Be
 
 Stops data for this project is made available by the [City of Berkeley's Open Data Portal](https://data.cityofberkeley.info/), and is freely available to the public. Race data by census tracts is sourced from 2020 census data, with the specific table for this project available [here](https://data.census.gov/cedsci/table?t=Race%20and%20Ethnicity&g=1400000US060014,06001421100,06001421200,06001421300,06001421400,06001421500,06001421600,06001421700,06001421800,06001421900,06001422000,06001422100,06001422200,06001422300,06001422400,06001422500). GeoJson mapping files for the City of Berkeley are available [here](https://data.cityofberkeley.info/Public-Safety/Berkeley-PD-Police-Beats-2015-2016/hccy-runn#:~:text=Shapefile-,GeoJSON,-Download%20a%20non).
   
-  
+![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/Berkeley%20PD%20-%20Stop%20Data%20(October%201%202020%20-%20Present)%20Open%20Data%20City%20of%20Berkeley.png)
+
   
 
 
@@ -25,19 +26,17 @@ Current work is being done to do the following:
 * Further research and organize literature on yield rates, traffic stop legislation changes, and RIPA effects in other cities
 
 
+![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/Duration%20Boxplot%20by%20Race%20(TEXT).png)
+![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/Full%20Heatmap%20All%20Incidents.png)
+![App Screenshot](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/GitHub%20Presentation%20Files/logit_model_comparison.png)
 
 
 
-
-
-
-
-
-
-
-
-
-![App Screenshot](https://github.com/kch0p/Legal-Studies-123-Problem-Set-1/blob/main/readme_files/images/hour_of_day_chart.png)
-
-
+### Learn More 
+If you'd like to see more of the work done in the project, I've linked the current resources below!
+* [Project Landing Page](https://www.notion.so/karatechop/ISF-BPD-Analysis-Landing-Page-162fb1015f8c4ff38b269d93c40ca216) (with more news/reports resources)
+* [Research Presentation from Junior Year](https://docs.google.com/presentation/d/1gxzAV4evgyhWNZ6g-F8-rggxMzqc0GQfbHAsvXd6KUs/edit#slide=id.p)
+* [Interactive Map](https://raw.githack.com/kch0p/BPD-Stops-Thesis-Project/main/Exports/Interactive%20Full%20Heatmap.html) of Berkeley Stops
+* [Web Notebook](https://github.com/kch0p/BPD-Stops-Thesis-Project/blob/main/Exports/Final%20Exports/Web%20Presentation/Web%20Presentation%20(BPD%20PROJECT%20KC%20HARRIS).html) Version of the Report
+* [Original CPE Report](https://newspack-berkeleyside-cityside.s3.amazonaws.com/wp-content/uploads/2018/05/Berkeley-Report-May-2018.pdf)
 
